@@ -26,7 +26,7 @@
             color: var(--text-light);
             margin: 0;
             padding: 0;
-            padding-bottom: calc(var(--bar-height) + 20px);
+            padding-bottom: calc(var(--bar-height) + 40px);
         }
 
         /* Top Navigation Tabs */
@@ -37,10 +37,16 @@
             background-color: var(--bg-color);
             border-bottom: 2px solid var(--accent-purple);
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 10px 12px;
             gap: 8px;
             overflow-x: auto;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        .nav-header::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
         }
 
         .tab-btn {
@@ -170,6 +176,135 @@
             color: white;
             font-weight: bold;
             font-size: 1rem;
+        }
+
+        /* START PROJECT BUTTON */
+        .generate-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--accent-gold);
+            color: #1a1625;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-top: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(226, 176, 71, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .generate-btn:hover {
+            background: #d1a03c;
+        }
+
+        /* CHECKLIST STYLING */
+        .checklist-section {
+            margin-bottom: 24px;
+            background: rgba(40, 34, 54, 0.4);
+            padding: 12px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(63, 53, 88, 0.5);
+        }
+
+        .checklist-header {
+            color: var(--accent-gold);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--accent-purple);
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border: 1px solid #3d3450;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .check-item:hover {
+            background: #322b44;
+        }
+
+        .check-item.completed {
+            background: rgba(40, 34, 54, 0.6);
+            border-color: rgba(63, 53, 88, 0.4);
+        }
+
+        .check-item.completed .check-text {
+            text-decoration: line-through;
+            color: #8e839e;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border: 2px solid var(--accent-purple);
+            border-radius: 6px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-color);
+            transition: all 0.2s ease;
+        }
+
+        .check-item.completed .checkbox {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+
+        .check-item.completed .checkbox::after {
+            content: "✓";
+            color: #1a1625;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .check-text {
+            font-size: 0.95rem;
+            flex-grow: 1;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: color 0.2s ease;
+        }
+
+        .check-qty {
+            color: var(--accent-blue);
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 4px 10px;
+            background: rgba(84, 178, 219, 0.15);
+            border-radius: 6px;
+            margin-left: 12px;
+        }
+        
+        .check-item.completed .check-qty {
+            opacity: 0.5;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #8e839e;
+            padding: 40px 20px;
+            font-style: italic;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px dashed var(--accent-purple);
         }
 
         /* EXPANDABLE FLOATING BOTTOM SHEET */
@@ -335,6 +470,7 @@
     <!-- Top Navigation -->
     <div class="nav-header">
         <button class="tab-btn active" onclick="switchTab('calculatorTab', this)">Calculator</button>
+        <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
         <button class="tab-btn" onclick="switchTab('furnitureIndexTab', this)">Furniture Index</button>
         <button class="tab-btn" onclick="switchTab('indexTab', this)">Material Index</button>
     </div>
@@ -343,15 +479,25 @@
     <div id="calculatorTab" class="tab-content active">
         <h1>Gwidam Workshop Planner</h1>
         <div class="furniture-grid" id="furnitureGrid"></div>
+        <button class="generate-btn" onclick="generateChecklist()">Start Project (Create Checklist)</button>
     </div>
 
-    <!-- TAB 2: FURNITURE INDEX -->
+    <!-- TAB 2: CHECKLIST -->
+    <div id="checklistTab" class="tab-content">
+        <h1>Project Checklist</h1>
+        <div id="checklistContainer">
+            <!-- Dynamically populated via JS -->
+            <div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>
+        </div>
+    </div>
+
+    <!-- TAB 3: FURNITURE INDEX -->
     <div id="furnitureIndexTab" class="tab-content">
         <h1>Furniture Catalog & Lore</h1>
         <div class="index-grid" id="furnitureIndexGrid"></div>
     </div>
 
-    <!-- TAB 3: MATERIAL INDEX -->
+    <!-- TAB 4: MATERIAL INDEX -->
     <div id="indexTab" class="tab-content">
         <h1>Material Glossary & Locations</h1>
         <div class="index-grid" id="indexGrid"></div>
@@ -418,28 +564,36 @@ const glossary = [
 ];
 
 let quantities = {};
+let checklistProgress = {};
 
-// SAFE LOAD SAVED DATA
-function loadSavedQuantities() {
+// CORE CACHING FUNCTIONS
+function loadSavedData() {
     try {
-        const savedData = localStorage.getItem("gwidam_workshop_quantities");
-        if (savedData) {
-            quantities = JSON.parse(savedData);
+        const savedQuantities = localStorage.getItem("gwidam_workshop_quantities");
+        if (savedQuantities) quantities = JSON.parse(savedQuantities);
+
+        const savedChecklist = localStorage.getItem("gwidam_workshop_checklist");
+        if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
+        
+        // If there is data in the quantities, render the checklist tab silently behind the scenes
+        if (Object.values(quantities).some(q => q > 0)) {
+            renderChecklist();
         }
     } catch (e) {
         quantities = {};
+        checklistProgress = {};
     }
 }
 
-// SAFE SAVE DATA
 function saveQuantities() {
-    try {
-        localStorage.setItem("gwidam_workshop_quantities", JSON.stringify(quantities));
-    } catch (e) {
-        // Fallback silently if localStorage is restricted
-    }
+    try { localStorage.setItem("gwidam_workshop_quantities", JSON.stringify(quantities)); } catch (e) {}
 }
 
+function saveChecklist() {
+    try { localStorage.setItem("gwidam_workshop_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
+}
+
+// UI LOGIC
 function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
@@ -450,10 +604,10 @@ function switchTab(tabId, btn) {
     const sheet = document.getElementById('bottomSheet');
     if (tabId === 'calculatorTab') {
         sheet.style.display = 'block';
-        document.body.style.paddingBottom = 'calc(var(--bar-height) + 20px)';
+        document.body.style.paddingBottom = 'calc(var(--bar-height) + 40px)';
     } else {
         sheet.style.display = 'none';
-        document.body.style.paddingBottom = '20px';
+        document.body.style.paddingBottom = '40px';
     }
 }
 
@@ -477,17 +631,14 @@ function formatTime(minutes) {
     return `${hrs}h ${mins}m`;
 }
 
+// RENDERERS
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
 
     items.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
-
-        const matString = Object.entries(item.mats)
-            .map(([mat, count]) => `${count} ${mat}`)
-            .join(", ");
-
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
 
         const card = document.createElement("div");
@@ -512,14 +663,9 @@ function renderGrid() {
 function renderFurnitureIndex() {
     const fGrid = document.getElementById("furnitureIndexGrid");
     fGrid.innerHTML = "";
-
     items.forEach(item => {
-        const matString = Object.entries(item.mats)
-            .map(([mat, count]) => `${count} ${mat}`)
-            .join(", ");
-
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
-
         const card = document.createElement("div");
         card.className = "glossary-card";
         card.innerHTML = `
@@ -536,7 +682,6 @@ function renderFurnitureIndex() {
 function renderIndex() {
     const indexGrid = document.getElementById("indexGrid");
     indexGrid.innerHTML = "";
-
     glossary.forEach(mat => {
         const card = document.createElement("div");
         card.className = "glossary-card";
@@ -549,18 +694,123 @@ function renderIndex() {
     });
 }
 
+// CHECKLIST LOGIC
+function generateChecklist() {
+    const hasItems = Object.values(quantities).some(q => q > 0);
+    if (!hasItems) {
+        alert("Please select at least one piece of furniture in the calculator first!");
+        return;
+    }
+    
+    // Switch to the checklist tab and render
+    const navBtn = document.getElementById('navChecklist');
+    switchTab('checklistTab', navBtn);
+    renderChecklist();
+}
+
+function toggleCheckItem(id, element) {
+    checklistProgress[id] = !checklistProgress[id];
+    saveChecklist();
+    
+    if (checklistProgress[id]) {
+        element.classList.add("completed");
+    } else {
+        element.classList.remove("completed");
+    }
+}
+
+function renderChecklist() {
+    const container = document.getElementById("checklistContainer");
+    const matTotals = {};
+    let hasItems = false;
+
+    // Calculate requirements from current quantities
+    items.forEach(item => {
+        const qty = quantities[item.id] || 0;
+        if (qty > 0) {
+            hasItems = true;
+            Object.entries(item.mats).forEach(([mat, count]) => {
+                matTotals[mat] = (matTotals[mat] || 0) + (count * qty);
+            });
+        }
+    });
+
+    if (!hasItems) {
+        container.innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
+        return;
+    }
+
+    // Map materials to their locations using the Glossary
+    const groupedMats = {};
+    Object.entries(matTotals).forEach(([mat, total]) => {
+        const glossItem = glossary.find(g => g.name === mat);
+        const loc = glossItem ? glossItem.source : "Other / Unknown";
+        if (!groupedMats[loc]) groupedMats[loc] = [];
+        groupedMats[loc].push({ name: mat, total });
+    });
+
+    let html = ``;
+
+    // 1. Grouped Materials Rendering
+    for (const [location, mats] of Object.entries(groupedMats)) {
+        html += `<div class="checklist-section">
+                    <div class="checklist-header">📍 ${location}</div>`;
+        mats.forEach(m => {
+            const checkId = `mat_${m.name.replace(/\s+/g, '_')}`; // Ensure safe ID
+            const isChecked = checklistProgress[checkId] ? "completed" : "";
+            html += `
+                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${m.name}</div>
+                    <div class="check-qty">x${m.total.toLocaleString()}</div>
+                </div>`;
+        });
+        html += `</div>`;
+    }
+
+    // 2. Individual Furniture Crafting Breakdown
+    html += `<div class="checklist-section" style="margin-top: 32px;">
+                <div class="checklist-header">🔨 Furniture Assembly</div>`;
+    
+    items.forEach(item => {
+        const qty = quantities[item.id] || 0;
+        for (let i = 0; i < qty; i++) {
+            const checkId = `furn_${item.id}_${i}`;
+            const isChecked = checklistProgress[checkId] ? "completed" : "";
+            html += `
+                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${item.name} ${qty > 1 ? `<span style="opacity:0.6; font-size:0.8rem;">(#${i+1})</span>` : ''}</div>
+                    <div class="check-qty" style="background: rgba(226, 176, 71, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                </div>`;
+        }
+    });
+    html += `</div>`;
+
+    container.innerHTML = html;
+}
+
+// QUANTITY & TOTALS LOGIC
 function updateQty(id, change) {
     quantities[id] = Math.max(0, (quantities[id] || 0) + change);
     saveQuantities();
     renderGrid();
     calculateTotals();
+    
+    // Silently update checklist behind the scenes if it's already active
+    if (Object.values(quantities).some(q => q > 0)) {
+        renderChecklist(); 
+    }
 }
 
 function resetQuantities() {
     Object.keys(quantities).forEach(id => quantities[id] = 0);
+    checklistProgress = {}; // Erase checklist progress when resetting
     saveQuantities();
+    saveChecklist();
     renderGrid();
     calculateTotals();
+    renderChecklist();
 }
 
 function calculateTotals() {
@@ -604,13 +854,12 @@ function calculateTotals() {
     }
 
     const totalParallelTime = calculateParallelTime(taskDurations, 4);
-    
-    document.getElementById("totalTimeDisplay").innerText = 
-        `⏱️ ${formatTime(totalParallelTime)} | ${totalFurnitureCount} Furniture`;
+    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${totalFurnitureCount} Furniture`;
 }
 
 function calculateParallelTime(durations, maxSlots) {
     if (durations.length === 0) return 0;
+    // Uses Longest Processing Time (LPT) scheduling algorithm for accurate time calculation
     durations.sort((a, b) => b - a);
     const slots = new Array(maxSlots).fill(0);
 
@@ -627,8 +876,8 @@ function calculateParallelTime(durations, maxSlots) {
     return Math.max(...slots);
 }
 
-// Initial setup
-loadSavedQuantities();
+// INIT
+loadSavedData();
 renderGrid();
 renderFurnitureIndex();
 renderIndex();
