@@ -383,19 +383,19 @@
 
 <script>
 const items = [
-    { id: "cheongsachorong", name: "Cheongsachorong Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Its gentle glow lights the way through the quiet night." },
+    { id: "cheongsachorong", name: "Cheongsachorong Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Its gentle glow lights the way through the quiet night.", image: "Cheongsachorong Lantern.png" },
     { id: "mysterious_well", name: "Mysterious Well", timeMinutes: 80, mats: { "Guardian Yeopjeon": 60, "Eoduksini": 3, "Water": 10 }, lore: "An old stone well said to echo with faint whispers when looked into at midnight." },
-    { id: "traditional_jar", name: "Traditional Jar", timeMinutes: 30, mats: { "Guardian Yeopjeon": 40, "Stone": 10 }, lore: "Place it somewhere that gets plenty of sunshine." },
-    { id: "guardian_monument", name: "Village Guardian Monument", timeMinutes: 30, mats: { "Guardian Yeopjeon": 60, "Health Charm": 5, "Stone": 20 }, lore: "A guardian monument that has watched over the village for generations." },
-    { id: "moon_pavilion", name: "Moon-Viewing Pavilion", timeMinutes: 230, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Stone": 10 }, lore: "Welcome the rising moon on a peaceful night." },
-    { id: "latticework_lantern", name: "Traditional Latticework Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Made with traditional latticework and hanji paper." },
-    { id: "thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Someone's Nameplate": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight." },
-    { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 390, mats: { "Guardian Yeopjeon": 250, "Haechi Statue (Material)": 1, "Yeopjeon Knot Ornament": 5, "Someone's Nameplate": 3 }, lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi." },
-    { id: "underworld_totem", name: "Female General of the Underworld Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Female General Totem (Material)": 1, "Health Charm": 5 }, lore: "It is said to govern the energy that flows beneath the earth." },
-    { id: "wooden_platform", name: "Peaceful Wooden Platform", timeMinutes: 40, mats: { "Guardian Yeopjeon": 40, "Tree Branch": 20 }, lore: "Take a break and enjoy the gentle breeze." },
-    { id: "traditional_signboard", name: "Traditional Signboard", timeMinutes: 180, mats: { "Guardian Yeopjeon": 100, "Someone's Norigae": 10, "Misfortune Doll": 5 }, lore: "Leave a message for the village." },
-    { id: "thatched_barn", name: "Thatched Barn", timeMinutes: 110, mats: { "Guardian Yeopjeon": 80, "Misfortune Doll": 5, "Tree Branch": 10 }, lore: "A cozy barn topped with warm straw." },
-    { id: "market_stall", name: "Village Market Stall", timeMinutes: 360, mats: { "Guardian Yeopjeon": 200, "Will-o'-the-Wisp": 5, "Someone's Nameplate": 3 }, lore: "A simple market stall that fits perfectly in a cozy village marketplace.", image: "image_4.png" }
+    { id: "traditional_jar", name: "Traditional Jar", timeMinutes: 30, mats: { "Guardian Yeopjeon": 40, "Stone": 10 }, lore: "Place it somewhere that gets plenty of sunshine.", image: "Traditional Jar.png" },
+    { id: "guardian_monument", name: "Village Guardian Monument", timeMinutes: 30, mats: { "Guardian Yeopjeon": 60, "Health Charm": 5, "Stone": 20 }, lore: "A guardian monument that has watched over the village for generations.", image: "Village Guardian Monument.png" },
+    { id: "moon_pavilion", name: "Moon-Viewing Pavilion", timeMinutes: 230, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Stone": 10 }, lore: "Welcome the rising moon on a peaceful night.", image: "Moon-Viewing Pavilion.png" },
+    { id: "latticework_lantern", name: "Traditional Latticework Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Made with traditional latticework and hanji paper.", image: "Traditional Latticework Lantern.png" },
+    { id: "thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Someone's Nameplate": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight.", image: "Moonlit Thatched Cottage.png" },
+    { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 390, mats: { "Guardian Yeopjeon": 250, "Haechi Statue (Material)": 1, "Yeopjeon Knot Ornament": 5, "Someone's Nameplate": 3 }, lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi.", image: "Haechi Statue.png" },
+    { id: "underworld_totem", name: "Female General of the Underworld Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Female General Totem (Material)": 1, "Health Charm": 5 }, lore: "It is said to govern the energy that flows beneath the earth.", image: "Female General of the Underworld Totem.png" },
+    { id: "wooden_platform", name: "Peaceful Wooden Platform", timeMinutes: 40, mats: { "Guardian Yeopjeon": 40, "Tree Branch": 20 }, lore: "Take a break and enjoy the gentle breeze.", image: "Peaceful Wooden Platform.png" },
+    { id: "traditional_signboard", name: "Traditional Signboard", timeMinutes: 180, mats: { "Guardian Yeopjeon": 100, "Someone's Norigae": 10, "Misfortune Doll": 5 }, lore: "Leave a message for the village.", image: "Traditional Signboard.png" },
+    { id: "thatched_barn", name: "Thatched Barn", timeMinutes: 110, mats: { "Guardian Yeopjeon": 80, "Misfortune Doll": 5, "Tree Branch": 10 }, lore: "A cozy barn topped with warm straw.", image: "Thatched Barn.png" },
+    { id: "market_stall", name: "Village Market Stall", timeMinutes: 360, mats: { "Guardian Yeopjeon": 200, "Will-o'-the-Wisp": 5, "Someone's Nameplate": 3 }, lore: "A simple market stall that fits perfectly in a cozy village marketplace.", image: "Village Market Stall.png" }
 ];
 
 const glossary = [
