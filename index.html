@@ -41,12 +41,12 @@
             padding: 10px 12px;
             gap: 8px;
             overflow-x: auto;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
         
         .nav-header::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
+            display: none;
         }
 
         .tab-btn {
@@ -486,7 +486,6 @@
     <div id="checklistTab" class="tab-content">
         <h1>Project Checklist</h1>
         <div id="checklistContainer">
-            <!-- Dynamically populated via JS -->
             <div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>
         </div>
     </div>
@@ -566,7 +565,6 @@ const glossary = [
 let quantities = {};
 let checklistProgress = {};
 
-// CORE CACHING FUNCTIONS
 function loadSavedData() {
     try {
         const savedQuantities = localStorage.getItem("gwidam_workshop_quantities");
@@ -575,7 +573,6 @@ function loadSavedData() {
         const savedChecklist = localStorage.getItem("gwidam_workshop_checklist");
         if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
         
-        // If there is data in the quantities, render the checklist tab silently behind the scenes
         if (Object.values(quantities).some(q => q > 0)) {
             renderChecklist();
         }
@@ -593,7 +590,6 @@ function saveChecklist() {
     try { localStorage.setItem("gwidam_workshop_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
 }
 
-// UI LOGIC
 function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
@@ -631,7 +627,6 @@ function formatTime(minutes) {
     return `${hrs}h ${mins}m`;
 }
 
-// RENDERERS
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
@@ -694,7 +689,6 @@ function renderIndex() {
     });
 }
 
-// CHECKLIST LOGIC
 function generateChecklist() {
     const hasItems = Object.values(quantities).some(q => q > 0);
     if (!hasItems) {
@@ -702,7 +696,6 @@ function generateChecklist() {
         return;
     }
     
-    // Switch to the checklist tab and render
     const navBtn = document.getElementById('navChecklist');
     switchTab('checklistTab', navBtn);
     renderChecklist();
@@ -719,12 +712,41 @@ function toggleCheckItem(id, element) {
     }
 }
 
+// Activity Categorization Helper
+function getCategoryForMaterial(matName) {
+    const netItems = ["Cursed Scarecrow", "Eoduksini", "Will-o'-the-Wisp"];
+    const excavationItems = [
+        "Someone's Nameplate", "Yeopjeon Knot Ornament", "Haechi Statue (Material)", 
+        "Someone's Norigae", "Female General Totem (Material)", "Great General Totem (Material)", 
+        "Health Charm", "Misfortune Doll"
+    ];
+
+    if (netItems.includes(matName)) {
+        return "Catching (Net)";
+    }
+    if (excavationItems.includes(matName)) {
+        return "Excavation";
+    }
+    if (matName === "Tree Branch") {
+        return "Gathering";
+    }
+    if (matName === "Stone") {
+        return "Mining";
+    }
+    if (matName === "Water") {
+        return "Mega Mart";
+    }
+    if (matName === "Guardian Yeopjeon") {
+        return "Events";
+    }
+    return "Other Materials";
+}
+
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
     const matTotals = {};
     let hasItems = false;
 
-    // Calculate requirements from current quantities
     items.forEach(item => {
         const qty = quantities[item.id] || 0;
         if (qty > 0) {
@@ -740,23 +762,21 @@ function renderChecklist() {
         return;
     }
 
-    // Map materials to their locations using the Glossary
+    // Group materials by categorized activity instead of raw location strings
     const groupedMats = {};
     Object.entries(matTotals).forEach(([mat, total]) => {
-        const glossItem = glossary.find(g => g.name === mat);
-        const loc = glossItem ? glossItem.source : "Other / Unknown";
-        if (!groupedMats[loc]) groupedMats[loc] = [];
-        groupedMats[loc].push({ name: mat, total });
+        const category = getCategoryForMaterial(mat);
+        if (!groupedMats[category]) groupedMats[category] = [];
+        groupedMats[category].push({ name: mat, total });
     });
 
     let html = ``;
 
-    // 1. Grouped Materials Rendering
-    for (const [location, mats] of Object.entries(groupedMats)) {
+    for (const [category, mats] of Object.entries(groupedMats)) {
         html += `<div class="checklist-section">
-                    <div class="checklist-header">📍 ${location}</div>`;
+                    <div class="checklist-header">📌 ${category}</div>`;
         mats.forEach(m => {
-            const checkId = `mat_${m.name.replace(/\s+/g, '_')}`; // Ensure safe ID
+            const checkId = `mat_${m.name.replace(/\s+/g, '_')}`;
             const isChecked = checklistProgress[checkId] ? "completed" : "";
             html += `
                 <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
@@ -768,7 +788,7 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    // 2. Individual Furniture Crafting Breakdown
+    // Furniture Assembly Breakdown
     html += `<div class="checklist-section" style="margin-top: 32px;">
                 <div class="checklist-header">🔨 Furniture Assembly</div>`;
     
@@ -790,14 +810,12 @@ function renderChecklist() {
     container.innerHTML = html;
 }
 
-// QUANTITY & TOTALS LOGIC
 function updateQty(id, change) {
     quantities[id] = Math.max(0, (quantities[id] || 0) + change);
     saveQuantities();
     renderGrid();
     calculateTotals();
     
-    // Silently update checklist behind the scenes if it's already active
     if (Object.values(quantities).some(q => q > 0)) {
         renderChecklist(); 
     }
@@ -805,7 +823,7 @@ function updateQty(id, change) {
 
 function resetQuantities() {
     Object.keys(quantities).forEach(id => quantities[id] = 0);
-    checklistProgress = {}; // Erase checklist progress when resetting
+    checklistProgress = {};
     saveQuantities();
     saveChecklist();
     renderGrid();
@@ -859,7 +877,6 @@ function calculateTotals() {
 
 function calculateParallelTime(durations, maxSlots) {
     if (durations.length === 0) return 0;
-    // Uses Longest Processing Time (LPT) scheduling algorithm for accurate time calculation
     durations.sort((a, b) => b - a);
     const slots = new Array(maxSlots).fill(0);
 
@@ -876,7 +893,6 @@ function calculateParallelTime(durations, maxSlots) {
     return Math.max(...slots);
 }
 
-// INIT
 loadSavedData();
 renderGrid();
 renderFurnitureIndex();
