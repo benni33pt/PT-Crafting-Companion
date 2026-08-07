@@ -776,7 +776,8 @@ function renderChecklist() {
         html += `<div class="checklist-section">
                     <div class="checklist-header">📌 ${category}</div>`;
         mats.forEach(m => {
-            const checkId = `mat_${m.name.replace(/\s+/g, '_')}`;
+            // Strip ALL special characters to create a perfectly safe HTML ID string
+            const checkId = `mat_${m.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const isChecked = checklistProgress[checkId] ? "completed" : "";
             html += `
                 <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
