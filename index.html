@@ -808,6 +808,7 @@ function generateChecklist() {
     const navBtn = document.getElementById('navChecklist');
     switchTab('checklistTab', navBtn);
     renderChecklist();
+    calculateTotals();
 }
 
 function toggleChecklistSection(element) {
@@ -923,7 +924,7 @@ function renderChecklist() {
                 <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${m.name}</div>
-                    <div class="check-qty">x${m.total.toLocaleString()}</div>
+                    <div class="check-qty" id="qty_${checkId}">x${m.total.toLocaleString()}</div>
                 </div>`;
         });
         html += `</div>`;
@@ -993,11 +994,14 @@ function updateQty(id, change) {
     quantities[id] = Math.max(0, (quantities[id] || 0) + change);
     saveQuantities();
     renderGrid();
-    calculateTotals();
     
     if (Object.values(quantities).some(q => q > 0)) {
         renderChecklist(); 
+    } else {
+        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
     }
+    
+    calculateTotals();
 }
 
 function resetQuantities() {
@@ -1006,8 +1010,8 @@ function resetQuantities() {
     saveQuantities();
     saveChecklist();
     renderGrid();
-    calculateTotals();
     renderChecklist();
+    calculateTotals();
 }
 
 function calculateTotals() {
@@ -1067,6 +1071,8 @@ function calculateTotals() {
     } else {
         sortedMats.forEach(([mat, initialTotal]) => {
             const currentReq = matTotals[mat] !== undefined ? matTotals[mat] : initialTotal;
+            
+            // Build Bottom Sheet Tile
             const tile = document.createElement("div");
             tile.className = "mat-tile";
             
@@ -1079,6 +1085,13 @@ function calculateTotals() {
                 <span class="tile-title">${mat}</span>
                 <span class="tile-count">${currentReq.toLocaleString()} <span style="font-size:0.75rem; color:#8e839e; font-weight:normal;">/ ${initialTotal.toLocaleString()}</span></span>`;
             matsGridEl.appendChild(tile);
+
+            // Dynamically Sync the DOM Elements on the Checklist Page (so both update together)
+            const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
+            const checklistQtyEl = document.getElementById(`qty_${matCheckId}`);
+            if (checklistQtyEl) {
+                checklistQtyEl.innerHTML = `x${currentReq.toLocaleString()} <span style="font-size:0.75rem; font-weight:normal; opacity:0.6;">/ ${initialTotal.toLocaleString()}</span>`;
+            }
         });
     }
 
