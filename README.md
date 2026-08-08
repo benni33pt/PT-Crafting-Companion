@@ -1,4 +1,4 @@
-# 🏮 Gwidam Village Workshop Companion
+# PlayTogether Workshop Companion
 
 A lightweight, mobile-first web utility and crafting planner for **Gwidam Village**. Built to calculate parallel crafting times, aggregate raw material requirements, and track project progress across furniture crafting and pet incubation.
 
@@ -39,12 +39,3 @@ This project is intentionally built as a **zero-dependency, single-file web appl
 
 * **Parallel Queue Calculation (`calculateParallelTime`):** Models a 4-slot crafting queue by sorting item build durations in descending order and assigning each task to the earliest available slot.
 * **Dynamic Material Math (`calculateTotals`):** Evaluates completed assembly queue items (`craft_id_index`) and raw material checks (`mat_name`) against initial target goals to update the remaining required materials in the floating bottom sheet without altering project targets.
-
----
-
-## 📂 Repository Structure
-
-```text
-├── index.html                  # Core single-file application logic, CSS, and data arrays
-├── README.md                   # Repository documentation
-└── assets/                     # Item preview graphics and images
