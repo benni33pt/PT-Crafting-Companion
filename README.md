@@ -2,7 +2,7 @@
 
 A lightweight, mobile-first web utility and crafting planner for **Gwidam Village**. Built to calculate parallel crafting times, aggregate raw material requirements, and track project progress across furniture crafting and pet incubation.
 
-📱 **Live App:** [View Companion Tool](https://your-github-username.github.io/your-repo-name/)
+📱 **Live App:** [View Companion Tool](https://benni33pt.github.io/PT-gwidam-workshop-companion/)
 
 ---
 
