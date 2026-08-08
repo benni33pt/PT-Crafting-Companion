@@ -1019,7 +1019,7 @@ function calculateTotals() {
 
     const allCraftables = [...items, ...pets];
 
-    // 1. Calculate Target Totals & Time
+    // 1. Calculate Target Totals, Subtract Checked Crafts, & Track Remaining Time
     allCraftables.forEach(item => {
         const qty = quantities[item.id] || 0;
         if (qty > 0) {
@@ -1032,7 +1032,12 @@ function calculateTotals() {
 
             for (let i = 0; i < qty; i++) {
                 const craftCheckId = `craft_${item.id}_${i}`;
-                if (!checklistProgress[craftCheckId]) {
+                if (checklistProgress[craftCheckId]) {
+                    // Item completed in assembly queue -> subtract its individual mat costs
+                    Object.entries(item.mats).forEach(([mat, count]) => {
+                        matTotals[mat] = Math.max(0, (matTotals[mat] || 0) - count);
+                    });
+                } else {
                     taskDurations.push(item.timeMinutes);
                     remainingItemCount++;
                 }
@@ -1040,7 +1045,7 @@ function calculateTotals() {
         }
     });
 
-    // 2. Subtract Checked Off Raw Material Quantities
+    // 2. Subtract Raw Materials Checked Off in Shopping List
     Object.keys(initialMatTotals).forEach(mat => {
         const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
         if (checklistProgress[matCheckId]) {
