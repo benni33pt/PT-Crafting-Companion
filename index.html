@@ -12,6 +12,7 @@
             --text-light: #f0ecf7;
             --accent-gold: #e2b047;
             --accent-blue: #54b2db;
+            --accent-pet: #32a873; /* Jade Green for Pets */
             --border-radius: 12px;
             --bar-height: 60px;
         }
@@ -89,6 +90,38 @@
             letter-spacing: 0.5px;
         }
 
+        /* Sub-Navigation Toggle for Calculator */
+        .sub-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .sub-btn {
+            background-color: var(--bg-color);
+            color: #8e839e;
+            border: 2px solid var(--accent-purple);
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sub-btn.active-furniture {
+            background-color: rgba(226, 176, 71, 0.15);
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+
+        .sub-btn.active-pets {
+            background-color: rgba(50, 168, 115, 0.15);
+            color: var(--accent-pet);
+            border-color: var(--accent-pet);
+        }
+
         /* Image Styling */
         .card-img-container {
             text-align: center;
@@ -110,7 +143,7 @@
             object-fit: contain;
         }
 
-        /* Furniture Calculator Grid Layout */
+        /* Calculator Grid Layout */
         .furniture-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -125,6 +158,11 @@
             flex-direction: column;
             justify-content: space-between;
             border: 1px solid #3d3450;
+            transition: border-color 0.2s ease;
+        }
+
+        .item-card.pet-card {
+            border: 1px solid rgba(50, 168, 115, 0.4);
         }
 
         .item-name {
@@ -132,6 +170,10 @@
             font-size: 0.95rem;
             color: #ffffff;
             margin-bottom: 4px;
+        }
+
+        .pet-card .item-name {
+            color: var(--accent-pet);
         }
 
         .item-time {
@@ -220,6 +262,26 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border-bottom: 2px solid var(--accent-purple);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .checklist-header::after {
+            content: "▼";
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            transition: transform 0.2s ease;
+        }
+
+        .checklist-section.collapsed .checklist-header::after {
+            transform: rotate(-90deg);
+        }
+
+        .checklist-section.collapsed .check-item {
+            display: none;
         }
 
         .check-item {
@@ -478,6 +540,13 @@
     <!-- TAB 1: CALCULATOR -->
     <div id="calculatorTab" class="tab-content active">
         <h1>Gwidam Workshop Planner</h1>
+        
+        <!-- Sub-Navigation Toggle -->
+        <div class="sub-nav">
+            <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
+            <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets & Divine Beasts</button>
+        </div>
+
         <div class="furniture-grid" id="furnitureGrid"></div>
         <button class="generate-btn" onclick="generateChecklist()">Start Project (Create Checklist)</button>
     </div>
@@ -507,7 +576,7 @@
         <div class="sheet-header" onclick="toggleSheet()">
             <div class="drag-handle"></div>
             <div class="summary-bar-content">
-                <span class="time-badge" id="totalTimeDisplay">⏱️ 0m | 0 Furniture</span>
+                <span class="time-badge" id="totalTimeDisplay">⏱️ 0m | 0 Items</span>
                 <span class="toggle-btn" id="toggleLabel">Materials ▲</span>
             </div>
         </div>
@@ -544,6 +613,15 @@ const items = [
     { id: "wooden_platform", name: "Peaceful Wooden Platform", timeMinutes: 40, mats: { "Guardian Yeopjeon": 40, "Tree Branch": 20 }, lore: "Take a break and enjoy the gentle breeze.", image: "Peaceful Wooden Platform.png" }
 ];
 
+const pets = [
+    { id: "divine_beast_supplement", name: "Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 50, "Misfortune Doll": 3, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 50.", image: "divine_beast_supplement.png" },
+    { id: "premium_divine_beast_supplement", name: "Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 100, "Will-o'-the-Wisp": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 200.", image: "premium_divine_beast_supplement.png" },
+    { id: "super_premium_divine_beast_supplement", name: "Super Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 150, "Eoduksini": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 700.", image: "super_premium_divine_beast_supplement.png" },
+    { id: "divine_beast_barrier_pet_fence", name: "Divine Beast Barrier Pet Fence", timeMinutes: 990, mats: { "Guardian Yeopjeon": 250, "Health Charm": 10, "Yeopjeon Knot Ornament": 20, "Stone": 1 }, lore: "A mystical barrier created to safeguard the divine beasts.", image: "divine_beast_barrier_pet_fence.png" },
+    { id: "divine_beast_egg_normal", name: "Divine Beast Egg (Normal)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 200, "Normal Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "divine_beast_egg.png" },
+    { id: "divine_beast_egg_premium", name: "Divine Beast Egg (Premium)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 100, "Premium Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "divine_beast_egg.png" }
+];
+
 const glossary = [
     { name: "Water", source: "Mega Mart", lore: "There's nothing like water to quench your thirst. Doesn't have any special abilities." },
     { name: "Someone's Nameplate", source: "(Excavation) Mysterious Jar", lore: "Beyond the weathered name, forgotten memories still linger." },
@@ -559,11 +637,14 @@ const glossary = [
     { name: "Misfortune Doll", source: "(Excavation) Mysterious Jar", lore: "A doll that bears the traces of someone's wish to take away their misfortune." },
     { name: "Will-o'-the-Wisp", source: "Gwidam Village Shrine All Day", lore: "Time of Appearance: Ghost Story Event Season" },
     { name: "Tree Branch", source: "Gather", lore: "You can craft anything with this. It's used to craft items." },
-    { name: "Guardian Yeopjeon", source: "Event", lore: "Used at the Haechi Altar to pray for health and peace. Used in events." }
+    { name: "Guardian Yeopjeon", source: "Event", lore: "Used at the Haechi Altar to pray for health and peace. Used in events." },
+    { name: "Normal Egg", source: "Pet Paradise (Star Currency)", lore: "A standard egg containing a potential pet companion." },
+    { name: "Premium Egg", source: "Pet Paradise (Gem / Paid Currency)", lore: "A premium egg containing higher-tier pet companion potential." }
 ];
 
 let quantities = {};
 let checklistProgress = {};
+let currentCategory = 'furniture'; // Tracks active sub-tab
 
 function loadSavedData() {
     try {
@@ -607,6 +688,24 @@ function switchTab(tabId, btn) {
     }
 }
 
+function switchCategory(category) {
+    currentCategory = category;
+    
+    // Update button styling
+    const furnBtn = document.getElementById('subTabFurniture');
+    const petsBtn = document.getElementById('subTabPets');
+    
+    if (category === 'furniture') {
+        furnBtn.classList.add('active-furniture');
+        petsBtn.classList.remove('active-pets');
+    } else {
+        furnBtn.classList.remove('active-furniture');
+        petsBtn.classList.add('active-pets');
+    }
+    
+    renderGrid();
+}
+
 function toggleSheet() {
     const sheet = document.getElementById('bottomSheet');
     const label = document.getElementById('toggleLabel');
@@ -631,13 +730,18 @@ function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
 
-    items.forEach(item => {
+    const activeItems = currentCategory === 'furniture' ? items : pets;
+
+    activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
+        
+        // Apply special jade green style to pet cards
+        const cardClass = currentCategory === 'pets' ? "item-card pet-card" : "item-card";
 
         const card = document.createElement("div");
-        card.className = "item-card";
+        card.className = cardClass;
         card.innerHTML = `
             <div>
                 ${imgHtml}
@@ -658,7 +762,11 @@ function renderGrid() {
 function renderFurnitureIndex() {
     const fGrid = document.getElementById("furnitureIndexGrid");
     fGrid.innerHTML = "";
-    items.forEach(item => {
+    
+    // Combine both arrays for the complete index view
+    const allCraftables = [...items, ...pets];
+    
+    allCraftables.forEach(item => {
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
@@ -692,13 +800,17 @@ function renderIndex() {
 function generateChecklist() {
     const hasItems = Object.values(quantities).some(q => q > 0);
     if (!hasItems) {
-        alert("Please select at least one piece of furniture in the calculator first!");
+        alert("Please select at least one item in the calculator first!");
         return;
     }
     
     const navBtn = document.getElementById('navChecklist');
     switchTab('checklistTab', navBtn);
     renderChecklist();
+}
+
+function toggleChecklistSection(element) {
+    element.parentElement.classList.toggle('collapsed');
 }
 
 function toggleCheckItem(id, element) {
@@ -709,6 +821,24 @@ function toggleCheckItem(id, element) {
         element.classList.add("completed");
     } else {
         element.classList.remove("completed");
+    }
+
+    // Auto-collapse section if everything is completed
+    const section = element.closest('.checklist-section');
+    if (section) {
+        const allItems = section.querySelectorAll('.check-item');
+        const allCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
+        
+        if (allCompleted) {
+            // Wait a brief moment so the user sees the checkmark apply before it hides
+            setTimeout(() => {
+                // Verify they didn't quickly uncheck it during the timeout
+                const currentCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
+                if (currentCompleted) {
+                    section.classList.add('collapsed');
+                }
+            }, 400); 
+        }
     }
 }
 
@@ -739,6 +869,9 @@ function getCategoryForMaterial(matName) {
     if (matName === "Guardian Yeopjeon") {
         return "Events";
     }
+    if (matName === "Normal Egg" || matName === "Premium Egg") {
+        return "Pet Paradise";
+    }
     return "Other Materials";
 }
 
@@ -746,8 +879,10 @@ function renderChecklist() {
     const container = document.getElementById("checklistContainer");
     const matTotals = {};
     let hasItems = false;
+    
+    const allCraftables = [...items, ...pets];
 
-    items.forEach(item => {
+    allCraftables.forEach(item => {
         const qty = quantities[item.id] || 0;
         if (qty > 0) {
             hasItems = true;
@@ -762,7 +897,6 @@ function renderChecklist() {
         return;
     }
 
-    // Group materials by categorized activity instead of raw location strings
     const groupedMats = {};
     Object.entries(matTotals).forEach(([mat, total]) => {
         const category = getCategoryForMaterial(mat);
@@ -772,11 +906,13 @@ function renderChecklist() {
 
     let html = ``;
 
+    // 1. Render Material Categories
     for (const [category, mats] of Object.entries(groupedMats)) {
         html += `<div class="checklist-section">
-                    <div class="checklist-header">📌 ${category}</div>`;
+                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                        <span>📌 ${category}</span>
+                    </div>`;
         mats.forEach(m => {
-            // Strip ALL special characters to create a perfectly safe HTML ID string
             const checkId = `mat_${m.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const isChecked = checklistProgress[checkId] ? "completed" : "";
             html += `
@@ -789,16 +925,19 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    // Furniture Assembly Breakdown
-    html += `<div class="checklist-section" style="margin-top: 32px;">
-                <div class="checklist-header">🔨 Furniture Assembly</div>`;
-    
+    // 2. Render Furniture Assembly Queue
+    let hasFurniture = false;
+    let furnitureHtml = `<div class="checklist-section" style="margin-top: 32px;">
+                            <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                                <span>🔨 Furniture Assembly</span>
+                            </div>`;
     items.forEach(item => {
         const qty = quantities[item.id] || 0;
+        if (qty > 0) hasFurniture = true;
         for (let i = 0; i < qty; i++) {
-            const checkId = `furn_${item.id}_${i}`;
+            const checkId = `craft_${item.id}_${i}`;
             const isChecked = checklistProgress[checkId] ? "completed" : "";
-            html += `
+            furnitureHtml += `
                 <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${item.name} ${qty > 1 ? `<span style="opacity:0.6; font-size:0.8rem;">(#${i+1})</span>` : ''}</div>
@@ -806,9 +945,44 @@ function renderChecklist() {
                 </div>`;
         }
     });
-    html += `</div>`;
+    furnitureHtml += `</div>`;
+    if (hasFurniture) html += furnitureHtml;
+
+    // 3. Render Pet Assembly / Incubator Queue
+    let hasPets = false;
+    let petsHtml = `<div class="checklist-section" style="margin-top: 32px;">
+                        <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                            <span style="color: var(--accent-pet);">🐾 Pet & Divine Beast Incubator</span>
+                        </div>`;
+    pets.forEach(pet => {
+        const qty = quantities[pet.id] || 0;
+        if (qty > 0) hasPets = true;
+        for (let i = 0; i < qty; i++) {
+            const checkId = `craft_${pet.id}_${i}`;
+            const isChecked = checklistProgress[checkId] ? "completed" : "";
+            petsHtml += `
+                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${pet.name} ${qty > 1 ? `<span style="opacity:0.6; font-size:0.8rem;">(#${i+1})</span>` : ''}</div>
+                    <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
+                </div>`;
+        }
+    });
+    petsHtml += `</div>`;
+    if (hasPets) html += petsHtml;
 
     container.innerHTML = html;
+
+    // Apply auto-collapse on initial render for fully completed sections
+    container.querySelectorAll('.checklist-section').forEach(section => {
+        const checkItems = section.querySelectorAll('.check-item');
+        if (checkItems.length > 0) {
+            const allCompleted = Array.from(checkItems).every(item => item.classList.contains('completed'));
+            if (allCompleted) {
+                section.classList.add('collapsed');
+            }
+        }
+    });
 }
 
 function updateQty(id, change) {
@@ -835,12 +1009,14 @@ function resetQuantities() {
 function calculateTotals() {
     const matTotals = {};
     const taskDurations = [];
-    let totalFurnitureCount = 0;
+    let totalItemCount = 0;
 
-    items.forEach(item => {
+    const allCraftables = [...items, ...pets];
+
+    allCraftables.forEach(item => {
         const qty = quantities[item.id] || 0;
         if (qty > 0) {
-            totalFurnitureCount += qty;
+            totalItemCount += qty;
             Object.entries(item.mats).forEach(([mat, count]) => {
                 matTotals[mat] = (matTotals[mat] || 0) + (count * qty);
             });
@@ -873,7 +1049,7 @@ function calculateTotals() {
     }
 
     const totalParallelTime = calculateParallelTime(taskDurations, 4);
-    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${totalFurnitureCount} Furniture`;
+    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${totalItemCount} Items`;
 }
 
 function calculateParallelTime(durations, maxSlots) {
