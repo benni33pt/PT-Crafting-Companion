@@ -603,7 +603,7 @@ const items = [
     { id: "cheongsachorong", name: "Cheongsachorong Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Its gentle glow lights the way through the quiet night.", image: "Cheongsachorong Lantern.png" },
     { id: "latticework_lantern", name: "Traditional Latticework Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Made with traditional latticework and hanji paper.", image: "Traditional Latticework Lantern.png" },
     { id: "moon_pavilion", name: "Moon-Viewing Pavilion", timeMinutes: 230, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Stone": 10 }, lore: "Welcome the rising moon on a peaceful night.", image: "Moon-Viewing Pavilion.png" },
-    { id: "thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Someone's Nameplate": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight.", image: "Moonlit Thatched Cottage.png" },
+    { id: "moonlit_thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Ivory Cube": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight.", image: "Moonlit Thatched Cottage.png" },
     { id: "underworld_totem", name: "Female General of the Underworld Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Female General Totem (Material)": 1, "Health Charm": 5 }, lore: "It is said to govern the energy that flows beneath the earth.", image: "Female General of the Underworld Totem.png" },
     { id: "heaven_totem", name: "Great General of All Under Heaven Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Great General Totem (Material)": 1, "Health Charm": 5 }, lore: "Said to watch over the village and ward off evil spirits.", image: "Great General of All Under Heaven Totem.png" },
     { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 390, mats: { "Guardian Yeopjeon": 250, "Haechi Statue (Material)": 1, "Yeopjeon Knot Ornament": 5, "Someone's Nameplate": 3 }, lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi.", image: "Haechi Statue.png" },
@@ -623,6 +623,7 @@ const pets = [
 ];
 
 const glossary = [
+    { name: "Ivory Cube", source: "Furniture Shop", lore: "Let's stack the neat-looking cubes one by one." },
     { name: "Water", source: "Mega Mart", lore: "There's nothing like water to quench your thirst. Doesn't have any special abilities." },
     { name: "Someone's Nameplate", source: "(Excavation) Mysterious Jar", lore: "Beyond the weathered name, forgotten memories still linger." },
     { name: "Stone", source: "Mine", lore: "You can craft a variety of things with this. It's used to craft items." },
@@ -823,6 +824,8 @@ function toggleCheckItem(id, element) {
         element.classList.remove("completed");
     }
 
+    calculateTotals();
+
     // Auto-collapse section if everything is completed
     const section = element.closest('.checklist-section');
     if (section) {
@@ -830,9 +833,7 @@ function toggleCheckItem(id, element) {
         const allCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
         
         if (allCompleted) {
-            // Wait a brief moment so the user sees the checkmark apply before it hides
             setTimeout(() => {
-                // Verify they didn't quickly uncheck it during the timeout
                 const currentCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
                 if (currentCompleted) {
                     section.classList.add('collapsed');
@@ -871,6 +872,9 @@ function getCategoryForMaterial(matName) {
     }
     if (matName === "Normal Egg" || matName === "Premium Egg") {
         return "Pet Paradise";
+    }
+    if (matName === "Ivory Cube") {
+        return "Furniture Shop";
     }
     return "Other Materials";
 }
@@ -1008,28 +1012,46 @@ function resetQuantities() {
 
 function calculateTotals() {
     const matTotals = {};
+    const initialMatTotals = {};
     const taskDurations = [];
     let totalItemCount = 0;
+    let remainingItemCount = 0;
 
     const allCraftables = [...items, ...pets];
 
+    // 1. Calculate Target Totals & Time
     allCraftables.forEach(item => {
         const qty = quantities[item.id] || 0;
         if (qty > 0) {
             totalItemCount += qty;
+            
             Object.entries(item.mats).forEach(([mat, count]) => {
+                initialMatTotals[mat] = (initialMatTotals[mat] || 0) + (count * qty);
                 matTotals[mat] = (matTotals[mat] || 0) + (count * qty);
             });
+
             for (let i = 0; i < qty; i++) {
-                taskDurations.push(item.timeMinutes);
+                const craftCheckId = `craft_${item.id}_${i}`;
+                if (!checklistProgress[craftCheckId]) {
+                    taskDurations.push(item.timeMinutes);
+                    remainingItemCount++;
+                }
             }
+        }
+    });
+
+    // 2. Subtract Checked Off Raw Material Quantities
+    Object.keys(initialMatTotals).forEach(mat => {
+        const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
+        if (checklistProgress[matCheckId]) {
+            matTotals[mat] = 0;
         }
     });
 
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
-    const sortedMats = Object.entries(matTotals).sort((a, b) => b[1] - a[1]);
+    const sortedMats = Object.entries(initialMatTotals).sort((a, b) => b[1] - a[1]);
 
     if (sortedMats.length === 0) {
         matsGridEl.innerHTML = `
@@ -1038,18 +1060,25 @@ function calculateTotals() {
                 <span class="tile-count">0</span>
             </div>`;
     } else {
-        sortedMats.forEach(([mat, total]) => {
+        sortedMats.forEach(([mat, initialTotal]) => {
+            const currentReq = matTotals[mat] !== undefined ? matTotals[mat] : initialTotal;
             const tile = document.createElement("div");
             tile.className = "mat-tile";
+            
+            if (currentReq === 0) {
+                tile.style.opacity = "0.5";
+                tile.style.borderColor = "rgba(63, 53, 88, 0.4)";
+            }
+
             tile.innerHTML = `
                 <span class="tile-title">${mat}</span>
-                <span class="tile-count">${total.toLocaleString()}</span>`;
+                <span class="tile-count">${currentReq.toLocaleString()} <span style="font-size:0.75rem; color:#8e839e; font-weight:normal;">/ ${initialTotal.toLocaleString()}</span></span>`;
             matsGridEl.appendChild(tile);
         });
     }
 
     const totalParallelTime = calculateParallelTime(taskDurations, 4);
-    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${totalItemCount} Items`;
+    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${remainingItemCount} / ${totalItemCount} Items`;
 }
 
 function calculateParallelTime(durations, maxSlots) {
