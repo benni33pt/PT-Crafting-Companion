@@ -8,16 +8,18 @@
         :root {
             --bg-color: #1a1625;
             --card-bg: #282236;
-            --accent-gold: #e2b047;
-            --accent-purple: #7a52b3;
-            --accent-blue: #54b2db;
-            --accent-green: #48bb78;
+            --accent-purple: #3f3558;
             --text-light: #f0ecf7;
+            --accent-gold: #e2b047;
+            --accent-blue: #54b2db;
+            --accent-pet: #32a873; /* Jade Green for Pets */
             --border-radius: 12px;
-            --bar-height: 54px;
+            --bar-height: 60px;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -43,8 +45,10 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-
-        .nav-header::-webkit-scrollbar { display: none; }
+        
+        .nav-header::-webkit-scrollbar {
+            display: none;
+        }
 
         .tab-btn {
             background-color: var(--card-bg);
@@ -72,7 +76,9 @@
             padding: 16px;
         }
 
-        .tab-content.active { display: block; }
+        .tab-content.active {
+            display: block;
+        }
 
         h1 {
             text-align: center;
@@ -84,49 +90,39 @@
             letter-spacing: 0.5px;
         }
 
-        /* Sub Navigation Toggle */
+        /* Sub-Navigation Toggle for Calculator */
         .sub-nav {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 16px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .sub-btn {
-            background: var(--card-bg);
-            color: var(--text-light);
-            border: 1px solid var(--accent-purple);
+            background-color: var(--bg-color);
+            color: #8e839e;
+            border: 2px solid var(--accent-purple);
             padding: 6px 16px;
-            border-radius: 16px;
-            font-size: 0.85rem;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 0.9rem;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .sub-btn.active {
-            background: var(--accent-purple);
-            border-color: var(--accent-purple);
+        .sub-btn.active-furniture {
+            background-color: rgba(226, 176, 71, 0.15);
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
         }
 
-        /* Item Grid Layout */
-        .furniture-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 12px;
+        .sub-btn.active-pets {
+            background-color: rgba(50, 168, 115, 0.15);
+            color: var(--accent-pet);
+            border-color: var(--accent-pet);
         }
 
-        .item-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid #3d3450;
-        }
-
-        .item-card.pet-card { border-color: rgba(72, 187, 120, 0.4); }
-
+        /* Image Styling */
         .card-img-container {
             text-align: center;
             margin-bottom: 12px;
@@ -147,11 +143,37 @@
             object-fit: contain;
         }
 
+        /* Calculator Grid Layout */
+        .furniture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .item-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #3d3450;
+            transition: border-color 0.2s ease;
+        }
+
+        .item-card.pet-card {
+            border: 1px solid rgba(50, 168, 115, 0.4);
+        }
+
         .item-name {
             font-weight: bold;
             font-size: 0.95rem;
             color: #ffffff;
             margin-bottom: 4px;
+        }
+
+        .pet-card .item-name {
+            color: var(--accent-pet);
         }
 
         .item-time {
@@ -198,6 +220,7 @@
             font-size: 1rem;
         }
 
+        /* START PROJECT BUTTON */
         .generate-btn {
             display: block;
             width: 100%;
@@ -214,35 +237,42 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             box-shadow: 0 4px 12px rgba(226, 176, 71, 0.2);
+            transition: all 0.2s ease;
         }
 
-        /* CHECKLIST STYLING & COLLAPSIBLE SECTIONS */
+        .generate-btn:hover {
+            background: #d1a03c;
+        }
+
+        /* CHECKLIST STYLING */
         .checklist-section {
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             background: rgba(40, 34, 54, 0.4);
             padding: 12px;
             border-radius: var(--border-radius);
             border: 1px solid rgba(63, 53, 88, 0.5);
-            transition: all 0.3s ease;
         }
 
         .checklist-header {
             color: var(--accent-gold);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
             font-size: 1rem;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--accent-purple);
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
             user-select: none;
-            padding-bottom: 4px;
         }
 
         .checklist-header::after {
             content: "▼";
             font-size: 0.8rem;
+            color: var(--accent-gold);
             transition: transform 0.2s ease;
         }
 
@@ -250,13 +280,7 @@
             transform: rotate(-90deg);
         }
 
-        .checklist-content {
-            margin-top: 12px;
-            border-top: 2px solid var(--accent-purple);
-            padding-top: 12px;
-        }
-
-        .checklist-section.collapsed .checklist-content {
+        .checklist-section.collapsed .check-item {
             display: none;
         }
 
@@ -269,7 +293,12 @@
             border-radius: 8px;
             border: 1px solid #3d3450;
             cursor: pointer;
+            transition: all 0.2s ease;
             user-select: none;
+        }
+
+        .check-item:hover {
+            background: #322b44;
         }
 
         .check-item.completed {
@@ -293,6 +322,7 @@
             align-items: center;
             justify-content: center;
             background: var(--bg-color);
+            transition: all 0.2s ease;
         }
 
         .check-item.completed .checkbox {
@@ -312,6 +342,7 @@
             flex-grow: 1;
             font-weight: 500;
             color: var(--text-light);
+            transition: color 0.2s ease;
         }
 
         .check-qty {
@@ -323,8 +354,10 @@
             border-radius: 6px;
             margin-left: 12px;
         }
-
-        .check-item.completed .check-qty { opacity: 0.5; }
+        
+        .check-item.completed .check-qty {
+            opacity: 0.5;
+        }
 
         .empty-state {
             text-align: center;
@@ -336,7 +369,7 @@
             border: 1px dashed var(--accent-purple);
         }
 
-        /* FLOATING BOTTOM SHEET */
+        /* EXPANDABLE FLOATING BOTTOM SHEET */
         .bottom-sheet {
             position: fixed;
             bottom: 0;
@@ -352,7 +385,9 @@
             transform: translateY(calc(100% - var(--bar-height)));
         }
 
-        .bottom-sheet.open { transform: translateY(0); }
+        .bottom-sheet.open {
+            transform: translateY(0);
+        }
 
         .sheet-header {
             height: var(--bar-height);
@@ -436,10 +471,18 @@
             align-items: center;
         }
 
-        .tile-title { font-size: 0.75rem; color: #bfaecf; }
-        .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
+        .tile-title {
+            font-size: 0.75rem;
+            color: #bfaecf;
+        }
 
-        /* Index Grids */
+        .tile-count {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        /* Index & Glossary Grids */
         .index-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -453,10 +496,35 @@
             border: 1px solid #3d3450;
         }
 
-        .glossary-title { color: var(--accent-gold); font-size: 1rem; font-weight: bold; margin-bottom: 4px; }
-        .glossary-sub { font-size: 0.8rem; color: var(--accent-blue); margin-bottom: 8px; }
-        .glossary-lore { font-size: 0.8rem; color: #d0c8e0; font-style: italic; margin-bottom: 10px; line-height: 1.35; }
-        .glossary-source { font-size: 0.75rem; color: #bfaecf; background: rgba(63, 53, 88, 0.4); padding: 4px 8px; border-radius: 4px; display: inline-block; }
+        .glossary-title {
+            color: var(--accent-gold);
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .glossary-sub {
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .glossary-lore {
+            font-size: 0.8rem;
+            color: #d0c8e0;
+            font-style: italic;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .glossary-source {
+            font-size: 0.75rem;
+            color: #bfaecf;
+            background: rgba(63, 53, 88, 0.4);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -473,9 +541,10 @@
     <div id="calculatorTab" class="tab-content active">
         <h1>Gwidam Workshop Planner</h1>
         
+        <!-- Sub-Navigation Toggle -->
         <div class="sub-nav">
-            <button class="sub-btn active" id="btnCategoryFurniture" onclick="switchCategory('furniture')">Furniture</button>
-            <button class="sub-btn" id="btnCategoryPets" onclick="switchCategory('pets')">Pets</button>
+            <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
+            <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets & Divine Beasts</button>
         </div>
 
         <div class="furniture-grid" id="furnitureGrid"></div>
@@ -511,6 +580,7 @@
                 <span class="toggle-btn" id="toggleLabel">Materials ▲</span>
             </div>
         </div>
+
         <div class="sheet-body">
             <div class="sheet-action-row">
                 <span class="sheet-title">Required Materials</span>
@@ -525,383 +595,487 @@
         </div>
     </div>
 
-    <script>
-        // ITEMS DATA ARRAY
-        const items = [
-            { id: "traditional_jar", name: "Traditional Jar", timeMinutes: 3, mats: { "Clay": 3, "Water": 2 }, lore: "A sturdy clay jar crafted using age-old pottery methods.", image: "Traditional Jar.png", category: "furniture" },
-            { id: "wooden_stool", name: "Wooden Stool", timeMinutes: 5, mats: { "Wood": 4, "Nails": 2 }, lore: "Simple seating that brings rustic charm to any corner.", image: "Wooden Stool.png", category: "furniture" },
-            { id: "village_guardian_monument", name: "Village Guardian Monument", timeMinutes: 15, mats: { "Stone": 10, "Spirit Thread": 3 }, lore: "A stone carving placed to ward off malevolent spirits.", image: "Village Guardian Monument.png", category: "furniture" },
-            { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 30, mats: { "Stone": 20, "Gold Ore": 2, "Spirit Thread": 5 }, lore: "A mythical creature believed to protect from fire and disaster.", image: "Haechi Statue.png", category: "furniture" },
-            { id: "moonlight_hatched_cottage", name: "Moonlight Hatched Cottage", timeMinutes: 60, mats: { "Wood": 35, "Clay": 15, "Ivory Cube": 2, "Will-o'-the-Wisp": 3 }, lore: "A cozy cottage illuminated by gentle moonlight glows.", image: "Moonlight Hatched Cottage.png", category: "furniture" },
-            { id: "calico_cat", name: "Calico Cat", timeMinutes: 30, mats: { "Cat Food": 5, "Soft Fabric": 3, "Common Egg": 1 }, lore: "A friendly, tricolor feline companion.", image: "calico_cat.png", category: "pets" },
-            { id: "divine_beast", name: "Divine Beast", timeMinutes: 120, mats: { "Divine Beast Supplement": 1, "Divine Beast Egg": 1, "Spirit Thread": 10 }, lore: "A powerful mythical beast imbued with spiritual energy.", image: "divine_beast.png", category: "pets" }
-        ];
+<script>
+const items = [
+    { id: "traditional_jar", name: "Traditional Jar", timeMinutes: 30, mats: { "Guardian Yeopjeon": 40, "Stone": 10 }, lore: "Place it somewhere that gets plenty of sunshine.", image: "Traditional Jar.png" },
+    { id: "guardian_monument", name: "Village Guardian Monument", timeMinutes: 30, mats: { "Guardian Yeopjeon": 60, "Health Charm": 5, "Stone": 20 }, lore: "A guardian monument that has watched over the village for generations.", image: "Village Guardian Monument.png" },
+    { id: "mysterious_well", name: "Mysterious Well", timeMinutes: 80, mats: { "Guardian Yeopjeon": 60, "Eoduksini": 3, "Water": 10 }, lore: "Ancient secrets lie hidden deep within this well.", image: "Mysterious Well.png" },
+    { id: "cheongsachorong", name: "Cheongsachorong Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Its gentle glow lights the way through the quiet night.", image: "Cheongsachorong Lantern.png" },
+    { id: "latticework_lantern", name: "Traditional Latticework Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Made with traditional latticework and hanji paper.", image: "Traditional Latticework Lantern.png" },
+    { id: "moon_pavilion", name: "Moon-Viewing Pavilion", timeMinutes: 230, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Stone": 10 }, lore: "Welcome the rising moon on a peaceful night.", image: "Moon-Viewing Pavilion.png" },
+    { id: "thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Someone's Nameplate": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight.", image: "Moonlit Thatched Cottage.png" },
+    { id: "underworld_totem", name: "Female General of the Underworld Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Female General Totem (Material)": 1, "Health Charm": 5 }, lore: "It is said to govern the energy that flows beneath the earth.", image: "Female General of the Underworld Totem.png" },
+    { id: "heaven_totem", name: "Great General of All Under Heaven Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Great General Totem (Material)": 1, "Health Charm": 5 }, lore: "Said to watch over the village and ward off evil spirits.", image: "Great General of All Under Heaven Totem.png" },
+    { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 390, mats: { "Guardian Yeopjeon": 250, "Haechi Statue (Material)": 1, "Yeopjeon Knot Ornament": 5, "Someone's Nameplate": 3 }, lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi.", image: "Haechi Statue.png" },
+    { id: "market_stall", name: "Village Market Stall", timeMinutes: 360, mats: { "Guardian Yeopjeon": 200, "Will-o'-the-Wisp": 5, "Someone's Nameplate": 3 }, lore: "A simple market stall that fits perfectly in a cozy village marketplace.", image: "Village Market Stall.png" },
+    { id: "thatched_barn", name: "Thatched Barn", timeMinutes: 110, mats: { "Guardian Yeopjeon": 80, "Misfortune Doll": 5, "Tree Branch": 10 }, lore: "A cozy barn topped with warm straw.", image: "Thatched Barn.png" },
+    { id: "traditional_signboard", name: "Traditional Signboard", timeMinutes: 180, mats: { "Guardian Yeopjeon": 100, "Someone's Norigae": 10, "Misfortune Doll": 5 }, lore: "Leave a message for the village.", image: "Traditional Signboard.png" },
+    { id: "wooden_platform", name: "Peaceful Wooden Platform", timeMinutes: 40, mats: { "Guardian Yeopjeon": 40, "Tree Branch": 20 }, lore: "Take a break and enjoy the gentle breeze.", image: "Peaceful Wooden Platform.png" }
+];
 
-        // GLOSSARY DATA ARRAY
-        const glossary = [
-            { id: "clay", name: "Clay", category: "Excavation", source: "Excavation sites along riverbanks", lore: "Malleable earth used in ceramics and construction." },
-            { id: "water", name: "Water", category: "Gathering", source: "Wells and natural streams", lore: "Pure water required for crafting and mixing." },
-            { id: "wood", name: "Wood", category: "Gathering", source: "Trees in surrounding forests", lore: "Versatile lumber suitable for all types of furniture." },
-            { id: "nails", name: "Nails", category: "Mega Mart", source: "Purchased at Mega Mart", lore: "Iron fasteners required for woodworking." },
-            { id: "stone", name: "Stone", category: "Mining", source: "Quarries and rocky outcrops", lore: "Durable stone blocks for sturdy construction." },
-            { id: "spirit_thread", name: "Spirit Thread", category: "Events", source: "Special event quests and encounters", lore: "Ethereal thread woven with spiritual energy." },
-            { id: "gold_ore", name: "Gold Ore", category: "Mining", source: "Deep underground mining veins", lore: "Rare ore with a brilliant luster." },
-            { id: "ivory_cube", name: "Ivory Cube", category: "Furniture Shop", source: "Furniture Shop", lore: "A polished block of ivory used as a structural foundation for advanced dwellings." },
-            { id: "will_o_the_wisp", name: "Will-o'-the-Wisp", category: "Catching (Net)", source: "Captured during night hours using a net", lore: "A glowing orb of spiritual flame." },
-            { id: "cat_food", name: "Cat Food", category: "Mega Mart", source: "Purchased at Mega Mart", lore: "A tasty treat cats adore." },
-            { id: "soft_fabric", name: "Soft Fabric", category: "Gathering", source: "Woven from gathered plant fibers", lore: "Gentle cloth used for bedding and crafts." },
-            { id: "common_egg", name: "Common Egg", category: "Gathering", source: "Found in wild nests", lore: "A standard egg capable of hatching small creatures." },
-            { id: "divine_beast_supplement", name: "Divine Beast Supplement", category: "Mega Mart", source: "Purchased at Mega Mart", lore: "Nutritious formula required for mythical pets." },
-            { id: "divine_beast_egg", name: "Divine Beast Egg", category: "Events", source: "Rare drop during divine event quests", lore: "A radiant egg pulsating with ancient energy." }
-        ];
+const pets = [
+    { id: "divine_beast_supplement", name: "Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 50, "Misfortune Doll": 3, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 50.", image: "divine_beast_supplement.png" },
+    { id: "premium_divine_beast_supplement", name: "Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 100, "Will-o'-the-Wisp": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 200.", image: "premium_divine_beast_supplement.png" },
+    { id: "super_premium_divine_beast_supplement", name: "Super Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 150, "Eoduksini": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 700.", image: "super_premium_divine_beast_supplement.png" },
+    { id: "divine_beast_barrier_pet_fence", name: "Divine Beast Barrier Pet Fence", timeMinutes: 990, mats: { "Guardian Yeopjeon": 250, "Health Charm": 10, "Yeopjeon Knot Ornament": 20, "Stone": 1 }, lore: "A mystical barrier created to safeguard the divine beasts.", image: "divine_beast_barrier_pet_fence.png" },
+    { id: "divine_beast_egg_normal", name: "Divine Beast Egg (Normal)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 200, "Normal Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "divine_beast_egg.png" },
+    { id: "divine_beast_egg_premium", name: "Divine Beast Egg (Premium)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 100, "Premium Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "divine_beast_egg.png" }
+];
 
-        // STATE MANAGEMENT
-        let targetQuantities = JSON.parse(localStorage.getItem('gwidam_workshop_quantities')) || {};
-        let checklistState = JSON.parse(localStorage.getItem('gwidam_workshop_checklist')) || {};
-        let currentCategory = 'furniture';
+const glossary = [
+    { name: "Water", source: "Mega Mart", lore: "There's nothing like water to quench your thirst. Doesn't have any special abilities." },
+    { name: "Someone's Nameplate", source: "(Excavation) Mysterious Jar", lore: "Beyond the weathered name, forgotten memories still linger." },
+    { name: "Stone", source: "Mine", lore: "You can craft a variety of things with this. It's used to craft items." },
+    { name: "Cursed Scarecrow", source: "Gwidam Village All Areas All Day", lore: "Time of Appearance: Ghost Story Event Season" },
+    { name: "Eoduksini", source: "Gwidam Village Restricted Area All Day", lore: "Time of Appearance: Ghost Story Event Season" },
+    { name: "Yeopjeon Knot Ornament", source: "(Excavation) Mysterious Jar", lore: "Carefully woven strand by strand, as though each knot carries a wish for good fortune." },
+    { name: "Haechi Statue (Material)", source: "Excavation", lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi." },
+    { name: "Someone's Norigae", source: "(Excavation) Mysterious Jar", lore: "Its former brilliance has faded, but the signs of having been dearly cherished remain." },
+    { name: "Female General Totem (Material)", source: "Excavation", lore: "It is said to govern the energy that flows beneath the earth." },
+    { name: "Great General Totem (Material)", source: "Excavation", lore: "Said to watch over the village and ward off evil spirits." },
+    { name: "Health Charm", source: "(Excavation) Mysterious Jar", lore: "A charm filled with wishes for good health in both body and mind." },
+    { name: "Misfortune Doll", source: "(Excavation) Mysterious Jar", lore: "A doll that bears the traces of someone's wish to take away their misfortune." },
+    { name: "Will-o'-the-Wisp", source: "Gwidam Village Shrine All Day", lore: "Time of Appearance: Ghost Story Event Season" },
+    { name: "Tree Branch", source: "Gather", lore: "You can craft anything with this. It's used to craft items." },
+    { name: "Guardian Yeopjeon", source: "Event", lore: "Used at the Haechi Altar to pray for health and peace. Used in events." },
+    { name: "Normal Egg", source: "Pet Paradise (Star Currency)", lore: "A standard egg containing a potential pet companion." },
+    { name: "Premium Egg", source: "Pet Paradise (Gem / Paid Currency)", lore: "A premium egg containing higher-tier pet companion potential." }
+];
 
-        // SANITIZE STRINGS FOR SAFE DOM IDs
-        function sanitizeId(str) {
-            return str.replace(/[^a-zA-Z0-9]/g, '_');
-        }
+let quantities = {};
+let checklistProgress = {};
+let currentCategory = 'furniture'; // Tracks active sub-tab
 
-        // TAB NAVIGATION
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
-        }
+function loadSavedData() {
+    try {
+        const savedQuantities = localStorage.getItem("gwidam_workshop_quantities");
+        if (savedQuantities) quantities = JSON.parse(savedQuantities);
 
-        function switchCategory(cat) {
-            currentCategory = cat;
-            document.getElementById('btnCategoryFurniture').classList.toggle('active', cat === 'furniture');
-            document.getElementById('btnCategoryPets').classList.toggle('active', cat === 'pets');
-            renderGrid();
-        }
-
-        // RENDER CALCULATOR GRID
-        function renderGrid() {
-            const grid = document.getElementById('furnitureGrid');
-            grid.innerHTML = '';
-
-            const filteredItems = items.filter(i => (i.category || 'furniture') === currentCategory);
-
-            filteredItems.forEach(item => {
-                const qty = targetQuantities[item.id] || 0;
-                const matList = Object.entries(item.mats).map(([m, c]) => `${c} ${m}`).join(', ');
-
-                const card = document.createElement('div');
-                card.className = `item-card ${item.category === 'pets' ? 'pet-card' : ''}`;
-                card.innerHTML = `
-                    <div>
-                        <div class="card-img-container">
-                            <img src="${item.image}" class="item-preview-img" alt="${item.name}" onerror="this.src='placeholder.png'">
-                        </div>
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-time">⏱️ ${item.timeMinutes} mins</div>
-                        <div class="item-mats">Req: ${matList}</div>
-                    </div>
-                    <div class="controls">
-                        <button class="btn" onclick="updateQty('${item.id}', -1)">-</button>
-                        <input type="text" class="qty-input" value="${qty}" readonly>
-                        <button class="btn" onclick="updateQty('${item.id}', 1)">+</button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // QUANTITY CONTROLS
-        function updateQty(id, delta) {
-            targetQuantities[id] = Math.max(0, (targetQuantities[id] || 0) + delta);
-            if (targetQuantities[id] === 0) delete targetQuantities[id];
-            
-            localStorage.setItem('gwidam_workshop_quantities', JSON.stringify(targetQuantities));
-            renderGrid();
-            calculateTotals();
-        }
-
-        function resetQuantities() {
-            targetQuantities = {};
-            checklistState = {};
-            localStorage.removeItem('gwidam_workshop_quantities');
-            localStorage.removeItem('gwidam_workshop_checklist');
-            renderGrid();
-            calculateTotals();
+        const savedChecklist = localStorage.getItem("gwidam_workshop_checklist");
+        if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
+        
+        if (Object.values(quantities).some(q => q > 0)) {
             renderChecklist();
         }
+    } catch (e) {
+        quantities = {};
+        checklistProgress = {};
+    }
+}
 
-        // PARALLEL TIME CALCULATION (4 SLOTS)
-        function calculateParallelTime(durations, maxSlots = 4) {
-            if (durations.length === 0) return 0;
-            durations.sort((a, b) => b - a);
-            let slots = new Array(maxSlots).fill(0);
-            durations.forEach(d => {
-                let minIndex = slots.indexOf(Math.min(...slots));
-                slots[minIndex] += d;
-            });
-            return Math.max(...slots);
-        }
+function saveQuantities() {
+    try { localStorage.setItem("gwidam_workshop_quantities", JSON.stringify(quantities)); } catch (e) {}
+}
 
-        // CALCULATE TOTALS WITH DYNAMIC SUBTRACTION
-        function calculateTotals() {
-            let totalTargets = {};
-            let remainingMats = {};
-            let totalItems = 0;
-            let buildDurations = [];
+function saveChecklist() {
+    try { localStorage.setItem("gwidam_workshop_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
+}
 
-            // 1. Calculate base target requirements
-            for (const [id, qty] of Object.entries(targetQuantities)) {
-                const item = items.find(i => i.id === id);
-                if (!item || qty <= 0) continue;
+function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+    
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
 
-                totalItems += qty;
-                for (let i = 0; i < qty; i++) buildDurations.push(item.timeMinutes);
+    const sheet = document.getElementById('bottomSheet');
+    if (tabId === 'calculatorTab') {
+        sheet.style.display = 'block';
+        document.body.style.paddingBottom = 'calc(var(--bar-height) + 40px)';
+    } else {
+        sheet.style.display = 'none';
+        document.body.style.paddingBottom = '40px';
+    }
+}
 
-                for (const [mat, count] of Object.entries(item.mats)) {
-                    totalTargets[mat] = (totalTargets[mat] || 0) + (count * qty);
-                    remainingMats[mat] = (remainingMats[mat] || 0) + (count * qty);
-                }
-            }
+function switchCategory(category) {
+    currentCategory = category;
+    
+    // Update button styling
+    const furnBtn = document.getElementById('subTabFurniture');
+    const petsBtn = document.getElementById('subTabPets');
+    
+    if (category === 'furniture') {
+        furnBtn.classList.add('active-furniture');
+        petsBtn.classList.remove('active-pets');
+    } else {
+        furnBtn.classList.remove('active-furniture');
+        petsBtn.classList.add('active-pets');
+    }
+    
+    renderGrid();
+}
 
-            // 2. Subtract recipe costs for items checked off as completed
-            for (const [checkKey, isCompleted] of Object.entries(checklistState)) {
-                if (!isCompleted) continue;
-                
-                // Extract base item ID
-                const baseId = checkKey.substring(0, checkKey.lastIndexOf('_'));
-                const item = items.find(i => i.id === baseId);
+function toggleSheet() {
+    const sheet = document.getElementById('bottomSheet');
+    const label = document.getElementById('toggleLabel');
+    sheet.classList.toggle('open');
+    
+    if (sheet.classList.contains('open')) {
+        label.innerText = 'Hide ▼';
+    } else {
+        label.innerText = 'Materials ▲';
+    }
+}
 
-                // If it's a crafted item, subtract its recipe from the remaining materials
-                if (item) {
-                    for (const [mat, count] of Object.entries(item.mats)) {
-                        remainingMats[mat] = Math.max(0, (remainingMats[mat] || 0) - count);
-                    }
-                }
-            }
+function formatTime(minutes) {
+    const hrs = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (hrs === 0) return `${mins}m`;
+    if (mins === 0) return `${hrs}h`;
+    return `${hrs}h ${mins}m`;
+}
 
-            // Update UI elements
-            const totalMins = calculateParallelTime(buildDurations, 4);
-            const hrs = Math.floor(totalMins / 60);
-            const mins = totalMins % 60;
-            const timeStr = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
-            
-            document.getElementById('totalTimeDisplay').innerText = `⏱️ ${timeStr} | ${totalItems} Target Items`;
+function renderGrid() {
+    const grid = document.getElementById("furnitureGrid");
+    grid.innerHTML = "";
 
-            const matGrid = document.getElementById('materialsGrid');
-            matGrid.innerHTML = '';
+    const activeItems = currentCategory === 'furniture' ? items : pets;
 
-            if (Object.keys(totalTargets).length === 0) {
-                matGrid.innerHTML = `<div class="mat-tile"><span class="tile-title">Select Items</span><span class="tile-count">0</span></div>`;
-                return;
-            }
+    activeItems.forEach(item => {
+        quantities[item.id] = quantities[item.id] || 0;
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
+        
+        // Apply special jade green style to pet cards
+        const cardClass = currentCategory === 'pets' ? "item-card pet-card" : "item-card";
 
-            for (const [mat, targetCount] of Object.entries(totalTargets)) {
-                const currentCount = remainingMats[mat];
-                const tile = document.createElement('div');
-                tile.className = 'mat-tile';
-                tile.innerHTML = `
-                    <span class="tile-title">${mat}</span>
-                    <span class="tile-count" style="${currentCount === 0 ? 'color: #8e839e; text-decoration: line-through;' : ''}">${currentCount} / ${targetCount}</span>
-                `;
-                matGrid.appendChild(tile);
-            }
-        }
+        const card = document.createElement("div");
+        card.className = cardClass;
+        card.innerHTML = `
+            <div>
+                ${imgHtml}
+                <div class="item-name">${item.name}</div>
+                <div class="item-time">⏱️ ${formatTime(item.timeMinutes)}</div>
+                <div class="item-mats">${matString}</div>
+            </div>
+            <div class="controls">
+                <button class="btn" onclick="updateQty('${item.id}', -1)">-</button>
+                <input type="text" class="qty-input" value="${quantities[item.id]}" readonly>
+                <button class="btn" onclick="updateQty('${item.id}', 1)">+</button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
 
-        // GENERATE CHECKLIST
-        function generateChecklist() {
-            renderChecklist();
-            switchTab('checklistTab', document.getElementById('navChecklist'));
-        }
+function renderFurnitureIndex() {
+    const fGrid = document.getElementById("furnitureIndexGrid");
+    fGrid.innerHTML = "";
+    
+    // Combine both arrays for the complete index view
+    const allCraftables = [...items, ...pets];
+    
+    allCraftables.forEach(item => {
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
+            <div class="glossary-lore">"${item.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        fGrid.appendChild(card);
+    });
+}
 
-        // RENDER CHECKLIST WITH SPLIT QUEUES & AUTO-COLLAPSE
-        function renderChecklist() {
-            const container = document.getElementById('checklistContainer');
-            container.innerHTML = '';
+function renderIndex() {
+    const indexGrid = document.getElementById("indexGrid");
+    indexGrid.innerHTML = "";
+    glossary.forEach(mat => {
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            <div class="glossary-title">${mat.name}</div>
+            <div class="glossary-lore">"${mat.lore}"</div>
+            <div class="glossary-source">📍 Location: ${mat.source}</div>
+        `;
+        indexGrid.appendChild(card);
+    });
+}
 
-            let hasItems = false;
-            let categories = {};
+function generateChecklist() {
+    const hasItems = Object.values(quantities).some(q => q > 0);
+    if (!hasItems) {
+        alert("Please select at least one item in the calculator first!");
+        return;
+    }
+    
+    const navBtn = document.getElementById('navChecklist');
+    switchTab('checklistTab', navBtn);
+    renderChecklist();
+}
 
-            // Group materials into categories
-            for (const [id, qty] of Object.entries(targetQuantities)) {
-                const item = items.find(i => i.id === id);
-                if (!item || qty <= 0) continue;
-                hasItems = true;
+function toggleChecklistSection(element) {
+    element.parentElement.classList.toggle('collapsed');
+}
 
-                for (const [mat, count] of Object.entries(item.mats)) {
-                    const info = glossary.find(g => g.name === mat) || { category: "General" };
-                    const cat = info.category;
-                    if (!categories[cat]) categories[cat] = {};
-                    categories[cat][mat] = (categories[cat][mat] || 0) + (count * qty);
-                }
-            }
+function toggleCheckItem(id, element) {
+    checklistProgress[id] = !checklistProgress[id];
+    saveChecklist();
+    
+    if (checklistProgress[id]) {
+        element.classList.add("completed");
+    } else {
+        element.classList.remove("completed");
+    }
 
-            if (!hasItems) {
-                container.innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
-                return;
-            }
-
-            // 1. Render Material Gathering Categories
-            for (const [catName, mats] of Object.entries(categories)) {
-                const section = document.createElement('div');
-                section.className = 'checklist-section';
-                
-                let itemsHtml = '';
-                for (const [mat, qty] of Object.entries(mats)) {
-                    const checkId = `mat_${sanitizeId(mat)}`;
-                    const isChecked = checklistState[checkId] || false;
-                    itemsHtml += `
-                        <div class="check-item ${isChecked ? 'completed' : ''}" onclick="toggleCheck('${checkId}')">
-                            <div class="checkbox"></div>
-                            <span class="check-text">${mat}</span>
-                            <span class="check-qty">x${qty}</span>
-                        </div>
-                    `;
-                }
-
-                section.innerHTML = `
-                    <div class="checklist-header" onclick="toggleSection(this)">
-                        <span>${catName}</span>
-                    </div>
-                    <div class="checklist-content">${itemsHtml}</div>
-                `;
-                container.appendChild(section);
-            }
-
-            // 2. Render Furniture Assembly Queue
-            let furnitureHtml = '';
-            for (const [id, qty] of Object.entries(targetQuantities)) {
-                const item = items.find(i => i.id === id && (i.category || 'furniture') === 'furniture');
-                if (!item) continue;
-
-                for (let i = 1; i <= qty; i++) {
-                    const checkId = `${id}_${i}`;
-                    const isChecked = checklistState[checkId] || false;
-                    furnitureHtml += `
-                        <div class="check-item ${isChecked ? 'completed' : ''}" onclick="toggleCheck('${checkId}')">
-                            <div class="checkbox"></div>
-                            <span class="check-text">${item.name} #${i}</span>
-                            <span class="check-qty">⏱️ ${item.timeMinutes}m</span>
-                        </div>
-                    `;
-                }
-            }
-
-            if (furnitureHtml) {
-                const fSection = document.createElement('div');
-                fSection.className = 'checklist-section';
-                fSection.innerHTML = `
-                    <div class="checklist-header" onclick="toggleSection(this)">
-                        <span>Furniture Assembly</span>
-                    </div>
-                    <div class="checklist-content">${furnitureHtml}</div>
-                `;
-                container.appendChild(fSection);
-            }
-
-            // 3. Render Pet Hatching Queue
-            let petHtml = '';
-            for (const [id, qty] of Object.entries(targetQuantities)) {
-                const item = items.find(i => i.id === id && i.category === 'pets');
-                if (!item) continue;
-
-                for (let i = 1; i <= qty; i++) {
-                    const checkId = `${id}_${i}`;
-                    const isChecked = checklistState[checkId] || false;
-                    petHtml += `
-                        <div class="check-item ${isChecked ? 'completed' : ''}" onclick="toggleCheck('${checkId}')">
-                            <div class="checkbox"></div>
-                            <span class="check-text">${item.name} #${i}</span>
-                            <span class="check-qty">⏱️ ${item.timeMinutes}m</span>
-                        </div>
-                    `;
-                }
-            }
-
-            if (petHtml) {
-                const pSection = document.createElement('div');
-                pSection.className = 'checklist-section';
-                pSection.innerHTML = `
-                    <div class="checklist-header" onclick="toggleSection(this)">
-                        <span>Pet Hatching Queue</span>
-                    </div>
-                    <div class="checklist-content">${petHtml}</div>
-                `;
-                container.appendChild(pSection);
-            }
-        }
-
-        // TOGGLE CHECKBOX & AUTO-COLLAPSE
-        function toggleCheck(key) {
-            checklistState[key] = !checklistState[key];
-            localStorage.setItem('gwidam_workshop_checklist', JSON.stringify(checklistState));
-            
-            calculateTotals();
-            renderChecklist();
-
-            // Auto-collapse section if all items checked
+    // Auto-collapse section if everything is completed
+    const section = element.closest('.checklist-section');
+    if (section) {
+        const allItems = section.querySelectorAll('.check-item');
+        const allCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
+        
+        if (allCompleted) {
+            // Wait a brief moment so the user sees the checkmark apply before it hides
             setTimeout(() => {
-                document.querySelectorAll('.checklist-section').forEach(sec => {
-                    const allItems = sec.querySelectorAll('.check-item');
-                    const completedItems = sec.querySelectorAll('.check-item.completed');
-                    if (allItems.length > 0 && allItems.length === completedItems.length) {
-                        sec.classList.add('collapsed');
-                    }
-                });
-            }, 400);
+                // Verify they didn't quickly uncheck it during the timeout
+                const currentCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
+                if (currentCompleted) {
+                    section.classList.add('collapsed');
+                }
+            }, 400); 
         }
+    }
+}
 
-        function toggleSection(headerEl) {
-            headerEl.parentElement.classList.toggle('collapsed');
-        }
+// Activity Categorization Helper
+function getCategoryForMaterial(matName) {
+    const netItems = ["Cursed Scarecrow", "Eoduksini", "Will-o'-the-Wisp"];
+    const excavationItems = [
+        "Someone's Nameplate", "Yeopjeon Knot Ornament", "Haechi Statue (Material)", 
+        "Someone's Norigae", "Female General Totem (Material)", "Great General Totem (Material)", 
+        "Health Charm", "Misfortune Doll"
+    ];
 
-        // BOTTOM SHEET TOGGLE
-        function toggleSheet() {
-            const sheet = document.getElementById('bottomSheet');
-            const label = document.getElementById('toggleLabel');
-            sheet.classList.toggle('open');
-            label.innerText = sheet.classList.contains('open') ? 'Materials ▼' : 'Materials ▲';
-        }
+    if (netItems.includes(matName)) {
+        return "Catching (Net)";
+    }
+    if (excavationItems.includes(matName)) {
+        return "Excavation";
+    }
+    if (matName === "Tree Branch") {
+        return "Gathering";
+    }
+    if (matName === "Stone") {
+        return "Mining";
+    }
+    if (matName === "Water") {
+        return "Mega Mart";
+    }
+    if (matName === "Guardian Yeopjeon") {
+        return "Events";
+    }
+    if (matName === "Normal Egg" || matName === "Premium Egg") {
+        return "Pet Paradise";
+    }
+    return "Other Materials";
+}
 
-        // RENDER FURNITURE & MATERIAL INDEXES
-        function renderIndexes() {
-            const fGrid = document.getElementById('furnitureIndexGrid');
-            fGrid.innerHTML = '';
-            items.forEach(item => {
-                const matList = Object.entries(item.mats).map(([m, c]) => `${c} ${m}`).join(', ');
-                fGrid.innerHTML += `
-                    <div class="glossary-card">
-                        <div class="card-img-container">
-                            <img src="${item.image}" class="index-preview-img" alt="${item.name}" onerror="this.src='placeholder.png'">
-                        </div>
-                        <div class="glossary-title">${item.name}</div>
-                        <div class="glossary-sub">Base Time: ${item.timeMinutes} mins</div>
-                        <div class="glossary-lore">"${item.lore}"</div>
-                        <div class="glossary-source">Recipe: ${matList}</div>
-                    </div>
-                `;
+function renderChecklist() {
+    const container = document.getElementById("checklistContainer");
+    const matTotals = {};
+    let hasItems = false;
+    
+    const allCraftables = [...items, ...pets];
+
+    allCraftables.forEach(item => {
+        const qty = quantities[item.id] || 0;
+        if (qty > 0) {
+            hasItems = true;
+            Object.entries(item.mats).forEach(([mat, count]) => {
+                matTotals[mat] = (matTotals[mat] || 0) + (count * qty);
             });
-
-            const mGrid = document.getElementById('indexGrid');
-            mGrid.innerHTML = '';
-            glossary.forEach(mat => {
-                mGrid.innerHTML += `
-                    <div class="glossary-card">
-                        <div class="glossary-title">${mat.name}</div>
-                        <div class="glossary-sub">Category: ${mat.category}</div>
-                        <div class="glossary-lore">"${mat.lore}"</div>
-                        <div class="glossary-source">📍 Source: ${mat.source}</div>
-                    </div>
-                `;
-            });
         }
+    });
 
-        // INITIALIZE APP
-        renderGrid();
-        calculateTotals();
-        renderChecklist();
-        renderIndexes();
-    </script>
+    if (!hasItems) {
+        container.innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
+        return;
+    }
+
+    const groupedMats = {};
+    Object.entries(matTotals).forEach(([mat, total]) => {
+        const category = getCategoryForMaterial(mat);
+        if (!groupedMats[category]) groupedMats[category] = [];
+        groupedMats[category].push({ name: mat, total });
+    });
+
+    let html = ``;
+
+    // 1. Render Material Categories
+    for (const [category, mats] of Object.entries(groupedMats)) {
+        html += `<div class="checklist-section">
+                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                        <span>📌 ${category}</span>
+                    </div>`;
+        mats.forEach(m => {
+            const checkId = `mat_${m.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
+            const isChecked = checklistProgress[checkId] ? "completed" : "";
+            html += `
+                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${m.name}</div>
+                    <div class="check-qty">x${m.total.toLocaleString()}</div>
+                </div>`;
+        });
+        html += `</div>`;
+    }
+
+    // 2. Render Furniture Assembly Queue
+    let hasFurniture = false;
+    let furnitureHtml = `<div class="checklist-section" style="margin-top: 32px;">
+                            <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                                <span>🔨 Furniture Assembly</span>
+                            </div>`;
+    items.forEach(item => {
+        const qty = quantities[item.id] || 0;
+        if (qty > 0) hasFurniture = true;
+        for (let i = 0; i < qty; i++) {
+            const checkId = `craft_${item.id}_${i}`;
+            const isChecked = checklistProgress[checkId] ? "completed" : "";
+            furnitureHtml += `
+                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${item.name} ${qty > 1 ? `<span style="opacity:0.6; font-size:0.8rem;">(#${i+1})</span>` : ''}</div>
+                    <div class="check-qty" style="background: rgba(226, 176, 71, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                </div>`;
+        }
+    });
+    furnitureHtml += `</div>`;
+    if (hasFurniture) html += furnitureHtml;
+
+    // 3. Render Pet Assembly / Incubator Queue
+    let hasPets = false;
+    let petsHtml = `<div class="checklist-section" style="margin-top: 32px;">
+                        <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                            <span style="color: var(--accent-pet);">🐾 Pet & Divine Beast Incubator</span>
+                        </div>`;
+    pets.forEach(pet => {
+        const qty = quantities[pet.id] || 0;
+        if (qty > 0) hasPets = true;
+        for (let i = 0; i < qty; i++) {
+            const checkId = `craft_${pet.id}_${i}`;
+            const isChecked = checklistProgress[checkId] ? "completed" : "";
+            petsHtml += `
+                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${pet.name} ${qty > 1 ? `<span style="opacity:0.6; font-size:0.8rem;">(#${i+1})</span>` : ''}</div>
+                    <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
+                </div>`;
+        }
+    });
+    petsHtml += `</div>`;
+    if (hasPets) html += petsHtml;
+
+    container.innerHTML = html;
+
+    // Apply auto-collapse on initial render for fully completed sections
+    container.querySelectorAll('.checklist-section').forEach(section => {
+        const checkItems = section.querySelectorAll('.check-item');
+        if (checkItems.length > 0) {
+            const allCompleted = Array.from(checkItems).every(item => item.classList.contains('completed'));
+            if (allCompleted) {
+                section.classList.add('collapsed');
+            }
+        }
+    });
+}
+
+function updateQty(id, change) {
+    quantities[id] = Math.max(0, (quantities[id] || 0) + change);
+    saveQuantities();
+    renderGrid();
+    calculateTotals();
+    
+    if (Object.values(quantities).some(q => q > 0)) {
+        renderChecklist(); 
+    }
+}
+
+function resetQuantities() {
+    Object.keys(quantities).forEach(id => quantities[id] = 0);
+    checklistProgress = {};
+    saveQuantities();
+    saveChecklist();
+    renderGrid();
+    calculateTotals();
+    renderChecklist();
+}
+
+function calculateTotals() {
+    const matTotals = {};
+    const taskDurations = [];
+    let totalItemCount = 0;
+
+    const allCraftables = [...items, ...pets];
+
+    allCraftables.forEach(item => {
+        const qty = quantities[item.id] || 0;
+        if (qty > 0) {
+            totalItemCount += qty;
+            Object.entries(item.mats).forEach(([mat, count]) => {
+                matTotals[mat] = (matTotals[mat] || 0) + (count * qty);
+            });
+            for (let i = 0; i < qty; i++) {
+                taskDurations.push(item.timeMinutes);
+            }
+        }
+    });
+
+    const matsGridEl = document.getElementById("materialsGrid");
+    matsGridEl.innerHTML = "";
+
+    const sortedMats = Object.entries(matTotals).sort((a, b) => b[1] - a[1]);
+
+    if (sortedMats.length === 0) {
+        matsGridEl.innerHTML = `
+            <div class="mat-tile">
+                <span class="tile-title">Select Items</span>
+                <span class="tile-count">0</span>
+            </div>`;
+    } else {
+        sortedMats.forEach(([mat, total]) => {
+            const tile = document.createElement("div");
+            tile.className = "mat-tile";
+            tile.innerHTML = `
+                <span class="tile-title">${mat}</span>
+                <span class="tile-count">${total.toLocaleString()}</span>`;
+            matsGridEl.appendChild(tile);
+        });
+    }
+
+    const totalParallelTime = calculateParallelTime(taskDurations, 4);
+    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${totalItemCount} Items`;
+}
+
+function calculateParallelTime(durations, maxSlots) {
+    if (durations.length === 0) return 0;
+    durations.sort((a, b) => b - a);
+    const slots = new Array(maxSlots).fill(0);
+
+    durations.forEach(duration => {
+        let earliestSlot = 0;
+        for (let i = 1; i < maxSlots; i++) {
+            if (slots[i] < slots[earliestSlot]) {
+                earliestSlot = i;
+            }
+        }
+        slots[earliestSlot] += duration;
+    });
+
+    return Math.max(...slots);
+}
+
+loadSavedData();
+renderGrid();
+renderFurnitureIndex();
+renderIndex();
+calculateTotals();
+</script>
+
 </body>
 </html>
