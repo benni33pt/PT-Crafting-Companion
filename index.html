@@ -280,8 +280,10 @@
             transform: rotate(-90deg);
         }
 
-        .checklist-section.collapsed .check-item {
-            display: none;
+        .checklist-section.collapsed .check-item,
+        .checklist-section.collapsed .completed-toggle,
+        .checklist-section.collapsed .completed-container {
+            display: none !important;
         }
 
         .check-item {
@@ -357,6 +359,25 @@
         
         .check-item.completed .check-qty {
             opacity: 0.5;
+        }
+        
+        /* Show/Hide Completed Section */
+        .completed-toggle {
+            font-size: 0.85rem;
+            color: #8e839e;
+            text-align: center;
+            margin: 12px 0 8px;
+            padding: 8px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            user-select: none;
+            transition: color 0.2s, background 0.2s;
+        }
+        
+        .completed-toggle:hover {
+            color: var(--accent-gold);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .empty-state {
@@ -644,28 +665,38 @@ const glossary = [
 ];
 
 let quantities = {};
+let completedCrafts = {};
 let checklistProgress = {};
-let currentCategory = 'furniture'; // Tracks active sub-tab
+let showCompleted = { furniture: false, pets: false };
+let currentCategory = 'furniture'; 
 
 function loadSavedData() {
     try {
         const savedQuantities = localStorage.getItem("gwidam_workshop_quantities");
         if (savedQuantities) quantities = JSON.parse(savedQuantities);
+        
+        const savedCompleted = localStorage.getItem("gwidam_workshop_completed");
+        if (savedCompleted) completedCrafts = JSON.parse(savedCompleted);
 
         const savedChecklist = localStorage.getItem("gwidam_workshop_checklist");
         if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
         
-        if (Object.values(quantities).some(q => q > 0)) {
+        if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
             renderChecklist();
         }
     } catch (e) {
         quantities = {};
+        completedCrafts = {};
         checklistProgress = {};
     }
 }
 
 function saveQuantities() {
     try { localStorage.setItem("gwidam_workshop_quantities", JSON.stringify(quantities)); } catch (e) {}
+}
+
+function saveCompleted() {
+    try { localStorage.setItem("gwidam_workshop_completed", JSON.stringify(completedCrafts)); } catch (e) {}
 }
 
 function saveChecklist() {
@@ -692,7 +723,6 @@ function switchTab(tabId, btn) {
 function switchCategory(category) {
     currentCategory = category;
     
-    // Update button styling
     const furnBtn = document.getElementById('subTabFurniture');
     const petsBtn = document.getElementById('subTabPets');
     
@@ -738,7 +768,6 @@ function renderGrid() {
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
         
-        // Apply special jade green style to pet cards
         const cardClass = currentCategory === 'pets' ? "item-card pet-card" : "item-card";
 
         const card = document.createElement("div");
@@ -764,7 +793,6 @@ function renderFurnitureIndex() {
     const fGrid = document.getElementById("furnitureIndexGrid");
     fGrid.innerHTML = "";
     
-    // Combine both arrays for the complete index view
     const allCraftables = [...items, ...pets];
     
     allCraftables.forEach(item => {
@@ -800,7 +828,8 @@ function renderIndex() {
 
 function generateChecklist() {
     const hasItems = Object.values(quantities).some(q => q > 0);
-    if (!hasItems) {
+    const hasCompleted = Object.values(completedCrafts).some(q => q > 0);
+    if (!hasItems && !hasCompleted) {
         alert("Please select at least one item in the calculator first!");
         return;
     }
@@ -815,6 +844,7 @@ function toggleChecklistSection(element) {
     element.parentElement.classList.toggle('collapsed');
 }
 
+// Toggle for Material Shopping List only
 function toggleCheckItem(id, element) {
     checklistProgress[id] = !checklistProgress[id];
     saveChecklist();
@@ -824,27 +854,40 @@ function toggleCheckItem(id, element) {
     } else {
         element.classList.remove("completed");
     }
-
     calculateTotals();
+}
 
-    // Auto-collapse section if everything is completed
-    const section = element.closest('.checklist-section');
-    if (section) {
-        const allItems = section.querySelectorAll('.check-item');
-        const allCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
-        
-        if (allCompleted) {
-            setTimeout(() => {
-                const currentCompleted = Array.from(allItems).every(item => item.classList.contains('completed'));
-                if (currentCompleted) {
-                    section.classList.add('collapsed');
-                }
-            }, 400); 
-        }
+// Complete an Active Craft -> subtracts from goal, adds to completed
+function completeCraft(itemId) {
+    if (quantities[itemId] > 0) {
+        quantities[itemId]--;
+        completedCrafts[itemId] = (completedCrafts[itemId] || 0) + 1;
+        saveQuantities();
+        saveCompleted();
+        renderGrid();
+        renderChecklist();
+        calculateTotals();
     }
 }
 
-// Activity Categorization Helper
+// Undo a Completed Craft -> adds to goal, subtracts from completed
+function undoCraft(itemId) {
+    if (completedCrafts[itemId] > 0) {
+        completedCrafts[itemId]--;
+        quantities[itemId]++;
+        saveQuantities();
+        saveCompleted();
+        renderGrid();
+        renderChecklist();
+        calculateTotals();
+    }
+}
+
+function toggleCompletedVisibility(type) {
+    showCompleted[type] = !showCompleted[type];
+    renderChecklist();
+}
+
 function getCategoryForMaterial(matName) {
     const netItems = ["Cursed Scarecrow", "Eoduksini", "Will-o'-the-Wisp"];
     const excavationItems = [
@@ -883,21 +926,27 @@ function getCategoryForMaterial(matName) {
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
     const matTotals = {};
-    let hasItems = false;
+    let hasActiveOrCompletedItems = false;
     
     const allCraftables = [...items, ...pets];
 
+    // Compute Mats Based purely on Active Quantities (Target Goals)
     allCraftables.forEach(item => {
-        const qty = quantities[item.id] || 0;
-        if (qty > 0) {
-            hasItems = true;
+        const activeQty = quantities[item.id] || 0;
+        const completedQty = completedCrafts[item.id] || 0;
+        
+        if (activeQty > 0 || completedQty > 0) {
+            hasActiveOrCompletedItems = true;
+        }
+
+        if (activeQty > 0) {
             Object.entries(item.mats).forEach(([mat, count]) => {
-                matTotals[mat] = (matTotals[mat] || 0) + (count * qty);
+                matTotals[mat] = (matTotals[mat] || 0) + (count * activeQty);
             });
         }
     });
 
-    if (!hasItems) {
+    if (!hasActiveOrCompletedItems) {
         container.innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
         return;
     }
@@ -930,58 +979,109 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    // 2. Render Furniture Assembly Queue
+    // 2. Render Furniture Assembly Queue & Completed
     let hasFurniture = false;
-    let furnitureHtml = `<div class="checklist-section" style="margin-top: 32px;">
-                            <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                                <span>🔨 Furniture Assembly</span>
-                            </div>`;
+    let hasCompletedFurniture = false;
+    let furnitureActiveHtml = ``;
+    let furnitureCompletedHtml = ``;
+
     items.forEach(item => {
         const qty = quantities[item.id] || 0;
         if (qty > 0) hasFurniture = true;
         for (let i = 0; i < qty; i++) {
-            const checkId = `craft_${item.id}_${i}`;
-            const isChecked = checklistProgress[checkId] ? "completed" : "";
-            furnitureHtml += `
-                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+            furnitureActiveHtml += `
+                <div class="check-item" onclick="completeCraft('${item.id}')">
                     <div class="checkbox"></div>
-                    <div class="check-text">${item.name} ${qty > 1 ? `<span style="opacity:0.6; font-size:0.8rem;">(#${i+1})</span>` : ''}</div>
+                    <div class="check-text">${item.name}</div>
+                    <div class="check-qty" style="background: rgba(226, 176, 71, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                </div>`;
+        }
+        
+        const compQty = completedCrafts[item.id] || 0;
+        if (compQty > 0) hasCompletedFurniture = true;
+        for (let i = 0; i < compQty; i++) {
+            furnitureCompletedHtml += `
+                <div class="check-item completed" onclick="undoCraft('${item.id}')">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${item.name}</div>
                     <div class="check-qty" style="background: rgba(226, 176, 71, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
                 </div>`;
         }
     });
-    furnitureHtml += `</div>`;
-    if (hasFurniture) html += furnitureHtml;
 
-    // 3. Render Pet Assembly / Incubator Queue
+    if (hasFurniture || hasCompletedFurniture) {
+        html += `<div class="checklist-section" style="margin-top: 32px;">
+                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                        <span>🔨 Furniture Assembly</span>
+                    </div>
+                    ${furnitureActiveHtml}`;
+                    
+        if (hasCompletedFurniture) {
+            html += `<div class="completed-toggle" onclick="toggleCompletedVisibility('furniture')">
+                        ${showCompleted.furniture ? 'Hide' : 'Show'} Completed Furniture
+                     </div>
+                     <div class="completed-container" style="display: ${showCompleted.furniture ? 'block' : 'none'};">
+                        ${furnitureCompletedHtml}
+                     </div>`;
+        }
+        html += `</div>`;
+    }
+
+    // 3. Render Pet Assembly / Incubator Queue & Completed
     let hasPets = false;
-    let petsHtml = `<div class="checklist-section" style="margin-top: 32px;">
-                        <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                            <span style="color: var(--accent-pet);">🐾 Pet & Divine Beast Incubator</span>
-                        </div>`;
+    let hasCompletedPets = false;
+    let petsActiveHtml = ``;
+    let petsCompletedHtml = ``;
+
     pets.forEach(pet => {
         const qty = quantities[pet.id] || 0;
         if (qty > 0) hasPets = true;
         for (let i = 0; i < qty; i++) {
-            const checkId = `craft_${pet.id}_${i}`;
-            const isChecked = checklistProgress[checkId] ? "completed" : "";
-            petsHtml += `
-                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+            petsActiveHtml += `
+                <div class="check-item" onclick="completeCraft('${pet.id}')">
                     <div class="checkbox"></div>
-                    <div class="check-text">${pet.name} ${qty > 1 ? `<span style="opacity:0.6; font-size:0.8rem;">(#${i+1})</span>` : ''}</div>
+                    <div class="check-text">${pet.name}</div>
+                    <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
+                </div>`;
+        }
+        
+        const compQty = completedCrafts[pet.id] || 0;
+        if (compQty > 0) hasCompletedPets = true;
+        for (let i = 0; i < compQty; i++) {
+            petsCompletedHtml += `
+                <div class="check-item completed" onclick="undoCraft('${pet.id}')">
+                    <div class="checkbox"></div>
+                    <div class="check-text">${pet.name}</div>
                     <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
                 </div>`;
         }
     });
-    petsHtml += `</div>`;
-    if (hasPets) html += petsHtml;
+
+    if (hasPets || hasCompletedPets) {
+        html += `<div class="checklist-section" style="margin-top: 32px;">
+                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                        <span style="color: var(--accent-pet);">🐾 Pet & Divine Beast Incubator</span>
+                    </div>
+                    ${petsActiveHtml}`;
+                    
+        if (hasCompletedPets) {
+            html += `<div class="completed-toggle" onclick="toggleCompletedVisibility('pets')">
+                        ${showCompleted.pets ? 'Hide' : 'Show'} Completed Pets & Beasts
+                     </div>
+                     <div class="completed-container" style="display: ${showCompleted.pets ? 'block' : 'none'};">
+                        ${petsCompletedHtml}
+                     </div>`;
+        }
+        html += `</div>`;
+    }
 
     container.innerHTML = html;
 
-    // Apply auto-collapse on initial render for fully completed sections
+    // Apply auto-collapse for fully completed material sections on initial render
     container.querySelectorAll('.checklist-section').forEach(section => {
         const checkItems = section.querySelectorAll('.check-item');
-        if (checkItems.length > 0) {
+        // Only trigger this logic on material sections (no nested complete-container logic here)
+        if (checkItems.length > 0 && !section.querySelector('.completed-toggle')) {
             const allCompleted = Array.from(checkItems).every(item => item.classList.contains('completed'));
             if (allCompleted) {
                 section.classList.add('collapsed');
@@ -995,7 +1095,7 @@ function updateQty(id, change) {
     saveQuantities();
     renderGrid();
     
-    if (Object.values(quantities).some(q => q > 0)) {
+    if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
         renderChecklist(); 
     } else {
         document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
@@ -1006,9 +1106,14 @@ function updateQty(id, change) {
 
 function resetQuantities() {
     Object.keys(quantities).forEach(id => quantities[id] = 0);
+    Object.keys(completedCrafts).forEach(id => completedCrafts[id] = 0);
     checklistProgress = {};
+    showCompleted = { furniture: false, pets: false };
+    
     saveQuantities();
+    saveCompleted();
     saveChecklist();
+    
     renderGrid();
     renderChecklist();
     calculateTotals();
@@ -1016,41 +1121,29 @@ function resetQuantities() {
 
 function calculateTotals() {
     const matTotals = {};
-    const initialMatTotals = {};
     const taskDurations = [];
-    let totalItemCount = 0;
-    let remainingItemCount = 0;
+    let activeItemCount = 0;
 
     const allCraftables = [...items, ...pets];
 
-    // 1. Calculate Target Totals, Subtract Checked Crafts, & Track Remaining Time
+    // Compute active requirements directly off the dynamic quantity state
     allCraftables.forEach(item => {
-        const qty = quantities[item.id] || 0;
-        if (qty > 0) {
-            totalItemCount += qty;
+        const activeQty = quantities[item.id] || 0;
+        if (activeQty > 0) {
+            activeItemCount += activeQty;
             
             Object.entries(item.mats).forEach(([mat, count]) => {
-                initialMatTotals[mat] = (initialMatTotals[mat] || 0) + (count * qty);
-                matTotals[mat] = (matTotals[mat] || 0) + (count * qty);
+                matTotals[mat] = (matTotals[mat] || 0) + (count * activeQty);
             });
 
-            for (let i = 0; i < qty; i++) {
-                const craftCheckId = `craft_${item.id}_${i}`;
-                if (checklistProgress[craftCheckId]) {
-                    // Item completed in assembly queue -> subtract its individual mat costs
-                    Object.entries(item.mats).forEach(([mat, count]) => {
-                        matTotals[mat] = Math.max(0, (matTotals[mat] || 0) - count);
-                    });
-                } else {
-                    taskDurations.push(item.timeMinutes);
-                    remainingItemCount++;
-                }
+            for (let i = 0; i < activeQty; i++) {
+                taskDurations.push(item.timeMinutes);
             }
         }
     });
 
-    // 2. Subtract Raw Materials Checked Off in Shopping List
-    Object.keys(initialMatTotals).forEach(mat => {
+    // Zero out raw materials physically checked off on the checklist tab
+    Object.keys(matTotals).forEach(mat => {
         const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
         if (checklistProgress[matCheckId]) {
             matTotals[mat] = 0;
@@ -1060,7 +1153,7 @@ function calculateTotals() {
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
-    const sortedMats = Object.entries(initialMatTotals).sort((a, b) => b[1] - a[1]);
+    const sortedMats = Object.entries(matTotals).sort((a, b) => b[1] - a[1]);
 
     if (sortedMats.length === 0) {
         matsGridEl.innerHTML = `
@@ -1069,10 +1162,7 @@ function calculateTotals() {
                 <span class="tile-count">0</span>
             </div>`;
     } else {
-        sortedMats.forEach(([mat, initialTotal]) => {
-            const currentReq = matTotals[mat] !== undefined ? matTotals[mat] : initialTotal;
-            
-            // Build Bottom Sheet Tile
+        sortedMats.forEach(([mat, currentReq]) => {
             const tile = document.createElement("div");
             tile.className = "mat-tile";
             
@@ -1081,22 +1171,23 @@ function calculateTotals() {
                 tile.style.borderColor = "rgba(63, 53, 88, 0.4)";
             }
 
+            // Raw Total display only, zero fractions
             tile.innerHTML = `
                 <span class="tile-title">${mat}</span>
-                <span class="tile-count">${currentReq.toLocaleString()} <span style="font-size:0.75rem; color:#8e839e; font-weight:normal;">/ ${initialTotal.toLocaleString()}</span></span>`;
+                <span class="tile-count">${currentReq.toLocaleString()}</span>`;
             matsGridEl.appendChild(tile);
 
-            // Dynamically Sync the DOM Elements on the Checklist Page (so both update together)
+            // Sync the rendered Checklist UI text for the materials
             const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const checklistQtyEl = document.getElementById(`qty_${matCheckId}`);
             if (checklistQtyEl) {
-                checklistQtyEl.innerHTML = `x${currentReq.toLocaleString()} <span style="font-size:0.75rem; font-weight:normal; opacity:0.6;">/ ${initialTotal.toLocaleString()}</span>`;
+                checklistQtyEl.innerHTML = `x${currentReq.toLocaleString()}`;
             }
         });
     }
 
     const totalParallelTime = calculateParallelTime(taskDurations, 4);
-    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${remainingItemCount} / ${totalItemCount} Items`;
+    document.getElementById("totalTimeDisplay").innerText = `⏱️ ${formatTime(totalParallelTime)} | ${activeItemCount} Active Items`;
 }
 
 function calculateParallelTime(durations, maxSlots) {
