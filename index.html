@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gwidam Village Workshop Companion</title>
+    <title>PlayTogether Workshop Companion</title>
     <style>
         :root {
-            --bg-color: #1a1625;
-            --card-bg: #282236;
-            --accent-purple: #3f3558;
-            --text-light: #f0ecf7;
-            --accent-gold: #e2b047;
-            --accent-blue: #54b2db;
-            --accent-pet: #32a873; /* Jade Green for Pets */
+            --bg-color: #0A0A0A;
+            --card-bg: #1A1A1A;
+            --accent-purple: #2D2638; /* Kept variable name for engine compatibility, updated to charcoal */
+            --text-light: #F4F4F5;
+            --accent-gold: #E8C340;
+            --accent-blue: #17B2B2; /* Swapped to Nile Teal for time badges */
+            --accent-pet: #32a873; 
             --border-radius: 12px;
             --bar-height: 60px;
         }
@@ -30,30 +30,57 @@
             padding-bottom: calc(var(--bar-height) + 40px);
         }
 
-        /* Top Navigation Tabs */
+        /* STICKY HEADER & NAV */
         .nav-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: var(--bg-color);
-            border-bottom: 2px solid var(--accent-purple);
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid var(--accent-gold);
             display: flex;
-            justify-content: flex-start;
+            align-items: center;
             padding: 10px 12px;
+            gap: 12px;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        .home-btn {
+            background-color: var(--accent-gold);
+            color: #0A0A0A;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: none; /* Only shown in archives */
+            white-space: nowrap;
+        }
+
+        .tab-btn-container {
+            display: flex;
             gap: 8px;
             overflow-x: auto;
-            -ms-overflow-style: none;
             scrollbar-width: none;
         }
         
-        .nav-header::-webkit-scrollbar {
+        .tab-btn-container::-webkit-scrollbar {
             display: none;
         }
 
         .tab-btn {
             background-color: var(--card-bg);
             color: var(--text-light);
-            border: 1px solid var(--accent-purple);
+            border: 1px solid var(--accent-gold);
             padding: 8px 14px;
             border-radius: 20px;
             font-weight: bold;
@@ -65,8 +92,7 @@
 
         .tab-btn.active {
             background-color: var(--accent-gold);
-            color: #1a1625;
-            border-color: var(--accent-gold);
+            color: #0A0A0A;
         }
 
         .tab-content {
@@ -80,591 +106,322 @@
             display: block;
         }
 
-        h1 {
-            text-align: center;
-            color: var(--accent-gold);
-            font-size: 1.3rem;
-            margin-top: 0;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Sub-Navigation Toggle for Calculator */
-        .sub-nav {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .sub-btn {
-            background-color: var(--bg-color);
-            color: #8e839e;
-            border: 2px solid var(--accent-purple);
-            padding: 6px 16px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .sub-btn.active-furniture {
-            background-color: rgba(226, 176, 71, 0.15);
-            color: var(--accent-gold);
-            border-color: var(--accent-gold);
-        }
-
-        .sub-btn.active-pets {
-            background-color: rgba(50, 168, 115, 0.15);
-            color: var(--accent-pet);
-            border-color: var(--accent-pet);
-        }
-
-        /* Image Styling */
-        .card-img-container {
-            text-align: center;
-            margin-bottom: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            padding: 8px;
-        }
-
-        .item-preview-img {
-            max-width: 100%;
-            height: 100px;
-            object-fit: contain;
-        }
-
-        .index-preview-img {
-            max-width: 100%;
-            height: 140px;
-            object-fit: contain;
-        }
-
-        /* Calculator Grid Layout */
-        .furniture-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 12px;
-        }
-
-        .item-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid #3d3450;
-            transition: border-color 0.2s ease;
-        }
-
-        .item-card.pet-card {
-            border: 1px solid rgba(50, 168, 115, 0.4);
-        }
-
-        .item-name {
-            font-weight: bold;
-            font-size: 0.95rem;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-
-        .pet-card .item-name {
-            color: var(--accent-pet);
-        }
-
-        .item-time {
-            font-size: 0.8rem;
-            color: var(--accent-blue);
-            margin-bottom: 8px;
-        }
-
-        .item-mats {
-            font-size: 0.75rem;
-            color: #bfaecf;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .controls {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-color);
-            border-radius: 8px;
-            padding: 4px;
-        }
-
-        .btn {
-            background: var(--accent-purple);
-            color: white;
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        .qty-input {
-            width: 40px;
-            text-align: center;
-            background: transparent;
-            border: none;
-            color: white;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        /* START PROJECT BUTTON */
-        .generate-btn {
-            display: block;
+        /* PARALLAX HERO BANNER */
+        .hero-banner-container {
+            position: relative;
             width: 100%;
-            padding: 16px;
-            background: var(--accent-gold);
-            color: #1a1625;
-            font-weight: bold;
-            font-size: 1.1rem;
-            text-align: center;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            margin-top: 24px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(226, 176, 71, 0.2);
-            transition: all 0.2s ease;
+            height: 220px;
+            overflow: hidden;
+            display: block;
         }
 
-        .generate-btn:hover {
-            background: #d1a03c;
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
-        /* CHECKLIST STYLING */
-        .checklist-section {
-            margin-bottom: 24px;
-            background: rgba(40, 34, 54, 0.4);
-            padding: 12px;
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(63, 53, 88, 0.5);
-        }
-
-        .checklist-header {
-            color: var(--accent-gold);
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid var(--accent-purple);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            user-select: none;
-        }
-
-        .checklist-header::after {
-            content: "▼";
-            font-size: 0.8rem;
-            color: var(--accent-gold);
-            transition: transform 0.2s ease;
-        }
-
-        .checklist-section.collapsed .checklist-header::after {
-            transform: rotate(-90deg);
-        }
-
-        .checklist-section.collapsed .check-item,
-        .checklist-section.collapsed .completed-toggle,
-        .checklist-section.collapsed .completed-container {
-            display: none !important;
-        }
-
-        .check-item {
-            display: flex;
-            align-items: center;
-            background: var(--card-bg);
-            padding: 12px 16px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            border: 1px solid #3d3450;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-
-        .check-item:hover {
-            background: #322b44;
-        }
-
-        .check-item.completed {
-            background: rgba(40, 34, 54, 0.6);
-            border-color: rgba(63, 53, 88, 0.4);
-        }
-
-        .check-item.completed .check-text {
-            text-decoration: line-through;
-            color: #8e839e;
-        }
-
-        .checkbox {
-            width: 24px;
-            height: 24px;
-            min-width: 24px;
-            border: 2px solid var(--accent-purple);
-            border-radius: 6px;
-            margin-right: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-color);
-            transition: all 0.2s ease;
-        }
-
-        .check-item.completed .checkbox {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-        }
-
-        .check-item.completed .checkbox::after {
-            content: "✓";
-            color: #1a1625;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        .check-text {
-            font-size: 0.95rem;
-            flex-grow: 1;
-            font-weight: 500;
-            color: var(--text-light);
-            transition: color 0.2s ease;
-        }
-
-        .check-qty {
-            color: var(--accent-blue);
-            font-weight: bold;
-            font-size: 1rem;
-            padding: 4px 10px;
-            background: rgba(84, 178, 219, 0.15);
-            border-radius: 6px;
-            margin-left: 12px;
-        }
-        
-        .check-item.completed .check-qty {
-            opacity: 0.5;
-        }
-        
-        /* Show/Hide Completed Section */
-        .completed-toggle {
-            font-size: 0.85rem;
-            color: #8e839e;
-            text-align: center;
-            margin: 12px 0 8px;
-            padding: 8px;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 6px;
-            user-select: none;
-            transition: color 0.2s, background 0.2s;
-        }
-        
-        .completed-toggle:hover {
-            color: var(--accent-gold);
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #8e839e;
-            padding: 40px 20px;
-            font-style: italic;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            border: 1px dashed var(--accent-purple);
-        }
-
-        /* EXPANDABLE FLOATING BOTTOM SHEET */
-        .bottom-sheet {
-            position: fixed;
+        .hero-fade-overlay {
+            position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #201a2d;
-            border-top: 2px solid var(--accent-gold);
-            border-top-left-radius: 16px;
-            border-top-right-radius: 16px;
-            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(calc(100% - var(--bar-height)));
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 20%, rgba(10, 10, 10, 1) 100%);
         }
 
-        .bottom-sheet.open {
-            transform: translateY(0);
+        .hero-title {
+            position: absolute;
+            bottom: 12px;
+            width: 100%;
+            text-align: center;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+            margin: 0;
         }
 
-        .sheet-header {
-            height: var(--bar-height);
-            padding: 8px 16px;
+        /* SLIDE-OUT HAMBURGER DRAWER */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            display: none;
+        }
+
+        .drawer-overlay.open {
+            display: block;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 280px;
+            background: var(--card-bg);
+            border-right: 2px solid var(--accent-gold);
+            z-index: 201;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 20px 16px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            cursor: pointer;
-            user-select: none;
         }
 
-        .drag-handle {
-            width: 36px;
-            height: 4px;
-            background-color: #4a4466;
-            border-radius: 2px;
-            margin: 0 auto 6px;
+        .drawer.open {
+            transform: translateX(0);
         }
 
-        .summary-bar-content {
+        .drawer-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--accent-gold);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
         }
 
-        .time-badge {
-            font-size: 0.85rem;
-            color: var(--accent-blue);
+        .drawer-title {
             font-weight: bold;
-        }
-
-        .toggle-btn {
-            font-size: 0.8rem;
             color: var(--accent-gold);
-            font-weight: bold;
+            font-size: 1.1rem;
         }
 
-        .sheet-body {
-            padding: 0 16px 20px;
-            max-height: 50vh;
-            overflow-y: auto;
-        }
-
-        .sheet-action-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #3d3450;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-        }
-
-        .sheet-title {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: var(--text-light);
-        }
-
-        .reset-link {
-            font-size: 0.75rem;
-            color: #d9534f;
+        .close-btn {
             background: none;
             border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
             cursor: pointer;
-            text-decoration: underline;
         }
 
-        .materials-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-
-        .mat-tile {
-            background-color: var(--card-bg);
-            border: 1px solid var(--accent-purple);
-            border-radius: 8px;
-            padding: 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s ease;
-        }
-
-        .tile-title {
+        .drawer-section-title {
             font-size: 0.75rem;
-            color: #bfaecf;
-        }
-
-        .tile-count {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--accent-gold);
-        }
-
-        /* Index & Glossary Grids */
-        .index-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 12px;
-        }
-
-        .glossary-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 14px;
-            border: 1px solid #3d3450;
-        }
-
-        .glossary-title {
-            color: var(--accent-gold);
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        .glossary-sub {
-            font-size: 0.8rem;
             color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 16px 0 8px;
+            font-weight: bold;
+        }
+
+        .drawer-link {
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            transition: background 0.2s;
+        }
+
+        .drawer-link:hover {
+            background: rgba(232, 195, 64, 0.15);
+            color: var(--accent-gold);
+        }
+
+        /* PLACEHOLDER COMING SOON CARD */
+        .coming-soon-card {
+            background: var(--card-bg);
+            border: 1px dashed var(--accent-gold);
+            border-radius: var(--border-radius);
+            padding: 32px 20px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .coming-soon-title {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            font-weight: bold;
             margin-bottom: 8px;
         }
 
-        .glossary-lore {
-            font-size: 0.8rem;
-            color: #d0c8e0;
-            font-style: italic;
-            margin-bottom: 10px;
-            line-height: 1.35;
+        .coming-soon-text {
+            color: #A0A0A0;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
-        .glossary-source {
-            font-size: 0.75rem;
-            color: #bfaecf;
-            background: rgba(63, 53, 88, 0.4);
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
-        }
+        /* ENGINE STYLING (From Source 2) */
+        .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+        .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
+        .sub-btn.active-furniture { background-color: rgba(232, 195, 64, 0.15); color: var(--accent-gold); border-color: var(--accent-gold); }
+        .sub-btn.active-pets { background-color: rgba(50, 168, 115, 0.15); color: var(--accent-pet); border-color: var(--accent-pet); }
+
+        .furniture-grid, .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+        .item-card, .glossary-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 14px; border: 1px solid #333; transition: border-color 0.2s ease; }
+        .item-card { display: flex; flex-direction: column; justify-content: space-between; }
+        .item-card.pet-card { border: 1px solid rgba(50, 168, 115, 0.4); }
+
+        .card-img-container { text-align: center; margin-bottom: 12px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 8px; }
+        .item-preview-img { max-width: 100%; height: 100px; object-fit: contain; }
+        .index-preview-img { max-width: 100%; height: 140px; object-fit: contain; }
+
+        .item-name, .glossary-title { font-weight: bold; font-size: 0.95rem; color: #ffffff; margin-bottom: 4px; }
+        .glossary-title { color: var(--accent-gold); font-size: 1rem; }
+        .pet-card .item-name { color: var(--accent-pet); }
+        .item-time, .glossary-sub { font-size: 0.8rem; color: var(--accent-blue); margin-bottom: 8px; }
+        .item-mats, .glossary-source { font-size: 0.75rem; color: #bfaecf; margin-bottom: 12px; line-height: 1.3; }
+        .glossary-source { background: rgba(232, 195, 64, 0.15); color: var(--text-light); padding: 4px 8px; border-radius: 4px; display: inline-block; }
+        .glossary-lore { font-size: 0.8rem; color: #CCCCCC; font-style: italic; margin-bottom: 10px; line-height: 1.35; }
+
+        .controls { display: flex; align-items: center; justify-content: space-between; background: var(--bg-color); border-radius: 8px; padding: 4px; }
+        .btn { background: var(--accent-purple); color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+        .qty-input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; }
+
+        .generate-btn { display: block; width: 100%; padding: 16px; background: var(--accent-gold); color: #0A0A0A; font-weight: bold; font-size: 1.1rem; text-align: center; border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; }
+        .generate-btn:hover { background: #d1a03c; }
+
+        /* CHECKLIST */
+        .checklist-section { margin-bottom: 24px; background: rgba(26, 26, 26, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(232, 195, 64, 0.3); }
+        .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+        .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
+        .checklist-section.collapsed .checklist-header::after { transform: rotate(-90deg); }
+        .checklist-section.collapsed .check-item, .checklist-section.collapsed .completed-toggle, .checklist-section.collapsed .completed-container { display: none !important; }
+
+        .check-item { display: flex; align-items: center; background: var(--card-bg); padding: 12px 16px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: all 0.2s ease; user-select: none; }
+        .check-item:hover { background: #222; }
+        .check-item.completed { background: rgba(26, 26, 26, 0.6); border-color: rgba(232, 195, 64, 0.2); }
+        .check-item.completed .check-text { text-decoration: line-through; color: #8e839e; }
+
+        .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-gold); border-radius: 6px; margin-right: 14px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
+        .check-item.completed .checkbox { background: var(--accent-gold); border-color: var(--accent-gold); }
+        .check-item.completed .checkbox::after { content: "✓"; color: #0A0A0A; font-weight: bold; font-size: 1rem; }
+        .check-text { font-size: 0.95rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; }
+        .check-qty { color: var(--accent-blue); font-weight: bold; font-size: 1rem; padding: 4px 10px; background: rgba(23, 178, 178, 0.15); border-radius: 6px; margin-left: 12px; }
+        .check-item.completed .check-qty { opacity: 0.5; }
+
+        .completed-toggle { font-size: 0.85rem; color: #8e839e; text-align: center; margin: 12px 0 8px; padding: 8px; cursor: pointer; background: rgba(0, 0, 0, 0.2); border-radius: 6px; user-select: none; transition: all 0.2s; }
+        .completed-toggle:hover { color: var(--accent-gold); background: rgba(0, 0, 0, 0.4); }
+        .empty-state { text-align: center; color: #8e839e; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-purple); }
+
+        /* BOTTOM SHEET */
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background-color: #111; border-top: 2px solid var(--accent-gold); border-top-left-radius: 16px; border-top-right-radius: 16px; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.8); z-index: 1000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(calc(100% - var(--bar-height))); }
+        .bottom-sheet.open { transform: translateY(0); }
+        .sheet-header { height: var(--bar-height); padding: 8px 16px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; user-select: none; }
+        .drag-handle { width: 36px; height: 4px; background-color: #333; border-radius: 2px; margin: 0 auto 6px; }
+        .summary-bar-content { display: flex; justify-content: space-between; align-items: center; }
+        .time-badge { font-size: 0.85rem; color: var(--accent-blue); font-weight: bold; }
+        .toggle-btn { font-size: 0.8rem; color: var(--accent-gold); font-weight: bold; }
+        .sheet-body { padding: 0 16px 20px; max-height: 50vh; overflow-y: auto; }
+        .sheet-action-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
+        .sheet-title { font-size: 0.85rem; font-weight: bold; color: var(--text-light); }
+        .reset-link { font-size: 0.75rem; color: #d9534f; background: none; border: none; cursor: pointer; text-decoration: underline; }
+        .materials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .mat-tile { background-color: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
+        .tile-title { font-size: 0.75rem; color: #bfaecf; }
+        .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation -->
+    <!-- STICKY TOP NAV -->
     <div class="nav-header">
-        <button class="tab-btn active" onclick="switchTab('calculatorTab', this)">Calculator</button>
-        <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
-        <button class="tab-btn" onclick="switchTab('furnitureIndexTab', this)">Furniture Index</button>
-        <button class="tab-btn" onclick="switchTab('indexTab', this)">Material Index</button>
+        <button class="menu-btn" onclick="toggleDrawer()">≡</button>
+        <button class="home-btn" id="homeBtn" onclick="loadActiveEventView()">🏠 Back to Current Event</button>
+        <div class="tab-btn-container" id="tabBtnContainer">
+            <button class="tab-btn active" onclick="switchTab('calculatorTab', this)">Calculator</button>
+            <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
+        </div>
     </div>
 
-    <!-- TAB 1: CALCULATOR -->
-    <div id="calculatorTab" class="tab-content active">
-        <h1>Gwidam Workshop Planner</h1>
+    <!-- HAMBURGER DRAWER -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">Navigation Hub</span>
+            <button class="close-btn" onclick="toggleDrawer()">✕</button>
+        </div>
+
+        <div class="drawer-section-title">📜 Past Events</div>
+        <div class="drawer-link" onclick="loadGwidamArchive()">Gwidam Village</div>
+
+        <div class="drawer-section-title">📚 Material & Item Index</div>
+        <div class="drawer-link" onclick="loadCoreIndex()">PlayTogether Core</div>
+        <div class="drawer-link" onclick="loadGwidamIndex()">Gwidam Village Index</div>
+    </div>
+
+    <!-- ACTIVE EVENT LANDING PAGE (Desert Oasis Engine) -->
+    <div id="activeEventContainer">
         
-        <!-- Sub-Navigation Toggle -->
-        <div class="sub-nav">
-            <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
-            <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets & Divine Beasts</button>
+        <div class="hero-banner-container" id="heroBanner">
+            <img src="Images/DesertOasis/Desert Oasis Key Art.jpg" alt="Desert Oasis Key Art" class="hero-img">
+            <div class="hero-fade-overlay"></div>
+            <h1 class="hero-title">Desert Oasis</h1>
         </div>
 
-        <div class="furniture-grid" id="furnitureGrid"></div>
-        <button class="generate-btn" onclick="generateChecklist()">Start Project (Create Checklist)</button>
-    </div>
-
-    <!-- TAB 2: CHECKLIST -->
-    <div id="checklistTab" class="tab-content">
-        <h1>Project Checklist</h1>
-        <div id="checklistContainer">
-            <div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>
-        </div>
-    </div>
-
-    <!-- TAB 3: FURNITURE INDEX -->
-    <div id="furnitureIndexTab" class="tab-content">
-        <h1>Furniture Catalog & Lore</h1>
-        <div class="index-grid" id="furnitureIndexGrid"></div>
-    </div>
-
-    <!-- TAB 4: MATERIAL INDEX -->
-    <div id="indexTab" class="tab-content">
-        <h1>Material Glossary & Locations</h1>
-        <div class="index-grid" id="indexGrid"></div>
-    </div>
-
-    <!-- EXPANDABLE BOTTOM SHEET OVERLAY -->
-    <div class="bottom-sheet" id="bottomSheet">
-        <div class="sheet-header" onclick="toggleSheet()">
-            <div class="drag-handle"></div>
-            <div class="summary-bar-content">
-                <span class="time-badge" id="totalTimeDisplay">⏱️ 0m | 0 Items</span>
-                <span class="toggle-btn" id="toggleLabel">Materials ▲</span>
+        <div id="calculatorTab" class="tab-content active">
+            <!-- Sub-Navigation Toggle -->
+            <div class="sub-nav" id="activeSubNav" style="display: none;">
+                <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
+                <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets & Divine Beasts</button>
             </div>
+
+            <div class="furniture-grid" id="furnitureGrid"></div>
+            <button class="generate-btn" id="generateBtn" style="display: none;" onclick="generateChecklist()">Start Project (Create Checklist)</button>
         </div>
 
-        <div class="sheet-body">
-            <div class="sheet-action-row">
-                <span class="sheet-title">Required Materials</span>
-                <button class="reset-link" onclick="resetQuantities()">Reset Quantities</button>
+        <div id="checklistTab" class="tab-content">
+            <div id="checklistContainer"></div>
+        </div>
+
+        <!-- EXPANDABLE BOTTOM SHEET OVERLAY -->
+        <div class="bottom-sheet" id="bottomSheet" style="display: none;">
+            <div class="sheet-header" onclick="toggleSheet()">
+                <div class="drag-handle"></div>
+                <div class="summary-bar-content">
+                    <span class="time-badge" id="totalTimeDisplay">⏱️ 0m | 0 Items</span>
+                    <span class="toggle-btn" id="toggleLabel">Materials ▲</span>
+                </div>
             </div>
-            <div class="materials-grid" id="materialsGrid">
-                <div class="mat-tile">
-                    <span class="tile-title">Select Items</span>
-                    <span class="tile-count">0</span>
+
+            <div class="sheet-body">
+                <div class="sheet-action-row">
+                    <span class="sheet-title">Required Materials</span>
+                    <button class="reset-link" onclick="resetQuantities()">Reset Quantities</button>
+                </div>
+                <div class="materials-grid" id="materialsGrid">
+                    <div class="mat-tile">
+                        <span class="tile-title">Select Items</span>
+                        <span class="tile-count">0</span>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
+    <!-- ARCHIVE VIEW CONTAINER -->
+    <div id="archiveContainer" class="tab-content" style="padding-top: 24px;">
+        <h1 id="archiveTitle" style="text-align: center; color: var(--accent-gold); margin-bottom: 20px; margin-top: 0;">Event Archive</h1>
+        <div class="index-grid" id="archiveGrid"></div>
+    </div>
+
+    <!-- EXTERNAL DECOUPLED DATA FILES -->
+    <script src="js/playtogether_core.js"></script>
+    <script src="js/gwidam_data.js"></script>
+
 <script>
-const items = [
-    { id: "traditional_jar", name: "Traditional Jar", timeMinutes: 30, mats: { "Guardian Yeopjeon": 40, "Stone": 10 }, lore: "Place it somewhere that gets plenty of sunshine.", image: "Images/Gwidam/Traditional Jar.png" },
-    { id: "guardian_monument", name: "Village Guardian Monument", timeMinutes: 30, mats: { "Guardian Yeopjeon": 60, "Health Charm": 5, "Stone": 20 }, lore: "A guardian monument that has watched over the village for generations.", image: "Images/Gwidam/Village Guardian Monument.png" },
-    { id: "mysterious_well", name: "Mysterious Well", timeMinutes: 80, mats: { "Guardian Yeopjeon": 60, "Eoduksini": 3, "Water": 10 }, lore: "Ancient secrets lie hidden deep within this well.", image: "Images/Gwidam/Mysterious Well.png" },
-    { id: "cheongsachorong", name: "Cheongsachorong Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Its gentle glow lights the way through the quiet night.", image: "Images/Gwidam/Cheongsachorong Lantern.png" },
-    { id: "latticework_lantern", name: "Traditional Latticework Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Made with traditional latticework and hanji paper.", image: "Images/Gwidam/Traditional Latticework Lantern.png" },
-    { id: "moon_pavilion", name: "Moon-Viewing Pavilion", timeMinutes: 230, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Stone": 10 }, lore: "Welcome the rising moon on a peaceful night.", image: "Images/Gwidam/Moon-Viewing Pavilion.png" },
-    { id: "moonlit_thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Ivory Cube": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight.", image: "Images/Gwidam/Moonlit Thatched Cottage.png" },
-    { id: "underworld_totem", name: "Female General of the Underworld Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Female General Totem (Material)": 1, "Health Charm": 5 }, lore: "It is said to govern the energy that flows beneath the earth.", image: "Images/Gwidam/Female General of the Underworld Totem.png" },
-    { id: "heaven_totem", name: "Great General of All Under Heaven Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Great General Totem (Material)": 1, "Health Charm": 5 }, lore: "Said to watch over the village and ward off evil spirits.", image: "Images/Gwidam/Great General of All Under Heaven Totem.png" },
-    { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 390, mats: { "Guardian Yeopjeon": 250, "Haechi Statue (Material)": 1, "Yeopjeon Knot Ornament": 5, "Someone's Nameplate": 3 }, lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi.", image: "Images/Gwidam/Haechi Statue.png" },
-    { id: "market_stall", name: "Village Market Stall", timeMinutes: 360, mats: { "Guardian Yeopjeon": 200, "Will-o'-the-Wisp": 5, "Someone's Nameplate": 3 }, lore: "A simple market stall that fits perfectly in a cozy village marketplace.", image: "Images/Gwidam/Village Market Stall.png" },
-    { id: "thatched_barn", name: "Thatched Barn", timeMinutes: 110, mats: { "Guardian Yeopjeon": 80, "Misfortune Doll": 5, "Tree Branch": 10 }, lore: "A cozy barn topped with warm straw.", image: "Images/Gwidam/Thatched Barn.png" },
-    { id: "traditional_signboard", name: "Traditional Signboard", timeMinutes: 180, mats: { "Guardian Yeopjeon": 100, "Someone's Norigae": 10, "Misfortune Doll": 5 }, lore: "Leave a message for the village.", image: "Images/Gwidam/Traditional Signboard.png" },
-    { id: "wooden_platform", name: "Peaceful Wooden Platform", timeMinutes: 40, mats: { "Guardian Yeopjeon": 40, "Tree Branch": 20 }, lore: "Take a break and enjoy the gentle breeze.", image: "Images/Gwidam/Peaceful Wooden Platform.png" }
-];
+/* =====================================================================
+   ACTIVE EVENT DATA ENGINE (Currently set to empty for Desert Oasis)
+   Once you have the event items, simply paste them into these arrays!
+   ===================================================================== */
+const items = [];
+const pets = [];
+const glossary = [];
 
-const pets = [
-    { id: "divine_beast_supplement", name: "Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 50, "Misfortune Doll": 3, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 50.", image: "Images/Gwidam/divine_beast_supplement.png" },
-    { id: "premium_divine_beast_supplement", name: "Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 100, "Will-o'-the-Wisp": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 200.", image: "Images/Gwidam/premium_divine_beast_supplement.png" },
-    { id: "super_premium_divine_beast_supplement", name: "Super Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 150, "Eoduksini": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 700.", image: "Images/Gwidam/super_premium_divine_beast_supplement.png" },
-    { id: "divine_beast_barrier_pet_fence", name: "Divine Beast Barrier Pet Fence", timeMinutes: 990, mats: { "Guardian Yeopjeon": 250, "Health Charm": 10, "Yeopjeon Knot Ornament": 20, "Stone": 1 }, lore: "A mystical barrier created to safeguard the divine beasts.", image: "Images/Gwidam/divine_beast_barrier_pet_fence.png" },
-    { id: "divine_beast_egg_normal", name: "Divine Beast Egg (Normal)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 200, "Normal Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "Images/Gwidam/divine_beast_egg.png" },
-    { id: "divine_beast_egg_premium", name: "Divine Beast Egg (Premium)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 100, "Premium Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "Images/Gwidam/divine_beast_egg.png" }
-];
-
-const glossary = [
-    { name: "Ivory Cube", source: "Furniture Shop", lore: "Let's stack the neat-looking cubes one by one." },
-    { name: "Water", source: "Mega Mart", lore: "There's nothing like water to quench your thirst. Doesn't have any special abilities." },
-    { name: "Someone's Nameplate", source: "(Excavation) Mysterious Jar", lore: "Beyond the weathered name, forgotten memories still linger." },
-    { name: "Stone", source: "Mine", lore: "You can craft a variety of things with this. It's used to craft items." },
-    { name: "Cursed Scarecrow", source: "Gwidam Village All Areas All Day", lore: "Time of Appearance: Ghost Story Event Season" },
-    { name: "Eoduksini", source: "Gwidam Village Restricted Area All Day", lore: "Time of Appearance: Ghost Story Event Season" },
-    { name: "Yeopjeon Knot Ornament", source: "(Excavation) Mysterious Jar", lore: "Carefully woven strand by strand, as though each knot carries a wish for good fortune." },
-    { name: "Haechi Statue (Material)", source: "Excavation", lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi." },
-    { name: "Someone's Norigae", source: "(Excavation) Mysterious Jar", lore: "Its former brilliance has faded, but the signs of having been dearly cherished remain." },
-    { name: "Female General Totem (Material)", source: "Excavation", lore: "It is said to govern the energy that flows beneath the earth." },
-    { name: "Great General Totem (Material)", source: "Excavation", lore: "Said to watch over the village and ward off evil spirits." },
-    { name: "Health Charm", source: "(Excavation) Mysterious Jar", lore: "A charm filled with wishes for good health in both body and mind." },
-    { name: "Misfortune Doll", source: "(Excavation) Mysterious Jar", lore: "A doll that bears the traces of someone's wish to take away their misfortune." },
-    { name: "Will-o'-the-Wisp", source: "Gwidam Village Shrine All Day", lore: "Time of Appearance: Ghost Story Event Season" },
-    { name: "Tree Branch", source: "Gather", lore: "You can craft anything with this. It's used to craft items." },
-    { name: "Guardian Yeopjeon", source: "Event", lore: "Used at the Haechi Altar to pray for health and peace. Used in events." },
-    { name: "Normal Egg", source: "Pet Paradise (Star Currency)", lore: "A standard egg containing a potential pet companion." },
-    { name: "Premium Egg", source: "Pet Paradise (Gem / Paid Currency)", lore: "A premium egg containing higher-tier pet companion potential." }
-];
-
+/* =====================================================================
+   STATE MANAGEMENT (Updated LocalStorage Keys to prevent collision!)
+   ===================================================================== */
 let quantities = {};
 let completedCrafts = {};
 let checklistProgress = {};
@@ -673,13 +430,13 @@ let currentCategory = 'furniture';
 
 function loadSavedData() {
     try {
-        const savedQuantities = localStorage.getItem("gwidam_workshop_quantities");
+        const savedQuantities = localStorage.getItem("active_event_quantities");
         if (savedQuantities) quantities = JSON.parse(savedQuantities);
         
-        const savedCompleted = localStorage.getItem("gwidam_workshop_completed");
+        const savedCompleted = localStorage.getItem("active_event_completed");
         if (savedCompleted) completedCrafts = JSON.parse(savedCompleted);
 
-        const savedChecklist = localStorage.getItem("gwidam_workshop_checklist");
+        const savedChecklist = localStorage.getItem("active_event_checklist");
         if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
         
         if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
@@ -693,26 +450,35 @@ function loadSavedData() {
 }
 
 function saveQuantities() {
-    try { localStorage.setItem("gwidam_workshop_quantities", JSON.stringify(quantities)); } catch (e) {}
+    try { localStorage.setItem("active_event_quantities", JSON.stringify(quantities)); } catch (e) {}
 }
 
 function saveCompleted() {
-    try { localStorage.setItem("gwidam_workshop_completed", JSON.stringify(completedCrafts)); } catch (e) {}
+    try { localStorage.setItem("active_event_completed", JSON.stringify(completedCrafts)); } catch (e) {}
 }
 
 function saveChecklist() {
-    try { localStorage.setItem("gwidam_workshop_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
+    try { localStorage.setItem("active_event_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
+}
+
+/* =====================================================================
+   NAVIGATION & UI CONTROLS
+   ===================================================================== */
+function toggleDrawer() {
+    document.getElementById('drawer').classList.toggle('open');
+    document.getElementById('drawerOverlay').classList.toggle('open');
 }
 
 function switchTab(tabId, btn) {
-    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    document.querySelectorAll('#activeEventContainer .tab-content').forEach(tc => tc.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
     
     document.getElementById(tabId).classList.add('active');
     btn.classList.add('active');
 
+    // Only show bottom sheet if there is active data
     const sheet = document.getElementById('bottomSheet');
-    if (tabId === 'calculatorTab') {
+    if (tabId === 'calculatorTab' && items.length > 0) {
         sheet.style.display = 'block';
         document.body.style.paddingBottom = 'calc(var(--bar-height) + 40px)';
     } else {
@@ -721,9 +487,16 @@ function switchTab(tabId, btn) {
     }
 }
 
+function loadActiveEventView() {
+    document.getElementById('archiveContainer').style.display = 'none';
+    document.getElementById('activeEventContainer').style.display = 'block';
+    document.getElementById('homeBtn').style.display = 'none';
+    document.getElementById('tabBtnContainer').style.display = 'flex';
+    if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
+}
+
 function switchCategory(category) {
     currentCategory = category;
-    
     const furnBtn = document.getElementById('subTabFurniture');
     const petsBtn = document.getElementById('subTabPets');
     
@@ -734,7 +507,6 @@ function switchCategory(category) {
         furnBtn.classList.remove('active-furniture');
         petsBtn.classList.add('active-pets');
     }
-    
     renderGrid();
 }
 
@@ -742,12 +514,7 @@ function toggleSheet() {
     const sheet = document.getElementById('bottomSheet');
     const label = document.getElementById('toggleLabel');
     sheet.classList.toggle('open');
-    
-    if (sheet.classList.contains('open')) {
-        label.innerText = 'Hide ▼';
-    } else {
-        label.innerText = 'Materials ▲';
-    }
+    label.innerText = sheet.classList.contains('open') ? 'Hide ▼' : 'Materials ▲';
 }
 
 function formatTime(minutes) {
@@ -758,9 +525,27 @@ function formatTime(minutes) {
     return `${hrs}h ${mins}m`;
 }
 
+/* =====================================================================
+   ACTIVE EVENT CALCULATOR & CHECKLIST LOGIC
+   ===================================================================== */
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
+
+    // "Coming Soon" Fallback if data arrays are empty
+    if (items.length === 0 && pets.length === 0) {
+        grid.innerHTML = `
+            <div class="coming-soon-card" style="grid-column: 1 / -1;">
+                <div class="coming-soon-title">Desert Oasis — Calculator Coming Soon</div>
+                <div class="coming-soon-text">Check back here when the event drops to plan your new workshop queue!</div>
+            </div>`;
+        return;
+    }
+
+    // Reveal UI if data exists
+    document.getElementById('activeSubNav').style.display = 'flex';
+    document.getElementById('generateBtn').style.display = 'block';
+    document.getElementById('bottomSheet').style.display = 'block';
 
     const activeItems = currentCategory === 'furniture' ? items : pets;
 
@@ -768,7 +553,6 @@ function renderGrid() {
         quantities[item.id] = quantities[item.id] || 0;
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
-        
         const cardClass = currentCategory === 'pets' ? "item-card pet-card" : "item-card";
 
         const card = document.createElement("div");
@@ -790,43 +574,6 @@ function renderGrid() {
     });
 }
 
-function renderFurnitureIndex() {
-    const fGrid = document.getElementById("furnitureIndexGrid");
-    fGrid.innerHTML = "";
-    
-    const allCraftables = [...items, ...pets];
-    
-    allCraftables.forEach(item => {
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title">${item.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
-            <div class="glossary-lore">"${item.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        fGrid.appendChild(card);
-    });
-}
-
-function renderIndex() {
-    const indexGrid = document.getElementById("indexGrid");
-    indexGrid.innerHTML = "";
-    glossary.forEach(mat => {
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            <div class="glossary-title">${mat.name}</div>
-            <div class="glossary-lore">"${mat.lore}"</div>
-            <div class="glossary-source">📍 Location: ${mat.source}</div>
-        `;
-        indexGrid.appendChild(card);
-    });
-}
-
 function generateChecklist() {
     const hasItems = Object.values(quantities).some(q => q > 0);
     const hasCompleted = Object.values(completedCrafts).some(q => q > 0);
@@ -845,7 +592,6 @@ function toggleChecklistSection(element) {
     element.parentElement.classList.toggle('collapsed');
 }
 
-// Toggle for Material Shopping List only
 function toggleCheckItem(id, element) {
     checklistProgress[id] = !checklistProgress[id];
     saveChecklist();
@@ -858,8 +604,6 @@ function toggleCheckItem(id, element) {
     calculateTotals();
 }
 
-// Complete an Active Craft -> subtracts from goal, adds to completed
-// Added specific delay and animation per user request!
 function completeCraft(itemId, element) {
     if (quantities[itemId] > 0 && !element.classList.contains('processing')) {
         element.classList.add('processing'); 
@@ -873,11 +617,10 @@ function completeCraft(itemId, element) {
             renderGrid();
             renderChecklist();
             calculateTotals();
-        }, 500); // 500ms delay so you can see the strikethrough happen before it leaves
+        }, 500); // Maintained 500ms delay[cite: 2]
     }
 }
 
-// Undo a Completed Craft -> adds to goal, subtracts from completed
 function undoCraft(itemId) {
     if (completedCrafts[itemId] > 0) {
         completedCrafts[itemId]--;
@@ -896,56 +639,36 @@ function toggleCompletedVisibility(type) {
 }
 
 function getCategoryForMaterial(matName) {
-    const netItems = ["Cursed Scarecrow", "Eoduksini", "Will-o'-the-Wisp"];
-    const excavationItems = [
-        "Someone's Nameplate", "Yeopjeon Knot Ornament", "Haechi Statue (Material)", 
-        "Someone's Norigae", "Female General Totem (Material)", "Great General Totem (Material)", 
-        "Health Charm", "Misfortune Doll"
-    ];
-
-    if (netItems.includes(matName)) {
-        return "Catching (Net)";
-    }
-    if (excavationItems.includes(matName)) {
-        return "Excavation";
-    }
-    if (matName === "Tree Branch") {
-        return "Gathering";
-    }
-    if (matName === "Stone") {
-        return "Mining";
-    }
-    if (matName === "Water") {
-        return "Mega Mart";
-    }
-    if (matName === "Guardian Yeopjeon") {
-        return "Events";
-    }
-    if (matName === "Normal Egg" || matName === "Premium Egg") {
-        return "Pet Paradise";
-    }
-    if (matName === "Ivory Cube") {
-        return "Furniture Shop";
-    }
+    const excavationItems = ["Someone's Nameplate", "Yeopjeon Knot Ornament", "Haechi Statue (Material)", "Female General Totem (Material)", "Great General Totem (Material)", "Health Charm", "Misfortune Doll"];
+    if (excavationItems.includes(matName)) return "Excavation";
+    if (matName === "Tree Branch") return "Gathering";
+    if (matName === "Stone") return "Mining";
+    if (matName === "Water") return "Mega Mart";
+    if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
+    if (matName === "Ivory Cube") return "Furniture Shop";
     return "Other Materials";
 }
 
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
+    
+    if (items.length === 0 && pets.length === 0) {
+        container.innerHTML = `
+            <div class="coming-soon-card">
+                <div class="coming-soon-title">Active Checklist Empty</div>
+                <div class="coming-soon-text">No active project right now. Select items on the Calculator once the event starts!</div>
+            </div>`;
+        return;
+    }
+
     const matTotals = {};
     let hasActiveOrCompletedItems = false;
-    
     const allCraftables = [...items, ...pets];
 
-    // Compute Mats Based purely on Active Quantities (Target Goals)
     allCraftables.forEach(item => {
         const activeQty = quantities[item.id] || 0;
         const completedQty = completedCrafts[item.id] || 0;
-        
-        if (activeQty > 0 || completedQty > 0) {
-            hasActiveOrCompletedItems = true;
-        }
-
+        if (activeQty > 0 || completedQty > 0) hasActiveOrCompletedItems = true;
         if (activeQty > 0) {
             Object.entries(item.mats).forEach(([mat, count]) => {
                 matTotals[mat] = (matTotals[mat] || 0) + (count * activeQty);
@@ -967,7 +690,6 @@ function renderChecklist() {
 
     let html = ``;
 
-    // 1. Render Material Categories
     for (const [category, mats] of Object.entries(groupedMats)) {
         html += `<div class="checklist-section">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
@@ -986,7 +708,6 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    // 2. Render Furniture Assembly Queue & Completed
     let hasFurniture = false;
     let hasCompletedFurniture = false;
     let furnitureActiveHtml = ``;
@@ -1000,7 +721,7 @@ function renderChecklist() {
                 <div class="check-item" onclick="completeCraft('${item.id}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${item.name}</div>
-                    <div class="check-qty" style="background: rgba(226, 176, 71, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                    <div class="check-qty" style="background: rgba(232, 195, 64, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
                 </div>`;
         }
         
@@ -1011,7 +732,7 @@ function renderChecklist() {
                 <div class="check-item completed" onclick="undoCraft('${item.id}')">
                     <div class="checkbox"></div>
                     <div class="check-text">${item.name}</div>
-                    <div class="check-qty" style="background: rgba(226, 176, 71, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                    <div class="check-qty" style="background: rgba(232, 195, 64, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
                 </div>`;
         }
     });
@@ -1034,7 +755,6 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    // 3. Render Pet Assembly / Incubator Queue & Completed
     let hasPets = false;
     let hasCompletedPets = false;
     let petsActiveHtml = ``;
@@ -1084,10 +804,8 @@ function renderChecklist() {
 
     container.innerHTML = html;
 
-    // Apply auto-collapse for fully completed material sections on initial render
     container.querySelectorAll('.checklist-section').forEach(section => {
         const checkItems = section.querySelectorAll('.check-item');
-        // Only trigger this logic on material sections (no nested complete-container logic here)
         if (checkItems.length > 0 && !section.querySelector('.completed-toggle')) {
             const allCompleted = Array.from(checkItems).every(item => item.classList.contains('completed'));
             if (allCompleted) {
@@ -1133,7 +851,6 @@ function calculateTotals() {
 
     const allCraftables = [...items, ...pets];
 
-    // Compute active requirements directly off the dynamic quantity state
     allCraftables.forEach(item => {
         const activeQty = quantities[item.id] || 0;
         if (activeQty > 0) {
@@ -1162,26 +879,22 @@ function calculateTotals() {
             </div>`;
     } else {
         sortedMats.forEach(([mat, currentReq]) => {
-            // Check if this material is marked as physically checked off on the checklist
             const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const isChecked = checklistProgress[matCheckId];
             
             const tile = document.createElement("div");
             tile.className = "mat-tile";
             
-            // If the item requirement drops to 0, OR if the user manually checked it off, grey it out.
             if (currentReq === 0 || isChecked) {
                 tile.style.opacity = "0.5";
-                tile.style.borderColor = "rgba(63, 53, 88, 0.4)";
+                tile.style.borderColor = "rgba(232, 195, 64, 0.3)";
             }
 
-            // Raw Total display only, zero fractions
             tile.innerHTML = `
                 <span class="tile-title">${mat}</span>
                 <span class="tile-count">${currentReq.toLocaleString()}</span>`;
             matsGridEl.appendChild(tile);
 
-            // Sync the rendered Checklist UI text for the materials
             const checklistQtyEl = document.getElementById(`qty_${matCheckId}`);
             if (checklistQtyEl) {
                 checklistQtyEl.innerHTML = `x${currentReq.toLocaleString()}`;
@@ -1211,10 +924,87 @@ function calculateParallelTime(durations, maxSlots) {
     return Math.max(...slots);
 }
 
+/* =====================================================================
+   ARCHIVE LOADERS (Draws from external JS data)
+   ===================================================================== */
+function loadGwidamArchive() {
+    loadActiveEventView();
+    alert("Gwidam Calculator is now archived in read-only mode inside the Gwidam Village Index!");
+}
+
+function loadCoreIndex() {
+    showArchiveView("PlayTogether Core Index");
+    const grid = document.getElementById('archiveGrid');
+    grid.innerHTML = "";
+
+    // Ensures the external file has loaded before attempting to render
+    if (typeof coreGlossary === 'undefined') {
+        grid.innerHTML = '<div style="color: #d9534f;">Error: playtogether_core.js data not found!</div>';
+        return;
+    }
+
+    coreGlossary.forEach(mat => {
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            <div class="glossary-title">${mat.name}</div>
+            <div class="glossary-lore">"${mat.lore}"</div>
+            <div class="glossary-source">📍 Source: ${mat.source}</div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function loadGwidamIndex() {
+    showArchiveView("Gwidam Village Catalog & Lore");
+    const grid = document.getElementById('archiveGrid');
+    grid.innerHTML = "";
+
+    if (typeof gwidamItems === 'undefined') {
+        grid.innerHTML = '<div style="color: #d9534f;">Error: gwidam_data.js data not found!</div>';
+        return;
+    }
+
+    const allGwidamCraftables = [...gwidamItems, ...gwidamPets];
+    allGwidamCraftables.forEach(item => {
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
+            <div class="glossary-lore">"${item.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    gwidamGlossary.forEach(mat => {
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            <div class="glossary-title">${mat.name}</div>
+            <div class="glossary-lore">"${mat.lore}"</div>
+            <div class="glossary-source">📍 Location: ${mat.source}</div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function showArchiveView(title) {
+    document.getElementById('activeEventContainer').style.display = 'none';
+    document.getElementById('archiveContainer').style.display = 'block';
+    document.getElementById('archiveTitle').innerText = title;
+    document.getElementById('homeBtn').style.display = 'block';
+    document.getElementById('tabBtnContainer').style.display = 'none';
+    if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
+}
+
+// Initialization
 loadSavedData();
 renderGrid();
-renderFurnitureIndex();
-renderIndex();
 calculateTotals();
 </script>
 
