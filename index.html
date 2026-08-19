@@ -962,6 +962,12 @@ function loadGwidamIndex() {
         return;
     }
 
+    // --- SECTION 1: FURNITURE & PETS ---
+    const furnitureHeader = document.createElement("h2");
+    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    furnitureHeader.innerText = "🔨 Furniture & Pets";
+    grid.appendChild(furnitureHeader);
+
     const allGwidamCraftables = [...gwidamItems, ...gwidamPets];
     allGwidamCraftables.forEach(item => {
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
@@ -977,6 +983,12 @@ function loadGwidamIndex() {
         `;
         grid.appendChild(card);
     });
+
+    // --- SECTION 2: MATERIALS ---
+    const materialsHeader = document.createElement("h2");
+    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    materialsHeader.innerText = "📌 Event Materials";
+    grid.appendChild(materialsHeader);
 
     gwidamGlossary.forEach(mat => {
         const card = document.createElement("div");
