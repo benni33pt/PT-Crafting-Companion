@@ -1,41 +1,45 @@
-# PlayTogether Workshop Companion
+# PlayTogether Companion Engine
 
-A lightweight, mobile-first web utility and crafting planner for **Gwidam Village**. Built to calculate parallel crafting times, aggregate raw material requirements, and track project progress across furniture crafting and pet incubation.
+A lightweight, mobile-first web utility and crafting planner for **PlayTogether**. Built as a modular, generic engine that calculates parallel crafting times, aggregates raw material requirements, and tracks project progress across seasonal events and base game crafting.
 
-📱 **Live App:** [View Companion Tool](https://benni33pt.github.io/PT-gwidam-workshop-companion/)
+📱 **Live App:** [View Companion Tool](https://benni33pt.github.io/PT-Crafting-Companion/)
 
 ---
 
 ## 🛠️ Key Features
 
-* **Gwidam Workshop Planner (Calculator Tab):** 
-  * Select project goals for **Furniture** items and **Pets & Divine Beasts**.
-  * Adjust quantities without losing target goals when tracking active progress.
-* **Expandable Floating Bottom Sheet:** 
-  * Displays total required materials in real-time.
-  * Dynamically subtracts costs as items or raw materials are checked off the active project.
+* **Active Event Workshop Planner (Calculator Tab):** 
+  * Features a dynamic **Parallax Hero Banner** and custom seasonal theme styling for the current event (*Desert Oasis*).
+  * Seamlessly toggles between **Furniture** items and **Pets & Divine Beasts**.
+  * Retains project goals on the Calculator tab even as items are completed in the queue.
+* **Compact 2x2 Floating Bottom Sheet:** 
+  * Displays macro-level project totals in real time: **Total Selected Items**, **Total Parallel Crafting Time**, and **Raw Material Requirements**.
+  * Dynamically greys out completed materials without zeroing out target counts or cluttering the view with unneeded materials.
   * Calculates real remaining crafting time using a simulated **4-slot parallel crafting queue**.
 * **Active Project Checklist:** 
   * Automatically groups required raw materials into activity categories (*Catching/Net, Mining, Excavation, Gathering, Mega Mart, Events, Furniture Shop*).
-  * Features an itemized **Furniture Assembly** and **Pet Incubator** queue.
-  * Includes **collapsible headers** and **smart auto-collapsing** when all items in a category are completed.
-* **Reference Catalogs & Lore:** 
-  * **Furniture Index:** Browse full item costs, craft times, and flavor lore.
-  * **Material Index:** Quick lookup for material drop locations and acquisition sources.
+  * Features an itemized **Furniture Assembly** and **Pet Incubator** queue with a **500ms strikethrough animation delay** for clear tactile feedback when completing items.
+  * Includes **collapsible headers** and **smart auto-collapsing** when all items in a category are checked off.
+* **Slide-Out Hamburger Navigation Drawer (`≡`):** 
+  * **Past Event Archives:** Access read-only lore, catalog entries, and item requirements for retired seasons (*Gwidam Village*).
+  * **Master Item & Material Index:** View evergreen base game items (*PlayTogether Core*) alongside event-specific drop locations.
+  * **External Resource Hub:** Quick access links to official coupon redemptions, wikis, and community hubs.
+  * **Pinned Escape Hatch:** Features a sticky `🏠 Back to Current Event` button in the navigation bar when browsing archived data.
 * **Offline & State Persistence:** 
-  * Automatically saves project targets and checklist completion to `localStorage`.
+  * Automatically saves active event target quantities and checklist progress to `localStorage` using generic key structures (`active_event_quantities`, `active_event_checklist`).
 
 ---
 
 ## 🏗️ Architecture & Tech Stack
 
-This project is intentionally built as a **zero-dependency, single-file web application** to ensure fast mobile load times and low maintenance overhead.
+This project is built as a **zero-dependency, modular web application** designed for fast mobile load times, low maintenance overhead, and easy event updates.
 
-* **Frontend:** HTML5, Modern CSS (Variables, Grid, Flexbox), Vanilla JavaScript (ES6+).
-* **Hosting:** GitHub Pages (Static delivery).
-* **Data Persistence:** Browser `localStorage` (`gwidam_workshop_quantities` and `gwidam_workshop_checklist`).
+* **Frontend:** HTML5, Modern CSS (Variables, Grid, Flexbox, Parallax Gradients), Vanilla JavaScript (ES6+).
+* **Data Decoupling:** Event data is fully separated from the main app engine into external data files (`js/playtogether_core.js` and `js/gwidam_data.js`).
+* **Hosting:** GitHub Pages (Static delivery via relative pathing).
+* **Data Persistence:** Browser `localStorage`.
 
-### Core Algorithms
+### Core Algorithms & Engine Logic
 
 * **Parallel Queue Calculation (`calculateParallelTime`):** Models a 4-slot crafting queue by sorting item build durations in descending order and assigning each task to the earliest available slot.
-* **Dynamic Material Math (`calculateTotals`):** Evaluates completed assembly queue items (`craft_id_index`) and raw material checks (`mat_name`) against initial target goals to update the remaining required materials in the floating bottom sheet without altering project targets.
+* **Goal-Reduction Queue Workflow:** Completing an item on the Active Checklist moves it to a "Completed" accordion section and subtracts its quantity from the active target without wiping project parameters.
