@@ -175,6 +175,7 @@
             padding: 20px 16px;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
 
         .drawer.open {
@@ -251,7 +252,7 @@
             line-height: 1.4;
         }
 
-        /* ENGINE STYLING (From Source 2) */
+        /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
         .sub-btn.active-furniture { background-color: rgba(232, 195, 64, 0.15); color: var(--accent-gold); border-color: var(--accent-gold); }
@@ -342,9 +343,26 @@
             <button class="close-btn" onclick="toggleDrawer()">✕</button>
         </div>
 
+        <div class="drawer-section-title">📜 Past Events</div>
+        <div class="drawer-link" onclick="loadGwidamArchive()">Gwidam Village</div>
+
         <div class="drawer-section-title">📚 Material & Item Index</div>
         <div class="drawer-link" onclick="loadCoreIndex()">PlayTogether Core</div>
         <div class="drawer-link" onclick="loadGwidamIndex()">Gwidam Village Index</div>
+
+        <div class="drawer-section-title">🔗 Game Resources</div>
+        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
+        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
+        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
+
+        <div class="drawer-section-title">👤 Creator & Socials</div>
+        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
+        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
+        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
+        <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>💬 Discord: Benni1433</span>
+            <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
+        </div>
     </div>
 
     <!-- ACTIVE EVENT LANDING PAGE (Desert Oasis Engine) -->
@@ -464,6 +482,20 @@ function saveChecklist() {
 function toggleDrawer() {
     document.getElementById('drawer').classList.toggle('open');
     document.getElementById('drawerOverlay').classList.toggle('open');
+}
+
+function copyDiscordHandle() {
+    navigator.clipboard.writeText("Benni1433").then(() => {
+        const badge = document.getElementById("discordCopyBadge");
+        badge.innerText = "Copied!";
+        badge.style.color = "var(--accent-pet)";
+        setTimeout(() => {
+            badge.innerText = "Copy";
+            badge.style.color = "var(--accent-gold)";
+        }, 2000);
+    }).catch(err => {
+        alert("Discord Handle: Benni1433");
+    });
 }
 
 function switchTab(tabId, btn) {
@@ -614,7 +646,7 @@ function completeCraft(itemId, element) {
             renderGrid();
             renderChecklist();
             calculateTotals();
-        }, 500); // Maintained 500ms delay[cite: 2]
+        }, 500); 
     }
 }
 
@@ -866,25 +898,25 @@ function calculateTotals() {
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
-    const sortedMats = Object.entries(matTotals).sort((a, b) => b[1] - a[1]);
+    // 2x2 Grid Rendering: Filter out unneeded materials with 0 quantity
+    const activeMats = Object.entries(matTotals).filter(([_, count]) => count > 0).sort((a, b) => b[1] - a[1]);
 
-    if (sortedMats.length === 0) {
+    if (activeMats.length === 0) {
         matsGridEl.innerHTML = `
-            <div class="mat-tile">
-                <span class="tile-title">Select Items</span>
-                <span class="tile-count">0</span>
+            <div class="mat-tile" style="grid-column: 1 / -1; justify-content: center;">
+                <span class="tile-title">No Active Materials Selected</span>
             </div>`;
     } else {
-        sortedMats.forEach(([mat, currentReq]) => {
+        activeMats.forEach(([mat, currentReq]) => {
             const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const isChecked = checklistProgress[matCheckId];
             
             const tile = document.createElement("div");
             tile.className = "mat-tile";
             
-            if (currentReq === 0 || isChecked) {
-                tile.style.opacity = "0.5";
-                tile.style.borderColor = "rgba(232, 195, 64, 0.3)";
+            if (isChecked) {
+                tile.style.opacity = "0.4";
+                tile.style.borderColor = "rgba(232, 195, 64, 0.2)";
             }
 
             tile.innerHTML = `
@@ -934,7 +966,6 @@ function loadCoreIndex() {
     const grid = document.getElementById('archiveGrid');
     grid.innerHTML = "";
 
-    // Ensures the external file has loaded before attempting to render
     if (typeof coreGlossary === 'undefined') {
         grid.innerHTML = '<div style="color: #d9534f;">Error: playtogether_core.js data not found!</div>';
         return;
