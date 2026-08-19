@@ -490,6 +490,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.2s ease;
         }
 
         .tile-title {
@@ -618,29 +619,29 @@
 
 <script>
 const items = [
-    { id: "traditional_jar", name: "Traditional Jar", timeMinutes: 30, mats: { "Guardian Yeopjeon": 40, "Stone": 10 }, lore: "Place it somewhere that gets plenty of sunshine.", image: "Traditional Jar.png" },
-    { id: "guardian_monument", name: "Village Guardian Monument", timeMinutes: 30, mats: { "Guardian Yeopjeon": 60, "Health Charm": 5, "Stone": 20 }, lore: "A guardian monument that has watched over the village for generations.", image: "Village Guardian Monument.png" },
-    { id: "mysterious_well", name: "Mysterious Well", timeMinutes: 80, mats: { "Guardian Yeopjeon": 60, "Eoduksini": 3, "Water": 10 }, lore: "Ancient secrets lie hidden deep within this well.", image: "Mysterious Well.png" },
-    { id: "cheongsachorong", name: "Cheongsachorong Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Its gentle glow lights the way through the quiet night.", image: "Cheongsachorong Lantern.png" },
-    { id: "latticework_lantern", name: "Traditional Latticework Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Made with traditional latticework and hanji paper.", image: "Traditional Latticework Lantern.png" },
-    { id: "moon_pavilion", name: "Moon-Viewing Pavilion", timeMinutes: 230, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Stone": 10 }, lore: "Welcome the rising moon on a peaceful night.", image: "Moon-Viewing Pavilion.png" },
-    { id: "moonlit_thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Ivory Cube": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight.", image: "Moonlit Thatched Cottage.png" },
-    { id: "underworld_totem", name: "Female General of the Underworld Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Female General Totem (Material)": 1, "Health Charm": 5 }, lore: "It is said to govern the energy that flows beneath the earth.", image: "Female General of the Underworld Totem.png" },
-    { id: "heaven_totem", name: "Great General of All Under Heaven Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Great General Totem (Material)": 1, "Health Charm": 5 }, lore: "Said to watch over the village and ward off evil spirits.", image: "Great General of All Under Heaven Totem.png" },
-    { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 390, mats: { "Guardian Yeopjeon": 250, "Haechi Statue (Material)": 1, "Yeopjeon Knot Ornament": 5, "Someone's Nameplate": 3 }, lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi.", image: "Haechi Statue.png" },
-    { id: "market_stall", name: "Village Market Stall", timeMinutes: 360, mats: { "Guardian Yeopjeon": 200, "Will-o'-the-Wisp": 5, "Someone's Nameplate": 3 }, lore: "A simple market stall that fits perfectly in a cozy village marketplace.", image: "Village Market Stall.png" },
-    { id: "thatched_barn", name: "Thatched Barn", timeMinutes: 110, mats: { "Guardian Yeopjeon": 80, "Misfortune Doll": 5, "Tree Branch": 10 }, lore: "A cozy barn topped with warm straw.", image: "Thatched Barn.png" },
-    { id: "traditional_signboard", name: "Traditional Signboard", timeMinutes: 180, mats: { "Guardian Yeopjeon": 100, "Someone's Norigae": 10, "Misfortune Doll": 5 }, lore: "Leave a message for the village.", image: "Traditional Signboard.png" },
-    { id: "wooden_platform", name: "Peaceful Wooden Platform", timeMinutes: 40, mats: { "Guardian Yeopjeon": 40, "Tree Branch": 20 }, lore: "Take a break and enjoy the gentle breeze.", image: "Peaceful Wooden Platform.png" }
+    { id: "traditional_jar", name: "Traditional Jar", timeMinutes: 30, mats: { "Guardian Yeopjeon": 40, "Stone": 10 }, lore: "Place it somewhere that gets plenty of sunshine.", image: "Images/Gwidam/Traditional Jar.png" },
+    { id: "guardian_monument", name: "Village Guardian Monument", timeMinutes: 30, mats: { "Guardian Yeopjeon": 60, "Health Charm": 5, "Stone": 20 }, lore: "A guardian monument that has watched over the village for generations.", image: "Images/Gwidam/Village Guardian Monument.png" },
+    { id: "mysterious_well", name: "Mysterious Well", timeMinutes: 80, mats: { "Guardian Yeopjeon": 60, "Eoduksini": 3, "Water": 10 }, lore: "Ancient secrets lie hidden deep within this well.", image: "Images/Gwidam/Mysterious Well.png" },
+    { id: "cheongsachorong", name: "Cheongsachorong Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Its gentle glow lights the way through the quiet night.", image: "Images/Gwidam/Cheongsachorong Lantern.png" },
+    { id: "latticework_lantern", name: "Traditional Latticework Lantern", timeMinutes: 120, mats: { "Guardian Yeopjeon": 60, "Will-o'-the-Wisp": 3 }, lore: "Made with traditional latticework and hanji paper.", image: "Images/Gwidam/Traditional Latticework Lantern.png" },
+    { id: "moon_pavilion", name: "Moon-Viewing Pavilion", timeMinutes: 230, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Stone": 10 }, lore: "Welcome the rising moon on a peaceful night.", image: "Images/Gwidam/Moon-Viewing Pavilion.png" },
+    { id: "moonlit_thatched_cottage", name: "Moonlit Thatched Cottage", timeMinutes: 160, mats: { "Guardian Yeopjeon": 100, "Cursed Scarecrow": 15, "Ivory Cube": 2 }, lore: "A thatched cottage bathed in the gentle glow of moonlight.", image: "Images/Gwidam/Moonlit Thatched Cottage.png" },
+    { id: "underworld_totem", name: "Female General of the Underworld Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Female General Totem (Material)": 1, "Health Charm": 5 }, lore: "It is said to govern the energy that flows beneath the earth.", image: "Images/Gwidam/Female General of the Underworld Totem.png" },
+    { id: "heaven_totem", name: "Great General of All Under Heaven Totem", timeMinutes: 150, mats: { "Guardian Yeopjeon": 150, "Great General Totem (Material)": 1, "Health Charm": 5 }, lore: "Said to watch over the village and ward off evil spirits.", image: "Images/Gwidam/Great General of All Under Heaven Totem.png" },
+    { id: "haechi_statue", name: "Haechi Statue", timeMinutes: 390, mats: { "Guardian Yeopjeon": 250, "Haechi Statue (Material)": 1, "Yeopjeon Knot Ornament": 5, "Someone's Nameplate": 3 }, lore: "Imbued with the protective spirit of the righteous guardian beast, Haechi.", image: "Images/Gwidam/Haechi Statue.png" },
+    { id: "market_stall", name: "Village Market Stall", timeMinutes: 360, mats: { "Guardian Yeopjeon": 200, "Will-o'-the-Wisp": 5, "Someone's Nameplate": 3 }, lore: "A simple market stall that fits perfectly in a cozy village marketplace.", image: "Images/Gwidam/Village Market Stall.png" },
+    { id: "thatched_barn", name: "Thatched Barn", timeMinutes: 110, mats: { "Guardian Yeopjeon": 80, "Misfortune Doll": 5, "Tree Branch": 10 }, lore: "A cozy barn topped with warm straw.", image: "Images/Gwidam/Thatched Barn.png" },
+    { id: "traditional_signboard", name: "Traditional Signboard", timeMinutes: 180, mats: { "Guardian Yeopjeon": 100, "Someone's Norigae": 10, "Misfortune Doll": 5 }, lore: "Leave a message for the village.", image: "Images/Gwidam/Traditional Signboard.png" },
+    { id: "wooden_platform", name: "Peaceful Wooden Platform", timeMinutes: 40, mats: { "Guardian Yeopjeon": 40, "Tree Branch": 20 }, lore: "Take a break and enjoy the gentle breeze.", image: "Images/Gwidam/Peaceful Wooden Platform.png" }
 ];
 
 const pets = [
-    { id: "divine_beast_supplement", name: "Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 50, "Misfortune Doll": 3, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 50.", image: "divine_beast_supplement.png" },
-    { id: "premium_divine_beast_supplement", name: "Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 100, "Will-o'-the-Wisp": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 200.", image: "premium_divine_beast_supplement.png" },
-    { id: "super_premium_divine_beast_supplement", name: "Super Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 150, "Eoduksini": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 700.", image: "super_premium_divine_beast_supplement.png" },
-    { id: "divine_beast_barrier_pet_fence", name: "Divine Beast Barrier Pet Fence", timeMinutes: 990, mats: { "Guardian Yeopjeon": 250, "Health Charm": 10, "Yeopjeon Knot Ornament": 20, "Stone": 1 }, lore: "A mystical barrier created to safeguard the divine beasts.", image: "divine_beast_barrier_pet_fence.png" },
-    { id: "divine_beast_egg_normal", name: "Divine Beast Egg (Normal)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 200, "Normal Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "divine_beast_egg.png" },
-    { id: "divine_beast_egg_premium", name: "Divine Beast Egg (Premium)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 100, "Premium Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "divine_beast_egg.png" }
+    { id: "divine_beast_supplement", name: "Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 50, "Misfortune Doll": 3, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 50.", image: "Images/Gwidam/divine_beast_supplement.png" },
+    { id: "premium_divine_beast_supplement", name: "Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 100, "Will-o'-the-Wisp": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 200.", image: "Images/Gwidam/premium_divine_beast_supplement.png" },
+    { id: "super_premium_divine_beast_supplement", name: "Super Premium Divine Beast Supplement", timeMinutes: 40, mats: { "Guardian Yeopjeon": 150, "Eoduksini": 1, "Water": 5 }, lore: "Filled with pure spiritual energy to nurture the growth of your Divine Beast. Increases EXP by 700.", image: "Images/Gwidam/super_premium_divine_beast_supplement.png" },
+    { id: "divine_beast_barrier_pet_fence", name: "Divine Beast Barrier Pet Fence", timeMinutes: 990, mats: { "Guardian Yeopjeon": 250, "Health Charm": 10, "Yeopjeon Knot Ornament": 20, "Stone": 1 }, lore: "A mystical barrier created to safeguard the divine beasts.", image: "Images/Gwidam/divine_beast_barrier_pet_fence.png" },
+    { id: "divine_beast_egg_normal", name: "Divine Beast Egg (Normal)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 200, "Normal Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "Images/Gwidam/divine_beast_egg.png" },
+    { id: "divine_beast_egg_premium", name: "Divine Beast Egg (Premium)", timeMinutes: 100, mats: { "Guardian Yeopjeon": 100, "Premium Egg": 1 }, lore: "A mysterious presence can be felt from within the shell.", image: "Images/Gwidam/divine_beast_egg.png" }
 ];
 
 const glossary = [
@@ -858,15 +859,21 @@ function toggleCheckItem(id, element) {
 }
 
 // Complete an Active Craft -> subtracts from goal, adds to completed
-function completeCraft(itemId) {
-    if (quantities[itemId] > 0) {
-        quantities[itemId]--;
-        completedCrafts[itemId] = (completedCrafts[itemId] || 0) + 1;
-        saveQuantities();
-        saveCompleted();
-        renderGrid();
-        renderChecklist();
-        calculateTotals();
+// Added specific delay and animation per user request!
+function completeCraft(itemId, element) {
+    if (quantities[itemId] > 0 && !element.classList.contains('processing')) {
+        element.classList.add('processing'); 
+        element.classList.add('completed'); 
+        
+        setTimeout(() => {
+            quantities[itemId]--;
+            completedCrafts[itemId] = (completedCrafts[itemId] || 0) + 1;
+            saveQuantities();
+            saveCompleted();
+            renderGrid();
+            renderChecklist();
+            calculateTotals();
+        }, 500); // 500ms delay so you can see the strikethrough happen before it leaves
     }
 }
 
@@ -990,7 +997,7 @@ function renderChecklist() {
         if (qty > 0) hasFurniture = true;
         for (let i = 0; i < qty; i++) {
             furnitureActiveHtml += `
-                <div class="check-item" onclick="completeCraft('${item.id}')">
+                <div class="check-item" onclick="completeCraft('${item.id}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${item.name}</div>
                     <div class="check-qty" style="background: rgba(226, 176, 71, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
@@ -1038,7 +1045,7 @@ function renderChecklist() {
         if (qty > 0) hasPets = true;
         for (let i = 0; i < qty; i++) {
             petsActiveHtml += `
-                <div class="check-item" onclick="completeCraft('${pet.id}')">
+                <div class="check-item" onclick="completeCraft('${pet.id}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${pet.name}</div>
                     <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
@@ -1142,14 +1149,6 @@ function calculateTotals() {
         }
     });
 
-    // Zero out raw materials physically checked off on the checklist tab
-    Object.keys(matTotals).forEach(mat => {
-        const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
-        if (checklistProgress[matCheckId]) {
-            matTotals[mat] = 0;
-        }
-    });
-
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
@@ -1163,10 +1162,15 @@ function calculateTotals() {
             </div>`;
     } else {
         sortedMats.forEach(([mat, currentReq]) => {
+            // Check if this material is marked as physically checked off on the checklist
+            const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
+            const isChecked = checklistProgress[matCheckId];
+            
             const tile = document.createElement("div");
             tile.className = "mat-tile";
             
-            if (currentReq === 0) {
+            // If the item requirement drops to 0, OR if the user manually checked it off, grey it out.
+            if (currentReq === 0 || isChecked) {
                 tile.style.opacity = "0.5";
                 tile.style.borderColor = "rgba(63, 53, 88, 0.4)";
             }
@@ -1178,7 +1182,6 @@ function calculateTotals() {
             matsGridEl.appendChild(tile);
 
             // Sync the rendered Checklist UI text for the materials
-            const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const checklistQtyEl = document.getElementById(`qty_${matCheckId}`);
             if (checklistQtyEl) {
                 checklistQtyEl.innerHTML = `x${currentReq.toLocaleString()}`;
