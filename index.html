@@ -348,79 +348,115 @@
 	.glossary-card .index-preview-img[alt*="Water"] {
 	    border: 1.5px solid rgba(23, 178, 178, 0.5);
 	}
-
-/* =====================================================================
-	   MOBILE RESPONSIVE ENHANCEMENTS (2-COLUMN GRID & LARGER IMAGES)
+	/* =====================================================================
+	   MOBILE RESPONSIVE ENHANCEMENTS (GALLERY CATALOG & TIGHT BORDERS)
 	   ===================================================================== */
 
-	/* Mobile screens: Force 2 cards per row on calculator & catalog */
+	/* Fix border alignment: remove inner container padding & black space */
+	.card-img-container {
+	    padding: 0 !important;
+	    margin-bottom: 8px !important;
+	    background: transparent !important;
+	}
+
+	/* Base image styling: border touches image edges directly */
+	.index-preview-img,
+	.item-preview-img {
+	    border-radius: 10px;
+	    background-color: #ffffff; /* Solid white background so transparency pops */
+	    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+	    box-sizing: border-box;
+	    display: block;
+	    margin: 0 auto;
+	}
+
+	/* Desktop / Base Image Sizing */
+	.item-preview-img {
+	    width: 100%;
+	    max-width: 160px;
+	    height: auto;
+	    aspect-ratio: 1 / 1;
+	    object-fit: contain;
+	}
+
+	.index-preview-img {
+	    width: 100%;
+	    max-width: 220px;
+	    height: auto;
+	    aspect-ratio: 1 / 1;
+	    object-fit: contain;
+	}
+
+	/* --- MOBILE SPECIFIC OVERRIDES --- */
 	@media (max-width: 600px) {
 	    .tab-content {
 	        padding: 10px 8px;
 	    }
 
-	    .furniture-grid, 
-	    .index-grid {
+	    /* CALCULATOR: Compact 2-Column Grid */
+	    .furniture-grid {
 	        grid-template-columns: repeat(2, 1fr) !important;
 	        gap: 8px !important;
 	    }
 
-	    .item-card, 
+	    /* CATALOG INDEX: Full-Width Showcase Gallery Cards */
+	    .index-grid {
+	        grid-template-columns: 1fr !important; /* 1 card per row for showcase view */
+	        gap: 16px !important;
+	    }
+
 	    .glossary-card {
-	        padding: 8px;
+	        padding: 14px !important;
 	    }
 
-	    /* Scale images up & reduce padding so artwork fills the card */
-	    .card-img-container {
-	        padding: 4px;
-	        margin-bottom: 6px;
-	    }
-
-	    .item-preview-img {
-	        height: 105px !important;
-	        width: 100% !important;
-	    }
-
+	    /* Large Showcase Images in Catalog */
 	    .index-preview-img {
-	        height: 130px !important;
-	        width: 100% !important;
+	        max-width: 100% !important;
+	        height: 200px !important;
+	        object-fit: contain;
 	    }
 
-	    /* Text scaling for side-by-side mobile fit */
-	    .item-name, 
-	    .glossary-title {
-	        font-size: 0.85rem;
-	        line-height: 1.2;
+	    /* Calculator Tile Images */
+	    .item-preview-img {
+	        max-width: 100% !important;
+	        height: 110px !important;
+	        object-fit: contain;
 	    }
 
-	    .item-time, 
-	    .glossary-sub {
-	        font-size: 0.75rem;
-	        margin-bottom: 4px;
-	    }
+	    /* Text scaling for Calculator 2-col fit */
+	    .furniture-grid .item-name { font-size: 0.85rem; }
+	    .furniture-grid .item-time { font-size: 0.75rem; }
+	    .furniture-grid .item-mats { font-size: 0.7rem; }
 
-	    .item-mats, 
-	    .glossary-lore {
-	        font-size: 0.7rem;
-	        margin-bottom: 8px;
-	    }
+	    /* Text scaling for Gallery Catalog View */
+	    .index-grid .glossary-title { font-size: 1.1rem; }
+	    .index-grid .glossary-sub { font-size: 0.85rem; }
+	    .index-grid .glossary-lore { font-size: 0.85rem; line-height: 1.4; }
 
-	    /* Compact +/- button controls for mobile */
-	    .controls {
-	        padding: 2px;
-	    }
+	    /* Compact +/- buttons on calculator */
+	    .controls { padding: 2px; }
+	    .btn { width: 28px; height: 28px; font-size: 1rem; }
+	    .qty-input { width: 28px; font-size: 0.9rem; }
+	}
 
-	    .btn {
-	        width: 28px;
-	        height: 28px;
-	        font-size: 1rem;
-	    }
+	/* --- CATEGORY BORDER COLORS (TOUCHING IMAGE EDGES DIRECTLY) --- */
+	.item-card .item-preview-img,
+	.glossary-card .index-preview-img {
+	    border: 2px solid rgba(232, 195, 64, 0.8) !important; /* Gold */
+	}
 
-	    .qty-input {
-	        width: 28px;
-	        font-size: 0.9rem;
-	    }
-	}		
+	.pet-card .item-preview-img,
+	.glossary-card[style*="50, 168, 115"] .index-preview-img {
+	    border: 2px solid rgba(50, 168, 115, 0.8) !important; /* Jade Green */
+	}
+
+	.glossary-card .index-preview-img[alt*="Papyrus"],
+	.glossary-card .index-preview-img[alt*="Tablet"],
+	.glossary-card .index-preview-img[alt*="Pottery"],
+	.glossary-card .index-preview-img[alt*="Coin"],
+	.glossary-card .index-preview-img[alt*="Water"] {
+	    border: 2px solid rgba(23, 178, 178, 0.8) !important; /* Nile Teal */
+	}	
 
     </style>
 </head>
