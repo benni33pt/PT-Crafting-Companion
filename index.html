@@ -348,6 +348,80 @@
 	.glossary-card .index-preview-img[alt*="Water"] {
 	    border: 1.5px solid rgba(23, 178, 178, 0.5);
 	}
+
+/* =====================================================================
+	   MOBILE RESPONSIVE ENHANCEMENTS (2-COLUMN GRID & LARGER IMAGES)
+	   ===================================================================== */
+
+	/* Mobile screens: Force 2 cards per row on calculator & catalog */
+	@media (max-width: 600px) {
+	    .tab-content {
+	        padding: 10px 8px;
+	    }
+
+	    .furniture-grid, 
+	    .index-grid {
+	        grid-template-columns: repeat(2, 1fr) !important;
+	        gap: 8px !important;
+	    }
+
+	    .item-card, 
+	    .glossary-card {
+	        padding: 8px;
+	    }
+
+	    /* Scale images up & reduce padding so artwork fills the card */
+	    .card-img-container {
+	        padding: 4px;
+	        margin-bottom: 6px;
+	    }
+
+	    .item-preview-img {
+	        height: 105px !important;
+	        width: 100% !important;
+	    }
+
+	    .index-preview-img {
+	        height: 130px !important;
+	        width: 100% !important;
+	    }
+
+	    /* Text scaling for side-by-side mobile fit */
+	    .item-name, 
+	    .glossary-title {
+	        font-size: 0.85rem;
+	        line-height: 1.2;
+	    }
+
+	    .item-time, 
+	    .glossary-sub {
+	        font-size: 0.75rem;
+	        margin-bottom: 4px;
+	    }
+
+	    .item-mats, 
+	    .glossary-lore {
+	        font-size: 0.7rem;
+	        margin-bottom: 8px;
+	    }
+
+	    /* Compact +/- button controls for mobile */
+	    .controls {
+	        padding: 2px;
+	    }
+
+	    .btn {
+	        width: 28px;
+	        height: 28px;
+	        font-size: 1rem;
+	    }
+
+	    .qty-input {
+	        width: 28px;
+	        font-size: 0.9rem;
+	    }
+	}		
+
     </style>
 </head>
 <body>
