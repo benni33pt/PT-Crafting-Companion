@@ -255,6 +255,17 @@
         .controls { display: flex; align-items: center; justify-content: space-between; background: var(--bg-color); border-radius: 8px; padding: 4px; }
         .btn { background: var(--accent-purple); color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .qty-input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; }
+        
+        /* Custom Input Styling adjustments */
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .qty-input[type=number] {
+            -moz-appearance: textfield;
+            outline: none;
+        }
 
         .generate-btn { display: block; width: 100%; padding: 16px; background: var(--accent-gold); color: #0A0A0A; font-weight: bold; font-size: 1.1rem; text-align: center; border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; }
         .generate-btn:hover { background: #d1a03c; }
@@ -462,8 +473,7 @@
 </head>
 <body>
 
-    <!-- STICKY TOP NAV -->
-    <div class="nav-header">
+        <div class="nav-header">
         <button class="menu-btn" onclick="toggleDrawer()">≡</button>
         <button class="home-btn" id="homeBtn" onclick="loadActiveEventView()">🏠 Back to Current Event</button>
         <div class="tab-btn-container" id="tabBtnContainer">
@@ -473,8 +483,7 @@
         </div>
     </div>
 
-    <!-- HAMBURGER DRAWER -->
-<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
 <div class="drawer" id="drawer">
     <div class="drawer-header">
         <span class="drawer-title">Navigation Hub</span>
@@ -501,8 +510,7 @@
     </div>
 </div>
 
-    <!-- ACTIVE EVENT LANDING PAGE (Desert Oasis Engine) -->
-    <div id="activeEventContainer">
+        <div id="activeEventContainer">
         
         <div class="hero-banner-container" id="heroBanner">
             <img src="Images/DesertOasis/Desert Oasis Key Art.jpg" alt="Desert Oasis Key Art" class="hero-img">
@@ -511,8 +519,7 @@
         </div>
 
         <div id="calculatorTab" class="tab-content active">
-            <!-- Sub-Navigation Toggle -->
-            <div class="sub-nav" id="activeSubNav">
+                        <div class="sub-nav" id="activeSubNav">
                 <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
                 <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets</button>
             </div>
@@ -525,8 +532,7 @@
             <div id="checklistContainer"></div>
         </div>
 
-        <!-- EXPANDABLE BOTTOM SHEET OVERLAY -->
-        <div class="bottom-sheet" id="bottomSheet">
+                <div class="bottom-sheet" id="bottomSheet">
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
                 <div class="summary-bar-content">
@@ -551,14 +557,12 @@
 
     </div>
 
-    <!-- ARCHIVE VIEW CONTAINER -->
-    <div id="archiveContainer" class="tab-content" style="padding-top: 24px;">
+        <div id="archiveContainer" class="tab-content" style="padding-top: 24px;">
         <h1 id="archiveTitle" style="text-align: center; color: var(--accent-gold); margin-bottom: 20px; margin-top: 0;">Event Archive</h1>
         <div class="index-grid" id="archiveGrid"></div>
     </div>
 
-    <!-- EXTERNAL DECOUPLED DATA FILES -->
-    <script src="js/playtogether_core.js"></script>
+        <script src="js/playtogether_core.js"></script>
     <script src="js/gwidam_data.js"></script>
 
 <script>
@@ -751,7 +755,7 @@ function renderGrid() {
             </div>
             <div class="controls">
                 <button class="btn" onclick="updateQty('${item.id}', -1)">-</button>
-                <input type="text" class="qty-input" value="${quantities[item.id]}" readonly>
+                <input type="number" class="qty-input" value="${quantities[item.id]}" onchange="handleManualInput('${item.id}', this.value)" onfocus="this.select()">
                 <button class="btn" onclick="updateQty('${item.id}', 1)">+</button>
             </div>
         `;
@@ -993,6 +997,20 @@ function renderChecklist() {
 
 function updateQty(id, change) {
     quantities[id] = Math.max(0, (quantities[id] || 0) + change);
+    saveQuantities();
+    renderGrid();
+    
+    if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
+        renderChecklist(); 
+    } else {
+        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
+    }
+    
+    calculateTotals();
+}
+
+function handleManualInput(id, value) {
+    quantities[id] = Math.max(0, parseInt(value) || 0);
     saveQuantities();
     renderGrid();
     
