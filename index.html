@@ -229,29 +229,6 @@
             color: var(--accent-gold);
         }
 
-        /* PLACEHOLDER COMING SOON CARD */
-        .coming-soon-card {
-            background: var(--card-bg);
-            border: 1px dashed var(--accent-gold);
-            border-radius: var(--border-radius);
-            padding: 32px 20px;
-            text-align: center;
-            margin-top: 12px;
-        }
-
-        .coming-soon-title {
-            color: var(--accent-gold);
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .coming-soon-text {
-            color: #A0A0A0;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
         /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
@@ -321,6 +298,56 @@
         .mat-tile { background-color: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
         .tile-title { font-size: 0.75rem; color: #bfaecf; }
         .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
+	
+	/* =====================================================================
+	   ROUNDED IMAGE CONTAINERS & CATEGORY COLOR BORDERS
+	   ===================================================================== */
+
+	/* Base image styling: rounds image corners & sets background/dimensions */
+	.index-preview-img,
+	.item-preview-img {
+	    border-radius: 10px;
+	    background-color: rgba(0, 0, 0, 0.25);
+	    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+	    box-sizing: border-box;
+	    border: 1.5px solid var(--accent-purple); /* Default charcoal border */
+	}
+
+	/* Size constraints */
+	.item-preview-img {
+	    height: 90px;
+	    width: 90px;
+	    object-fit: contain;
+	}
+
+	.index-preview-img {
+	    height: 120px;
+	    width: 120px;
+	    object-fit: contain;
+	}
+
+	/* --- DYNAMIC CATEGORY BORDER VARIATIONS --- */
+
+	/* Gold Outline for Furniture Items */
+	.item-card .item-preview-img,
+	.glossary-card .index-preview-img {
+	    border: 1.5px solid rgba(232, 195, 64, 0.4);
+	}
+
+	/* Jade Green Outline for Pet Cards */
+	.pet-card .item-preview-img,
+	.glossary-card[style*="50, 168, 115"] .index-preview-img {
+	    border: 1.5px solid rgba(50, 168, 115, 0.5);
+	}
+
+	/* Nile Teal Outline for Material Index Cards */
+	.glossary-card .index-preview-img[alt*="Papyrus"],
+	.glossary-card .index-preview-img[alt*="Tablet"],
+	.glossary-card .index-preview-img[alt*="Pottery"],
+	.glossary-card .index-preview-img[alt*="Coin"],
+	.glossary-card .index-preview-img[alt*="Water"] {
+	    border: 1.5px solid rgba(23, 178, 178, 0.5);
+	}
     </style>
 </head>
 <body>
@@ -332,35 +359,37 @@
         <div class="tab-btn-container" id="tabBtnContainer">
             <button class="tab-btn active" onclick="switchTab('calculatorTab', this)">Calculator</button>
             <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
+            <button class="tab-btn" onclick="loadActiveEventIndex()">Desert Oasis Catalog</button>
         </div>
     </div>
 
     <!-- HAMBURGER DRAWER -->
-    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
-    <div class="drawer" id="drawer">
-        <div class="drawer-header">
-            <span class="drawer-title">Navigation Hub</span>
-            <button class="close-btn" onclick="toggleDrawer()">✕</button>
-        </div>
-
-        <div class="drawer-section-title">📚 Material & Item Index</div>
-        <div class="drawer-link" onclick="loadCoreIndex()">PlayTogether Core</div>
-        <div class="drawer-link" onclick="loadGwidamIndex()">Gwidam Village Index</div>
-
-        <div class="drawer-section-title">🔗 Game Resources</div>
-        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
-        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
-        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
-
-        <div class="drawer-section-title">👤 Creator & Socials</div>
-        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
-        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
-        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
-        <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
-            <span>💬 Discord: Benni1433</span>
-            <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
-        </div>
+<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+<div class="drawer" id="drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">Navigation Hub</span>
+        <button class="close-btn" onclick="toggleDrawer()">✕</button>
     </div>
+
+	<div class="drawer-section-title">📚 Material & Item Index</div>
+	<div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
+	<div class="drawer-link" onclick="loadActiveEventIndex()">🏺 Desert Oasis Index</div>
+	<div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
+
+    <div class="drawer-section-title">🔗 Game Resources</div>
+    <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
+    <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
+    <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
+
+    <div class="drawer-section-title">👤 Creator & Socials</div>
+    <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
+    <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
+    <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
+    <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
+        <span>💬 Discord: Benni1433</span>
+        <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
+    </div>
+</div>
 
     <!-- ACTIVE EVENT LANDING PAGE (Desert Oasis Engine) -->
     <div id="activeEventContainer">
@@ -373,13 +402,13 @@
 
         <div id="calculatorTab" class="tab-content active">
             <!-- Sub-Navigation Toggle -->
-            <div class="sub-nav" id="activeSubNav" style="display: none;">
+            <div class="sub-nav" id="activeSubNav">
                 <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
-                <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets & Divine Beasts</button>
+                <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets</button>
             </div>
 
             <div class="furniture-grid" id="furnitureGrid"></div>
-            <button class="generate-btn" id="generateBtn" style="display: none;" onclick="generateChecklist()">Start Project (Create Checklist)</button>
+            <button class="generate-btn" id="generateBtn" onclick="generateChecklist()">Start!</button>
         </div>
 
         <div id="checklistTab" class="tab-content">
@@ -387,7 +416,7 @@
         </div>
 
         <!-- EXPANDABLE BOTTOM SHEET OVERLAY -->
-        <div class="bottom-sheet" id="bottomSheet" style="display: none;">
+        <div class="bottom-sheet" id="bottomSheet">
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
                 <div class="summary-bar-content">
@@ -424,15 +453,50 @@
 
 <script>
 /* =====================================================================
-   ACTIVE EVENT DATA ENGINE (Currently set to empty for Desert Oasis)
-   Once you have the event items, simply paste them into these arrays!
+   ACTIVE EVENT DATA ENGINE (Desert Oasis Event)
    ===================================================================== */
-const items = [];
-const pets = [];
-const glossary = [];
+const items = [
+    // --- CACTI & PLANTS ---
+    { id: "saguaro_cactus", name: "Saguaro Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A hardy cactus that thrives among the rugged sand dunes.", image: "Images/DesertOasis/Saguaro Cactus.png" },
+    { id: "columnar_cactus", name: "Columnar Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "An iconic desert cactus that stretches proudly toward the sky.", image: "Images/DesertOasis/Columnar Cactus.png" },
+    { id: "paddle_cactus", name: "Paddle Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A charming cactus with broad, paddle-shaped stems.", image: "Images/DesertOasis/Paddle Cactus.png" },
+    { id: "golden_barrel_cactus", name: "Golden Barrel Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A round cactus adorned with shimmering golden spines.", image: "Images/DesertOasis/Golden Barrel Cactus.png" },
+    { id: "oasis_cactus", name: "Oasis Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A lush cactus that flourishes around refreshing desert oases.", image: "Images/DesertOasis/Oasis Cactus.png" },
+
+    // --- CARTS & MARKET STANDS ---
+    { id: "oasis_cart", name: "Oasis Cart", timeMinutes: 320, mats: { "Pyramid Coin": 400, "Torn Papyrus": 5, "Tree Branch": 20 }, lore: "A wooden cart used to transport goods through the desert village.", image: "Images/DesertOasis/Oasis Cart.png" },
+    { id: "oasis_drink_stand", name: "Oasis Drink Stand", timeMinutes: 440, mats: { "Pyramid Coin": 400, "Cracked Clay Tablet": 5, "Torn Papyrus": 3, "Tree Branch": 20 }, lore: "A small stand that sells refreshing drinks.", image: "Images/DesertOasis/Oasis Drink Stand.png" },
+    { id: "oasis_food_stand", name: "Oasis Food Stand", timeMinutes: 440, mats: { "Pyramid Coin": 400, "Cracked Clay Tablet": 5, "Torn Papyrus": 3, "Tree Branch": 20 }, lore: "A food stand that sells a variety of desert dishes.", image: "Images/DesertOasis/Oasis Food Stand.png" },
+
+    // --- STRUCTURES & DECOR ---
+    { id: "wooden_signpost", name: "Wooden Signpost", timeMinutes: 120, mats: { "Pyramid Coin": 200, "Tree Branch": 3 }, lore: "A wooden sign that points travelers toward nearby paths and places.", image: "Images/DesertOasis/Wooden Signpost.png" },
+    { id: "oasis_banner", name: "Oasis Banner", timeMinutes: 110, mats: { "Pyramid Coin": 200, "Torn Papyrus": 3, "Tree Branch": 10 }, lore: "A decorative banner that brightens up the oasis.", image: "Images/DesertOasis/Oasis Banner.png" },
+    { id: "oasis_jar", name: "Oasis Jar", timeMinutes: 90, mats: { "Pyramid Coin": 200, "Broken Pottery Shards": 3 }, lore: "A large jar used to store precious water and food.", image: "Images/DesertOasis/Oasis Jar.png" },
+    { id: "ancient_beast_bones", name: "Ancient Beast Bones", timeMinutes: 700, mats: { "Pyramid Coin": 500 }, lore: "The weathered remains of a beast left in the desert for many years.", image: "Images/DesertOasis/Ancient Beast Bones.png" },
+
+    // --- PET FURNITURE ---
+    { id: "oasis_pet_bed", name: "Oasis Pet Bed", timeMinutes: 160, mats: { "Pyramid Coin": 400, "Broken Pottery Shards": 3, "Cracked Clay Tablet": 10 }, lore: "Rest is just as important when preparing for a long journey.", image: "Images/DesertOasis/Oasis Pet Bed.png" },
+    { id: "oasis_pet_bathtub", name: "Oasis Pet Bathtub", timeMinutes: 240, mats: { "Pyramid Coin": 400, "Broken Pottery Shards": 3, "Oasis Water": 3 }, lore: "A special pet bathtub filled with the crystal-clear spring water of an oasis.", image: "Images/DesertOasis/Oasis Pet Bathtub.png" }
+];
+
+const pets = [
+    { id: "fennec_fox_egg_normal", name: "Fennec Fox Egg (Normal)", timeMinutes: 200, mats: { "Pyramid Coin": 400, "Normal Egg": 1 }, lore: "A little desert guardian slumbers quietly within.", image: "Images/DesertOasis/Fennec Fox Egg.png" },
+    { id: "fennec_fox_egg_premium", name: "Fennec Fox Egg (Premium)", timeMinutes: 100, mats: { "Pyramid Coin": 200, "Premium Egg": 1 }, lore: "A little desert guardian slumbers quietly within.", image: "Images/DesertOasis/Fennec Fox Egg.png" },
+    { id: "oasis_supplement", name: "Oasis Supplement", timeMinutes: 10, mats: { "Pyramid Coin": 100, "Oasis Water": 1 }, lore: "A supplement infused with the refreshing energy of a tranquil oasis. Increases EXP by 50.", image: "Images/DesertOasis/Oasis Supplement.png" },
+    { id: "premium_oasis_supplement", name: "Premium Oasis Supplement", timeMinutes: 30, mats: { "Pyramid Coin": 200, "Oasis Water": 3 }, lore: "A supplement infused with the refreshing energy of a tranquil oasis. Increases EXP by 200.", image: "Images/DesertOasis/Premium Oasis Supplement.png" },
+    { id: "special_oasis_supplement", name: "Special Oasis Supplement", timeMinutes: 60, mats: { "Pyramid Coin": 400, "Oasis Water": 5 }, lore: "A supplement infused with the refreshing energy of a tranquil oasis. Increases EXP by 700.", image: "Images/DesertOasis/Special Oasis Supplement.png" }
+];
+
+const glossary = [
+    { name: "Pyramid Coin", lore: "Used in events.", source: "Event", image: "Images/DesertOasis/Pyramid Coin.png" },
+    { name: "Torn Papyrus", lore: "A torn sheet of papyrus bearing ancient records.", source: "(Excavation) Ancient Jar", image: "Images/DesertOasis/Torn Papyrus.png" },
+    { name: "Cracked Clay Tablet", lore: "A clay tablet once used to record history, now cracked with age.", source: "(Excavation) Ancient Jar", image: "Images/DesertOasis/Cracked Clay Tablet.png" },
+    { name: "Broken Pottery Shards", lore: "Fragments of everyday pottery once used in daily life.", source: "(Excavation) Ancient Jar", image: "Images/DesertOasis/Broken Pottery Shards.png" },
+    { name: "Oasis Water", lore: "Crystal-clear, refreshing spring water drawn from the oasis.", source: "Event Vendor", image: "Images/DesertOasis/Oasis Water.png" }
+];
 
 /* =====================================================================
-   STATE MANAGEMENT (Updated LocalStorage Keys to prevent collision!)
+   STATE MANAGEMENT
    ===================================================================== */
 let quantities = {};
 let completedCrafts = {};
@@ -502,9 +566,9 @@ function switchTab(tabId, btn) {
     document.getElementById(tabId).classList.add('active');
     btn.classList.add('active');
 
-    // Only show bottom sheet if there is active data
+    // Only show bottom sheet if on Calculator tab
     const sheet = document.getElementById('bottomSheet');
-    if (tabId === 'calculatorTab' && items.length > 0) {
+    if (tabId === 'calculatorTab') {
         sheet.style.display = 'block';
         document.body.style.paddingBottom = 'calc(var(--bar-height) + 40px)';
     } else {
@@ -557,21 +621,6 @@ function formatTime(minutes) {
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
-
-    // "Coming Soon" Fallback if data arrays are empty
-    if (items.length === 0 && pets.length === 0) {
-        grid.innerHTML = `
-            <div class="coming-soon-card" style="grid-column: 1 / -1;">
-                <div class="coming-soon-title">Desert Oasis — Calculator Coming Soon</div>
-                <div class="coming-soon-text">Check back here when the event drops to plan your new workshop queue!</div>
-            </div>`;
-        return;
-    }
-
-    // Reveal UI if data exists
-    document.getElementById('activeSubNav').style.display = 'flex';
-    document.getElementById('generateBtn').style.display = 'block';
-    document.getElementById('bottomSheet').style.display = 'block';
 
     const activeItems = currentCategory === 'furniture' ? items : pets;
 
@@ -665,27 +714,18 @@ function toggleCompletedVisibility(type) {
 }
 
 function getCategoryForMaterial(matName) {
-    const excavationItems = ["Someone's Nameplate", "Yeopjeon Knot Ornament", "Haechi Statue (Material)", "Female General Totem (Material)", "Great General Totem (Material)", "Health Charm", "Misfortune Doll"];
+    const excavationItems = ["Torn Papyrus", "Cracked Clay Tablet", "Broken Pottery Shards"];
     if (excavationItems.includes(matName)) return "Excavation";
     if (matName === "Tree Branch") return "Gathering";
     if (matName === "Stone") return "Mining";
-    if (matName === "Water") return "Mega Mart";
+    if (matName === "Oasis Water") return "Event Vendor";
+    if (matName === "Pyramid Coin") return "Event Currency";
     if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
-    if (matName === "Ivory Cube") return "Furniture Shop";
     return "Other Materials";
 }
 
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
-    
-    if (items.length === 0 && pets.length === 0) {
-        container.innerHTML = `
-            <div class="coming-soon-card">
-                <div class="coming-soon-title">Active Checklist Empty</div>
-                <div class="coming-soon-text">No active project right now. Select items on the Calculator once the event starts!</div>
-            </div>`;
-        return;
-    }
 
     const matTotals = {};
     let hasActiveOrCompletedItems = false;
@@ -813,7 +853,7 @@ function renderChecklist() {
     if (hasPets || hasCompletedPets) {
         html += `<div class="checklist-section" style="margin-top: 32px;">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span style="color: var(--accent-pet);">🐾 Pet & Divine Beast Incubator</span>
+                        <span style="color: var(--accent-pet);">🐾 Pet Incubator</span>
                     </div>
                     ${petsActiveHtml}`;
                     
@@ -895,7 +935,6 @@ function calculateTotals() {
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
-    // 2x2 Grid Rendering: Filter out unneeded materials with 0 quantity
     const activeMats = Object.entries(matTotals).filter(([_, count]) => count > 0).sort((a, b) => b[1] - a[1]);
 
     if (activeMats.length === 0) {
@@ -951,11 +990,74 @@ function calculateParallelTime(durations, maxSlots) {
 }
 
 /* =====================================================================
-   ARCHIVE LOADERS (Draws from external JS data)
+   INDEX & ARCHIVE LOADERS
    ===================================================================== */
-function loadGwidamArchive() {
-    loadActiveEventView();
-    alert("Gwidam Calculator is now archived in read-only mode inside the Gwidam Village Index!");
+function loadActiveEventIndex() {
+    showArchiveView("Desert Oasis Catalog & Lore");
+    const grid = document.getElementById('archiveGrid');
+    grid.innerHTML = "";
+
+    // --- SECTION 1: FURNITURE ---
+    const furnitureHeader = document.createElement("h2");
+    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    furnitureHeader.innerText = "🔨 Furniture";
+    grid.appendChild(furnitureHeader);
+
+    items.forEach(item => {
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
+            <div class="glossary-lore">"${item.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    // --- SECTION 2: PETS ---
+    const petsHeader = document.createElement("h2");
+    petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    petsHeader.innerText = "🐾 Pets & Incubator Items";
+    grid.appendChild(petsHeader);
+
+    pets.forEach(pet => {
+        const matString = Object.entries(pet.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = pet.image ? `<div class="card-img-container"><img src="${pet.image}" alt="${pet.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.style.borderColor = "rgba(50, 168, 115, 0.4)";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title" style="color: var(--accent-pet);">${pet.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(pet.timeMinutes)}</div>
+            <div class="glossary-lore">"${pet.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    // --- SECTION 3: MATERIALS ---
+    const materialsHeader = document.createElement("h2");
+    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    materialsHeader.innerText = "📌 Event Materials";
+    grid.appendChild(materialsHeader);
+
+    glossary.forEach(mat => {
+        const imgHtml = mat.image ? `<div class="card-img-container"><img src="${mat.image}" alt="${mat.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${mat.name}</div>
+            <div class="glossary-lore">"${mat.lore}"</div>
+            <div class="glossary-source">📍 Location: ${mat.source}</div>
+        `;
+        grid.appendChild(card);
+    });
 }
 
 function loadCoreIndex() {
