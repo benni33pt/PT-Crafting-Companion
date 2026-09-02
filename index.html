@@ -78,6 +78,7 @@
             overflow-x: auto;
             scrollbar-width: none;
             align-items: center;
+            width: 100%;
         }
         
         .tab-btn-container::-webkit-scrollbar {
@@ -102,18 +103,6 @@
             color: #0A0A0A;
         }
 
-        .event-timer-badge {
-            background: rgba(138, 43, 226, 0.2);
-            border: 1px solid var(--accent-purple);
-            color: var(--accent-gold);
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 6px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-            margin-left: auto;
-        }
-
         .tab-content {
             display: none;
             max-width: 900px;
@@ -125,7 +114,7 @@
             display: block;
         }
 
-        /* PARALLAX HERO BANNER */
+        /* PARALLAX HERO BANNER & TIMER BADGE OVERLAY */
         .hero-banner-container {
             position: relative;
             width: 100%;
@@ -162,6 +151,23 @@
             letter-spacing: 1px;
             text-shadow: 0 2px 8px rgba(0,0,0,0.9);
             margin: 0;
+        }
+
+        .event-timer-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(6px);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            white-space: nowrap;
         }
 
         /* SLIDE-OUT HAMBURGER DRAWER */
@@ -370,6 +376,7 @@
             .controls { padding: 2px; }
             .btn { width: 28px; height: 28px; font-size: 1rem; }
             .qty-input { width: 28px; font-size: 0.9rem; }
+            .event-timer-badge { font-size: 0.7rem; padding: 4px 10px; top: 10px; right: 10px; }
         }
 
         .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(138, 43, 226, 0.8) !important; }
@@ -386,7 +393,6 @@
             <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
             <button class="tab-btn" onclick="loadActiveEventIndex()">Magic Academy Catalog</button>
         </div>
-        <div class="event-timer-badge" id="eventTimerBadge">⏳ Calculating...</div>
     </div>
 
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
@@ -419,6 +425,7 @@
 
     <div id="activeEventContainer">
         <div class="hero-banner-container" id="heroBanner">
+            <div class="event-timer-badge" id="eventTimerBadge">⏳ Calculating...</div>
             <img src="Images/MagicAcademy/Magic Academy Key Art.jpg" alt="Magic Academy Key Art" class="hero-img">
             <div class="hero-fade-overlay"></div>
             <h1 class="hero-title">Magic Academy</h1>
