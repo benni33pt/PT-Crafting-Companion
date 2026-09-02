@@ -186,7 +186,7 @@
             white-space: nowrap;
         }
 
-        /* SLIDE-OUT HAMBURGER DRAWER */
+        /* SLIDE-OUT DRAWER WITH VERTICAL SCROLLING */
         .drawer-overlay {
             position: fixed;
             top: 0;
@@ -208,15 +208,17 @@
             left: 0;
             bottom: 0;
             width: 280px;
+            max-height: 100vh;
             background: var(--card-bg);
             border-right: 2px solid var(--accent-gold);
             z-index: 201;
             transform: translateX(-100%);
             transition: transform 0.3s ease;
-            padding: 20px 16px;
+            padding: 20px 16px 40px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .drawer.open {
@@ -268,6 +270,49 @@
         .drawer-link:hover {
             background: rgba(232, 195, 64, 0.15);
             color: var(--accent-gold);
+        }
+
+        /* ACCORDION STYLING FOR PAST EVENTS */
+        .drawer-accordion {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .drawer-accordion summary {
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 8px 0;
+            user-select: none;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .drawer-accordion summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .drawer-accordion summary::after {
+            content: "▼";
+            font-size: 0.7rem;
+            color: var(--accent-gold);
+            transition: transform 0.2s ease;
+        }
+
+        .drawer-accordion[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .drawer-accordion-content {
+            padding-left: 8px;
+            border-left: 2px solid rgba(232, 195, 64, 0.2);
+            margin-left: 4px;
+            margin-top: 4px;
         }
 
         /* PLACEHOLDER COMING SOON CARD */
@@ -411,6 +456,7 @@
         </div>
     </div>
 
+    <!-- SLIDE-OUT HAMBURGER DRAWER -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
     <div class="drawer" id="drawer">
         <div class="drawer-header">
@@ -418,17 +464,27 @@
             <button class="close-btn" onclick="toggleDrawer()">✕</button>
         </div>
 
+        <!-- MATERIAL & ITEM INDEX (CORE PINNED TOP) -->
         <div class="drawer-section-title">📚 Material & Item Index</div>
         <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
         <div class="drawer-link" onclick="loadActiveEventIndex()">🪄 Magic Academy Index</div>
-        <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
-        <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
 
+        <!-- COLLAPSED PAST EVENTS ACCORDION -->
+        <details class="drawer-accordion">
+            <summary>📜 Past Event Archives</summary>
+            <div class="drawer-accordion-content">
+                <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
+                <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
+            </div>
+        </details>
+
+        <!-- EXTERNAL GAME RESOURCES -->
         <div class="drawer-section-title">🔗 Game Resources</div>
         <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
         <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
         <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
 
+        <!-- CREATOR & SOCIAL LINKS -->
         <div class="drawer-section-title">👤 Creator & Socials</div>
         <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
         <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
@@ -670,7 +726,7 @@ function renderGrid() {
     if (activeItems.length === 0) {
         grid.innerHTML = `<div class="coming-soon-card" style="grid-column: 1 / -1;">
             <div class="coming-soon-title">Magic Academy — Maintenance In Progress</div>
-            <div class="coming-soon-text">This area will populate with event items once I have access!!!</div>
+            <div class="coming-soon-text">Event data will populate automatically as soon as maintenance completes!</div>
         </div>`;
         return;
     }
