@@ -8,10 +8,11 @@
         :root {
             --bg-color: #0A0A0A;
             --card-bg: #1A1A1A;
-            --accent-purple: #2D2638; /* Kept variable name for engine compatibility, updated to charcoal */
+            --accent-purple: #8A2BE2; /* Arcane Purple for Magic Academy theme */
+            --accent-purple-glow: #6A0DAD;
             --text-light: #F4F4F5;
             --accent-gold: #E8C340;
-            --accent-blue: #17B2B2; /* Swapped to Nile Teal for time badges */
+            --accent-blue: #17B2B2; /* Nile Teal */
             --accent-pet: #32a873; 
             --border-radius: 12px;
             --bar-height: 60px;
@@ -19,6 +20,11 @@
 
         * {
             box-sizing: border-box;
+        }
+
+        /* PREVENT MOBILE DOUBLE-TAP ZOOM */
+        button, .btn, .check-item, input, .tab-btn, .sub-btn, .drawer-link {
+            touch-action: manipulation;
         }
 
         body {
@@ -62,7 +68,7 @@
             font-weight: bold;
             font-size: 0.8rem;
             cursor: pointer;
-            display: none; /* Only shown in archives */
+            display: none;
             white-space: nowrap;
         }
 
@@ -71,6 +77,7 @@
             gap: 8px;
             overflow-x: auto;
             scrollbar-width: none;
+            align-items: center;
         }
         
         .tab-btn-container::-webkit-scrollbar {
@@ -93,6 +100,18 @@
         .tab-btn.active {
             background-color: var(--accent-gold);
             color: #0A0A0A;
+        }
+
+        .event-timer-badge {
+            background: rgba(138, 43, 226, 0.2);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            margin-left: auto;
         }
 
         .tab-content {
@@ -229,10 +248,33 @@
             color: var(--accent-gold);
         }
 
+        /* PLACEHOLDER COMING SOON CARD */
+        .coming-soon-card {
+            background: var(--card-bg);
+            border: 1px dashed var(--accent-purple);
+            border-radius: var(--border-radius);
+            padding: 32px 20px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .coming-soon-title {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .coming-soon-text {
+            color: #A0A0A0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
         /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; }
-        .sub-btn.active-furniture { background-color: rgba(232, 195, 64, 0.15); color: var(--accent-gold); border-color: var(--accent-gold); }
+        .sub-btn.active-furniture { background-color: rgba(138, 43, 226, 0.25); color: var(--accent-gold); border-color: var(--accent-purple); }
         .sub-btn.active-pets { background-color: rgba(50, 168, 115, 0.15); color: var(--accent-pet); border-color: var(--accent-pet); }
 
         .furniture-grid, .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
@@ -256,7 +298,6 @@
         .btn { background: var(--accent-purple); color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .qty-input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; }
         
-        /* Custom Input Styling adjustments */
         .qty-input::-webkit-outer-spin-button,
         .qty-input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -267,11 +308,11 @@
             outline: none;
         }
 
-        .generate-btn { display: block; width: 100%; padding: 16px; background: var(--accent-gold); color: #0A0A0A; font-weight: bold; font-size: 1.1rem; text-align: center; border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; }
-        .generate-btn:hover { background: #d1a03c; }
+        .generate-btn { display: block; width: 100%; padding: 16px; background: var(--accent-purple); color: #FFFFFF; font-weight: bold; font-size: 1.1rem; text-align: center; border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; }
+        .generate-btn:hover { background: var(--accent-purple-glow); }
 
         /* CHECKLIST */
-        .checklist-section { margin-bottom: 24px; background: rgba(26, 26, 26, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(232, 195, 64, 0.3); }
+        .checklist-section { margin-bottom: 24px; background: rgba(26, 26, 26, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(138, 43, 226, 0.4); }
         .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
         .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
         .checklist-section.collapsed .checklist-header::after { transform: rotate(-90deg); }
@@ -282,9 +323,9 @@
         .check-item.completed { background: rgba(26, 26, 26, 0.6); border-color: rgba(232, 195, 64, 0.2); }
         .check-item.completed .check-text { text-decoration: line-through; color: #8e839e; }
 
-        .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-gold); border-radius: 6px; margin-right: 14px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
-        .check-item.completed .checkbox { background: var(--accent-gold); border-color: var(--accent-gold); }
-        .check-item.completed .checkbox::after { content: "✓"; color: #0A0A0A; font-weight: bold; font-size: 1rem; }
+        .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-purple); border-radius: 6px; margin-right: 14px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
+        .check-item.completed .checkbox { background: var(--accent-purple); border-color: var(--accent-purple); }
+        .check-item.completed .checkbox::after { content: "✓"; color: #FFFFFF; font-weight: bold; font-size: 1rem; }
         .check-text { font-size: 0.95rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; }
         .check-qty { color: var(--accent-blue); font-weight: bold; font-size: 1rem; padding: 4px 10px; background: rgba(23, 178, 178, 0.15); border-radius: 6px; margin-left: 12px; }
         .check-item.completed .check-qty { opacity: 0.5; }
@@ -294,7 +335,7 @@
         .empty-state { text-align: center; color: #8e839e; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-purple); }
 
         /* BOTTOM SHEET */
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background-color: #111; border-top: 2px solid var(--accent-gold); border-top-left-radius: 16px; border-top-right-radius: 16px; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.8); z-index: 1000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(calc(100% - var(--bar-height))); }
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background-color: #111; border-top: 2px solid var(--accent-purple); border-top-left-radius: 16px; border-top-right-radius: 16px; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.8); z-index: 1000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(calc(100% - var(--bar-height))); }
         .bottom-sheet.open { transform: translateY(0); }
         .sheet-header { height: var(--bar-height); padding: 8px 16px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; user-select: none; }
         .drag-handle { width: 36px; height: 4px; background-color: #333; border-radius: 2px; margin: 0 auto 6px; }
@@ -309,217 +350,82 @@
         .mat-tile { background-color: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
         .tile-title { font-size: 0.75rem; color: #bfaecf; }
         .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
-	
-	/* =====================================================================
-	   ROUNDED IMAGE CONTAINERS & CATEGORY COLOR BORDERS
-	   ===================================================================== */
 
-	/* Base image styling: rounds image corners & sets background/dimensions */
-	.index-preview-img,
-	.item-preview-img {
-	    border-radius: 10px;
-	    background-color: rgba(0, 0, 0, 0.25);
-	    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-	    box-sizing: border-box;
-	    border: 1.5px solid var(--accent-purple); /* Default charcoal border */
-	}
+        /* GALLERY & BORDER STYLES */
+        .card-img-container { padding: 0 !important; margin-bottom: 8px !important; background: transparent !important; }
+        .index-preview-img, .item-preview-img { border-radius: 10px; background-color: #ffffff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5); box-sizing: border-box; display: block; margin: 0 auto; }
+        .item-preview-img { width: 100%; max-width: 160px; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
+        .index-preview-img { width: 100%; max-width: 220px; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
 
-	/* Size constraints */
-	.item-preview-img {
-	    height: 90px;
-	    width: 90px;
-	    object-fit: contain;
-	}
+        @media (max-width: 600px) {
+            .tab-content { padding: 10px 8px; }
+            .furniture-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+            .index-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .glossary-card { padding: 14px !important; }
+            .index-preview-img { max-width: 100% !important; height: 200px !important; object-fit: contain; }
+            .item-preview-img { max-width: 100% !important; height: 110px !important; object-fit: contain; }
+            .furniture-grid .item-name { font-size: 0.85rem; }
+            .furniture-grid .item-time { font-size: 0.75rem; }
+            .furniture-grid .item-mats { font-size: 0.7rem; }
+            .controls { padding: 2px; }
+            .btn { width: 28px; height: 28px; font-size: 1rem; }
+            .qty-input { width: 28px; font-size: 0.9rem; }
+        }
 
-	.index-preview-img {
-	    height: 120px;
-	    width: 120px;
-	    object-fit: contain;
-	}
-
-	/* --- DYNAMIC CATEGORY BORDER VARIATIONS --- */
-
-	/* Gold Outline for Furniture Items */
-	.item-card .item-preview-img,
-	.glossary-card .index-preview-img {
-	    border: 1.5px solid rgba(232, 195, 64, 0.4);
-	}
-
-	/* Jade Green Outline for Pet Cards */
-	.pet-card .item-preview-img,
-	.glossary-card[style*="50, 168, 115"] .index-preview-img {
-	    border: 1.5px solid rgba(50, 168, 115, 0.5);
-	}
-
-	/* Nile Teal Outline for Material Index Cards */
-	.glossary-card .index-preview-img[alt*="Papyrus"],
-	.glossary-card .index-preview-img[alt*="Tablet"],
-	.glossary-card .index-preview-img[alt*="Pottery"],
-	.glossary-card .index-preview-img[alt*="Coin"],
-	.glossary-card .index-preview-img[alt*="Water"] {
-	    border: 1.5px solid rgba(23, 178, 178, 0.5);
-	}
-	/* =====================================================================
-	   MOBILE RESPONSIVE ENHANCEMENTS (GALLERY CATALOG & TIGHT BORDERS)
-	   ===================================================================== */
-
-	/* Fix border alignment: remove inner container padding & black space */
-	.card-img-container {
-	    padding: 0 !important;
-	    margin-bottom: 8px !important;
-	    background: transparent !important;
-	}
-
-	/* Base image styling: border touches image edges directly */
-	.index-preview-img,
-	.item-preview-img {
-	    border-radius: 10px;
-	    background-color: #ffffff; /* Solid white background so transparency pops */
-	    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
-	    box-sizing: border-box;
-	    display: block;
-	    margin: 0 auto;
-	}
-
-	/* Desktop / Base Image Sizing */
-	.item-preview-img {
-	    width: 100%;
-	    max-width: 160px;
-	    height: auto;
-	    aspect-ratio: 1 / 1;
-	    object-fit: contain;
-	}
-
-	.index-preview-img {
-	    width: 100%;
-	    max-width: 220px;
-	    height: auto;
-	    aspect-ratio: 1 / 1;
-	    object-fit: contain;
-	}
-
-	/* --- MOBILE SPECIFIC OVERRIDES --- */
-	@media (max-width: 600px) {
-	    .tab-content {
-	        padding: 10px 8px;
-	    }
-
-	    /* CALCULATOR: Compact 2-Column Grid */
-	    .furniture-grid {
-	        grid-template-columns: repeat(2, 1fr) !important;
-	        gap: 8px !important;
-	    }
-
-	    /* CATALOG INDEX: Full-Width Showcase Gallery Cards */
-	    .index-grid {
-	        grid-template-columns: 1fr !important; /* 1 card per row for showcase view */
-	        gap: 16px !important;
-	    }
-
-	    .glossary-card {
-	        padding: 14px !important;
-	    }
-
-	    /* Large Showcase Images in Catalog */
-	    .index-preview-img {
-	        max-width: 100% !important;
-	        height: 200px !important;
-	        object-fit: contain;
-	    }
-
-	    /* Calculator Tile Images */
-	    .item-preview-img {
-	        max-width: 100% !important;
-	        height: 110px !important;
-	        object-fit: contain;
-	    }
-
-	    /* Text scaling for Calculator 2-col fit */
-	    .furniture-grid .item-name { font-size: 0.85rem; }
-	    .furniture-grid .item-time { font-size: 0.75rem; }
-	    .furniture-grid .item-mats { font-size: 0.7rem; }
-
-	    /* Text scaling for Gallery Catalog View */
-	    .index-grid .glossary-title { font-size: 1.1rem; }
-	    .index-grid .glossary-sub { font-size: 0.85rem; }
-	    .index-grid .glossary-lore { font-size: 0.85rem; line-height: 1.4; }
-
-	    /* Compact +/- buttons on calculator */
-	    .controls { padding: 2px; }
-	    .btn { width: 28px; height: 28px; font-size: 1rem; }
-	    .qty-input { width: 28px; font-size: 0.9rem; }
-	}
-
-	/* --- CATEGORY BORDER COLORS (TOUCHING IMAGE EDGES DIRECTLY) --- */
-	.item-card .item-preview-img,
-	.glossary-card .index-preview-img {
-	    border: 2px solid rgba(232, 195, 64, 0.8) !important; /* Gold */
-	}
-
-	.pet-card .item-preview-img,
-	.glossary-card[style*="50, 168, 115"] .index-preview-img {
-	    border: 2px solid rgba(50, 168, 115, 0.8) !important; /* Jade Green */
-	}
-
-	.glossary-card .index-preview-img[alt*="Papyrus"],
-	.glossary-card .index-preview-img[alt*="Tablet"],
-	.glossary-card .index-preview-img[alt*="Pottery"],
-	.glossary-card .index-preview-img[alt*="Coin"],
-	.glossary-card .index-preview-img[alt*="Water"] {
-	    border: 2px solid rgba(23, 178, 178, 0.8) !important; /* Nile Teal */
-	}	
-
+        .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(138, 43, 226, 0.8) !important; }
+        .pet-card .item-preview-img, .glossary-card[style*="50, 168, 115"] .index-preview-img { border: 2px solid rgba(50, 168, 115, 0.8) !important; }
     </style>
 </head>
 <body>
 
-        <div class="nav-header">
+    <div class="nav-header">
         <button class="menu-btn" onclick="toggleDrawer()">≡</button>
         <button class="home-btn" id="homeBtn" onclick="loadActiveEventView()">🏠 Back to Current Event</button>
         <div class="tab-btn-container" id="tabBtnContainer">
             <button class="tab-btn active" onclick="switchTab('calculatorTab', this)">Calculator</button>
             <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
-            <button class="tab-btn" onclick="loadActiveEventIndex()">Desert Oasis Catalog</button>
+            <button class="tab-btn" onclick="loadActiveEventIndex()">Magic Academy Catalog</button>
         </div>
+        <div class="event-timer-badge" id="eventTimerBadge">⏳ Calculating...</div>
     </div>
 
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
-<div class="drawer" id="drawer">
-    <div class="drawer-header">
-        <span class="drawer-title">Navigation Hub</span>
-        <button class="close-btn" onclick="toggleDrawer()">✕</button>
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">Navigation Hub</span>
+            <button class="close-btn" onclick="toggleDrawer()">✕</button>
+        </div>
+
+        <div class="drawer-section-title">📚 Material & Item Index</div>
+        <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
+        <div class="drawer-link" onclick="loadActiveEventIndex()">🪄 Magic Academy Index</div>
+        <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
+        <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
+
+        <div class="drawer-section-title">🔗 Game Resources</div>
+        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
+        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
+        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
+
+        <div class="drawer-section-title">👤 Creator & Socials</div>
+        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
+        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
+        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
+        <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>💬 Discord: Benni1433</span>
+            <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
+        </div>
     </div>
 
-	<div class="drawer-section-title">📚 Material & Item Index</div>
-	<div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
-	<div class="drawer-link" onclick="loadActiveEventIndex()">🏺 Desert Oasis Index</div>
-	<div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
-
-    <div class="drawer-section-title">🔗 Game Resources</div>
-    <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
-    <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
-    <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
-
-    <div class="drawer-section-title">👤 Creator & Socials</div>
-    <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
-    <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
-    <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
-    <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
-        <span>💬 Discord: Benni1433</span>
-        <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
-    </div>
-</div>
-
-        <div id="activeEventContainer">
-        
+    <div id="activeEventContainer">
         <div class="hero-banner-container" id="heroBanner">
-            <img src="Images/DesertOasis/Desert Oasis Key Art.jpg" alt="Desert Oasis Key Art" class="hero-img">
+            <img src="Images/MagicAcademy/Magic Academy Key Art.jpg" alt="Magic Academy Key Art" class="hero-img">
             <div class="hero-fade-overlay"></div>
-            <h1 class="hero-title">Desert Oasis</h1>
+            <h1 class="hero-title">Magic Academy</h1>
         </div>
 
         <div id="calculatorTab" class="tab-content active">
-                        <div class="sub-nav" id="activeSubNav">
+            <div class="sub-nav" id="activeSubNav">
                 <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
                 <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets</button>
             </div>
@@ -532,7 +438,7 @@
             <div id="checklistContainer"></div>
         </div>
 
-                <div class="bottom-sheet" id="bottomSheet">
+        <div class="bottom-sheet" id="bottomSheet">
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
                 <div class="summary-bar-content">
@@ -554,60 +460,61 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-        <div id="archiveContainer" class="tab-content" style="padding-top: 24px;">
+    <div id="archiveContainer" class="tab-content" style="padding-top: 24px;">
         <h1 id="archiveTitle" style="text-align: center; color: var(--accent-gold); margin-bottom: 20px; margin-top: 0;">Event Archive</h1>
         <div class="index-grid" id="archiveGrid"></div>
     </div>
 
-        <script src="js/playtogether_core.js"></script>
+    <!-- DATA SOURCES -->
+    <script src="js/playtogether_core.js"></script>
     <script src="js/gwidam_data.js"></script>
+    <script src="js/desert_oasis_data.js"></script>
+    <script src="js/magic_academy_data.js"></script>
 
 <script>
 /* =====================================================================
-   ACTIVE EVENT DATA ENGINE (Desert Oasis Event)
+   ACTIVE EVENT DATA BINDINGS (Magic Academy Active Engine)
    ===================================================================== */
-const items = [
-    // --- CACTI & PLANTS ---
-    { id: "saguaro_cactus", name: "Saguaro Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A hardy cactus that thrives among the rugged sand dunes.", image: "Images/DesertOasis/Saguaro Cactus.png" },
-    { id: "columnar_cactus", name: "Columnar Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "An iconic desert cactus that stretches proudly toward the sky.", image: "Images/DesertOasis/Columnar Cactus.png" },
-    { id: "paddle_cactus", name: "Paddle Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A charming cactus with broad, paddle-shaped stems.", image: "Images/DesertOasis/Paddle Cactus.png" },
-    { id: "golden_barrel_cactus", name: "Golden Barrel Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A round cactus adorned with shimmering golden spines.", image: "Images/DesertOasis/Golden Barrel Cactus.png" },
-    { id: "oasis_cactus", name: "Oasis Cactus", timeMinutes: 120, mats: { "Pyramid Coin": 200 }, lore: "A lush cactus that flourishes around refreshing desert oases.", image: "Images/DesertOasis/Oasis Cactus.png" },
+let items = typeof magicAcademyItems !== 'undefined' ? magicAcademyItems : [];
+let pets = typeof magicAcademyPets !== 'undefined' ? magicAcademyPets : [];
+let glossary = typeof magicAcademyGlossary !== 'undefined' ? magicAcademyGlossary : [];
 
-    // --- CARTS & MARKET STANDS ---
-    { id: "oasis_cart", name: "Oasis Cart", timeMinutes: 320, mats: { "Pyramid Coin": 400, "Torn Papyrus": 5, "Tree Branch": 20 }, lore: "A wooden cart used to transport goods through the desert village.", image: "Images/DesertOasis/Oasis Cart.png" },
-    { id: "oasis_drink_stand", name: "Oasis Drink Stand", timeMinutes: 440, mats: { "Pyramid Coin": 400, "Cracked Clay Tablet": 5, "Torn Papyrus": 3, "Tree Branch": 20 }, lore: "A small stand that sells refreshing drinks.", image: "Images/DesertOasis/Oasis Drink Stand.png" },
-    { id: "oasis_food_stand", name: "Oasis Food Stand", timeMinutes: 440, mats: { "Pyramid Coin": 400, "Cracked Clay Tablet": 5, "Torn Papyrus": 3, "Tree Branch": 20 }, lore: "A food stand that sells a variety of desert dishes.", image: "Images/DesertOasis/Oasis Food Stand.png" },
+/* =====================================================================
+   EVENT COUNTDOWN TIMER (UTC CONVERSION)
+   ===================================================================== */
+const EVENT_START_UTC = new Date(Date.UTC(2026, 8, 3, 4, 0, 0));   // Sept 3, 04:00 UTC
+const EVENT_END_UTC = new Date(Date.UTC(2026, 8, 16, 23, 59, 59));  // Sept 16, 23:59 UTC
 
-    // --- STRUCTURES & DECOR ---
-    { id: "wooden_signpost", name: "Wooden Signpost", timeMinutes: 120, mats: { "Pyramid Coin": 200, "Tree Branch": 3 }, lore: "A wooden sign that points travelers toward nearby paths and places.", image: "Images/DesertOasis/Wooden Signpost.png" },
-    { id: "oasis_banner", name: "Oasis Banner", timeMinutes: 110, mats: { "Pyramid Coin": 200, "Torn Papyrus": 3, "Tree Branch": 10 }, lore: "A decorative banner that brightens up the oasis.", image: "Images/DesertOasis/Oasis Banner.png" },
-    { id: "oasis_jar", name: "Oasis Jar", timeMinutes: 90, mats: { "Pyramid Coin": 200, "Broken Pottery Shards": 3 }, lore: "A large jar used to store precious water and food.", image: "Images/DesertOasis/Oasis Jar.png" },
-    { id: "ancient_beast_bones", name: "Ancient Beast Bones", timeMinutes: 700, mats: { "Pyramid Coin": 500 }, lore: "The weathered remains of a beast left in the desert for many years.", image: "Images/DesertOasis/Ancient Beast Bones.png" },
+function updateEventCountdown() {
+    const now = new Date();
+    const timerElement = document.getElementById("eventTimerBadge");
+    if (!timerElement) return;
 
-    // --- PET FURNITURE ---
-    { id: "oasis_pet_bed", name: "Oasis Pet Bed", timeMinutes: 160, mats: { "Pyramid Coin": 400, "Broken Pottery Shards": 3, "Cracked Clay Tablet": 10 }, lore: "Rest is just as important when preparing for a long journey.", image: "Images/DesertOasis/Oasis Pet Bed.png" },
-    { id: "oasis_pet_bathtub", name: "Oasis Pet Bathtub", timeMinutes: 240, mats: { "Pyramid Coin": 400, "Broken Pottery Shards": 3, "Oasis Water": 3 }, lore: "A special pet bathtub filled with the crystal-clear spring water of an oasis.", image: "Images/DesertOasis/Oasis Pet Bathtub.png" }
-];
+    if (now < EVENT_START_UTC) {
+        const diff = EVENT_START_UTC - now;
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const mins = Math.floor((diff / 1000 / 60) % 60);
+        timerElement.innerText = `⏳ Starts in ${hours}h ${mins}m`;
+        return;
+    }
 
-const pets = [
-    { id: "fennec_fox_egg_normal", name: "Fennec Fox Egg (Normal)", timeMinutes: 200, mats: { "Pyramid Coin": 400, "Normal Egg": 1 }, lore: "A little desert guardian slumbers quietly within.", image: "Images/DesertOasis/Fennec Fox Egg.png" },
-    { id: "fennec_fox_egg_premium", name: "Fennec Fox Egg (Premium)", timeMinutes: 100, mats: { "Pyramid Coin": 200, "Premium Egg": 1 }, lore: "A little desert guardian slumbers quietly within.", image: "Images/DesertOasis/Fennec Fox Egg.png" },
-    { id: "oasis_supplement", name: "Oasis Supplement", timeMinutes: 10, mats: { "Pyramid Coin": 100, "Oasis Water": 1 }, lore: "A supplement infused with the refreshing energy of a tranquil oasis. Increases EXP by 50.", image: "Images/DesertOasis/Oasis Supplement.png" },
-    { id: "premium_oasis_supplement", name: "Premium Oasis Supplement", timeMinutes: 30, mats: { "Pyramid Coin": 200, "Oasis Water": 3 }, lore: "A supplement infused with the refreshing energy of a tranquil oasis. Increases EXP by 200.", image: "Images/DesertOasis/Premium Oasis Supplement.png" },
-    { id: "special_oasis_supplement", name: "Special Oasis Supplement", timeMinutes: 60, mats: { "Pyramid Coin": 400, "Oasis Water": 5 }, lore: "A supplement infused with the refreshing energy of a tranquil oasis. Increases EXP by 700.", image: "Images/DesertOasis/Special Oasis Supplement.png" }
-];
+    const diff = EVENT_END_UTC - now;
+    if (diff <= 0) {
+        timerElement.innerText = "⏳ Event Ended";
+        return;
+    }
 
-const glossary = [
-    { name: "Pyramid Coin", lore: "Used in events.", source: "Event", image: "Images/DesertOasis/Pyramid Coin.png" },
-    { name: "Torn Papyrus", lore: "A torn sheet of papyrus bearing ancient records.", source: "(Excavation) Ancient Jar", image: "Images/DesertOasis/Torn Papyrus.png" },
-    { name: "Cracked Clay Tablet", lore: "A clay tablet once used to record history, now cracked with age.", source: "(Excavation) Ancient Jar", image: "Images/DesertOasis/Cracked Clay Tablet.png" },
-    { name: "Broken Pottery Shards", lore: "Fragments of everyday pottery once used in daily life.", source: "(Excavation) Ancient Jar", image: "Images/DesertOasis/Broken Pottery Shards.png" },
-    { name: "Oasis Water", lore: "Crystal-clear, refreshing spring water drawn from the oasis.", source: "Event Vendor", image: "Images/DesertOasis/Oasis Water.png" }
-];
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / 1000 / 60) % 60);
+
+    timerElement.innerText = `⏳ ${days}d ${hours}h ${mins}m left`;
+}
+
+setInterval(updateEventCountdown, 60000);
+updateEventCountdown();
 
 /* =====================================================================
    STATE MANAGEMENT
@@ -620,13 +527,13 @@ let currentCategory = 'furniture';
 
 function loadSavedData() {
     try {
-        const savedQuantities = localStorage.getItem("active_event_quantities");
+        const savedQuantities = localStorage.getItem("magic_academy_quantities");
         if (savedQuantities) quantities = JSON.parse(savedQuantities);
         
-        const savedCompleted = localStorage.getItem("active_event_completed");
+        const savedCompleted = localStorage.getItem("magic_academy_completed");
         if (savedCompleted) completedCrafts = JSON.parse(savedCompleted);
 
-        const savedChecklist = localStorage.getItem("active_event_checklist");
+        const savedChecklist = localStorage.getItem("magic_academy_checklist");
         if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
         
         if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
@@ -640,15 +547,15 @@ function loadSavedData() {
 }
 
 function saveQuantities() {
-    try { localStorage.setItem("active_event_quantities", JSON.stringify(quantities)); } catch (e) {}
+    try { localStorage.setItem("magic_academy_quantities", JSON.stringify(quantities)); } catch (e) {}
 }
 
 function saveCompleted() {
-    try { localStorage.setItem("active_event_completed", JSON.stringify(completedCrafts)); } catch (e) {}
+    try { localStorage.setItem("magic_academy_completed", JSON.stringify(completedCrafts)); } catch (e) {}
 }
 
 function saveChecklist() {
-    try { localStorage.setItem("active_event_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
+    try { localStorage.setItem("magic_academy_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
 }
 
 /* =====================================================================
@@ -680,7 +587,6 @@ function switchTab(tabId, btn) {
     document.getElementById(tabId).classList.add('active');
     btn.classList.add('active');
 
-    // Only show bottom sheet if on Calculator tab
     const sheet = document.getElementById('bottomSheet');
     if (tabId === 'calculatorTab') {
         sheet.style.display = 'block';
@@ -730,13 +636,21 @@ function formatTime(minutes) {
 }
 
 /* =====================================================================
-   ACTIVE EVENT CALCULATOR & CHECKLIST LOGIC
+   CALCULATOR & CHECKLIST LOGIC
    ===================================================================== */
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
 
     const activeItems = currentCategory === 'furniture' ? items : pets;
+
+    if (activeItems.length === 0) {
+        grid.innerHTML = `<div class="coming-soon-card" style="grid-column: 1 / -1;">
+            <div class="coming-soon-title">Magic Academy — Maintenance In Progress</div>
+            <div class="coming-soon-text">Event data will populate automatically as soon as maintenance completes!</div>
+        </div>`;
+        return;
+    }
 
     activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
@@ -832,10 +746,8 @@ function getCategoryForMaterial(matName) {
     if (excavationItems.includes(matName)) return "Excavation";
     if (matName === "Tree Branch") return "Gathering";
     if (matName === "Stone") return "Mining";
-    if (matName === "Oasis Water") return "Event Vendor";
-    if (matName === "Pyramid Coin") return "Event Currency";
     if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
-    return "Other Materials";
+    return "Event Materials";
 }
 
 function renderChecklist() {
@@ -857,7 +769,7 @@ function renderChecklist() {
     });
 
     if (!hasActiveOrCompletedItems) {
-        container.innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
+        container.innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start!" to generate your checklist.</div>`;
         return;
     }
 
@@ -920,7 +832,7 @@ function renderChecklist() {
     if (hasFurniture || hasCompletedFurniture) {
         html += `<div class="checklist-section" style="margin-top: 32px;">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span>🔨 Furniture Assembly</span>
+                        <span>🔨 Magic Academy Furniture</span>
                     </div>
                     ${furnitureActiveHtml}`;
                     
@@ -973,7 +885,7 @@ function renderChecklist() {
                     
         if (hasCompletedPets) {
             html += `<div class="completed-toggle" onclick="toggleCompletedVisibility('pets')">
-                        ${showCompleted.pets ? 'Hide' : 'Show'} Completed Pets & Beasts
+                        ${showCompleted.pets ? 'Hide' : 'Show'} Completed Pets
                      </div>
                      <div class="completed-container" style="display: ${showCompleted.pets ? 'block' : 'none'};">
                         ${petsCompletedHtml}
@@ -1003,7 +915,7 @@ function updateQty(id, change) {
     if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
         renderChecklist(); 
     } else {
-        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
+        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start!" to generate your checklist.</div>`;
     }
     
     calculateTotals();
@@ -1017,7 +929,7 @@ function handleManualInput(id, value) {
     if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
         renderChecklist(); 
     } else {
-        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start Project" to generate your checklist.</div>`;
+        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start!" to generate your checklist.</div>`;
     }
     
     calculateTotals();
@@ -1121,13 +1033,21 @@ function calculateParallelTime(durations, maxSlots) {
    INDEX & ARCHIVE LOADERS
    ===================================================================== */
 function loadActiveEventIndex() {
-    showArchiveView("Desert Oasis Catalog & Lore");
+    showArchiveView("Magic Academy Catalog & Lore");
     const grid = document.getElementById('archiveGrid');
     grid.innerHTML = "";
 
-    // --- SECTION 1: FURNITURE ---
+    if (items.length === 0 && pets.length === 0) {
+        grid.innerHTML = `<div class="coming-soon-card" style="grid-column: 1 / -1;">
+            <div class="coming-soon-title">Magic Academy Catalog Empty</div>
+            <div class="coming-soon-text">Catalog data will populate automatically as soon as maintenance completes!</div>
+        </div>`;
+        return;
+    }
+
+    // Furniture
     const furnitureHeader = document.createElement("h2");
-    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     furnitureHeader.innerText = "🔨 Furniture";
     grid.appendChild(furnitureHeader);
 
@@ -1146,10 +1066,10 @@ function loadActiveEventIndex() {
         grid.appendChild(card);
     });
 
-    // --- SECTION 2: PETS ---
+    // Pets
     const petsHeader = document.createElement("h2");
-    petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
-    petsHeader.innerText = "🐾 Pets & Incubator Items";
+    petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
+    petsHeader.innerText = "🐾 Pets";
     grid.appendChild(petsHeader);
 
     pets.forEach(pet => {
@@ -1167,14 +1087,68 @@ function loadActiveEventIndex() {
         `;
         grid.appendChild(card);
     });
+}
 
-    // --- SECTION 3: MATERIALS ---
+function loadDesertOasisIndex() {
+    showArchiveView("Desert Oasis Archive Catalog");
+    const grid = document.getElementById('archiveGrid');
+    grid.innerHTML = "";
+
+    if (typeof desertOasisItems === 'undefined') {
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/desert_oasis_data.js data not found! Ensure the file is uploaded to GitHub.</div>';
+        return;
+    }
+
+    // Furniture Header
+    const furnitureHeader = document.createElement("h2");
+    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
+    furnitureHeader.innerText = "🔨 Furniture";
+    grid.appendChild(furnitureHeader);
+
+    desertOasisItems.forEach(item => {
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
+            <div class="glossary-lore">"${item.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    // Pets Header
+    const petsHeader = document.createElement("h2");
+    petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
+    petsHeader.innerText = "🐾 Pets & Incubator Items";
+    grid.appendChild(petsHeader);
+
+    desertOasisPets.forEach(pet => {
+        const matString = Object.entries(pet.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = pet.image ? `<div class="card-img-container"><img src="${pet.image}" alt="${pet.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.style.borderColor = "rgba(50, 168, 115, 0.4)";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title" style="color: var(--accent-pet);">${pet.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(pet.timeMinutes)}</div>
+            <div class="glossary-lore">"${pet.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        grid.appendChild(card);
+    });
+
+    // Materials Header
     const materialsHeader = document.createElement("h2");
-    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     materialsHeader.innerText = "📌 Event Materials";
     grid.appendChild(materialsHeader);
 
-    glossary.forEach(mat => {
+    desertOasisGlossary.forEach(mat => {
         const imgHtml = mat.image ? `<div class="card-img-container"><img src="${mat.image}" alt="${mat.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
         card.className = "glossary-card";
@@ -1194,7 +1168,7 @@ function loadCoreIndex() {
     grid.innerHTML = "";
 
     if (typeof coreGlossary === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f;">Error: playtogether_core.js data not found!</div>';
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/playtogether_core.js data not found! Ensure the file is uploaded to GitHub.</div>';
         return;
     }
 
@@ -1216,13 +1190,12 @@ function loadGwidamIndex() {
     grid.innerHTML = "";
 
     if (typeof gwidamItems === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f;">Error: gwidam_data.js data not found!</div>';
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/gwidam_data.js data not found! Ensure the file is uploaded to GitHub.</div>';
         return;
     }
 
-    // --- SECTION 1: FURNITURE & PETS ---
     const furnitureHeader = document.createElement("h2");
-    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     furnitureHeader.innerText = "🔨 Furniture & Pets";
     grid.appendChild(furnitureHeader);
 
@@ -1242,9 +1215,8 @@ function loadGwidamIndex() {
         grid.appendChild(card);
     });
 
-    // --- SECTION 2: MATERIALS ---
     const materialsHeader = document.createElement("h2");
-    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;";
+    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     materialsHeader.innerText = "📌 Event Materials";
     grid.appendChild(materialsHeader);
 
