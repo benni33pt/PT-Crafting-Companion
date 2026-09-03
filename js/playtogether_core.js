@@ -1,9 +1,12 @@
 // PlayTogether Permanent Core Items & General Store Glossary
 const coreGlossary = [
-    { name: "Ivory Cube", source: "Furniture Shop", lore: "Let's stack the neat-looking cubes one by one." },
-    { name: "Water", source: "Mega Mart", lore: "There's nothing like water to quench your thirst. Doesn't have any special abilities." },
+    { name: "Glass Greenhouse Cube", source: "Furniture Shop", lore: "You can decorate My House to your taste." },
+    { name: "Turkey Meat", source: "Mega Mart", lore: "A turkey is much bigger than a chicken. You can cook its meat." },
+    { name: "Iron Ore", source: "Mine", lore: "It's great for crafting sturdy items!" },
+    { name: "Tree Branch", source: "Gathering", lore: "You can craft anything with this." },
+    { name: "Normal Egg", source: "Pet Paradise (Star Currency)", lore: "This egg holds a cute pet! Which pet will it hatch into?" },
+    { name: "Premium Egg", source: "Pet Paradise (Gem Currency)", lore: "This egg holds a cute pet! Which pet will it hatch into?" },
+    { name: "Eurasian Tree Sparrow", source: "All Areas (Wild)", lore: "Appears at All Areas All Day Year-Round." },
     { name: "Stone", source: "Mine", lore: "You can craft a variety of things with this. It's used to craft items." },
-    { name: "Tree Branch", source: "Gather", lore: "You can craft anything with this. It's used to craft items." },
-    { name: "Normal Egg", source: "Pet Paradise (Star Currency)", lore: "A standard egg containing a potential pet companion." },
-    { name: "Premium Egg", source: "Pet Paradise (Gem / Paid Currency)", lore: "A premium egg containing higher-tier pet companion potential." }
+    { name: "Water", source: "Mega Mart", lore: "There's nothing like water to quench your thirst. Doesn't have any special abilities." }
 ];
