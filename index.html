@@ -20,6 +20,7 @@
             --accent-gold: #E8C340;
             --accent-blue: #17B2B2; /* Nile Teal */
             --accent-pet: #32a873; 
+            --accent-crop: #F39C12; /* Distinct Sun Gold for Farm Crop */
             --border-radius: 12px;
             --bar-height: 60px;
         }
@@ -348,6 +349,7 @@
         .item-card, .glossary-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 14px; border: 1px solid #333; transition: border-color 0.2s ease; }
         .item-card { display: flex; flex-direction: column; justify-content: space-between; }
         .item-card.pet-card { border: 1px solid rgba(50, 168, 115, 0.4); }
+        .item-card.crop-card { border: 1px solid rgba(243, 156, 18, 0.6); }
 
         .card-img-container { text-align: center; margin-bottom: 12px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 8px; }
         .item-preview-img { max-width: 100%; height: 100px; object-fit: contain; }
@@ -356,6 +358,7 @@
         .item-name, .glossary-title { font-weight: bold; font-size: 0.95rem; color: #ffffff; margin-bottom: 4px; }
         .glossary-title { color: var(--accent-gold); font-size: 1rem; }
         .pet-card .item-name { color: var(--accent-pet); }
+        .crop-card .item-name { color: var(--accent-crop); }
         .item-time, .glossary-sub { font-size: 0.8rem; color: var(--accent-blue); margin-bottom: 8px; }
         .item-mats, .glossary-source { font-size: 0.75rem; color: #bfaecf; margin-bottom: 12px; line-height: 1.3; }
         .glossary-source { background: rgba(232, 195, 64, 0.15); color: var(--text-light); padding: 4px 8px; border-radius: 4px; display: inline-block; }
@@ -442,6 +445,7 @@
 
         .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(138, 43, 226, 0.8) !important; }
         .pet-card .item-preview-img, .glossary-card[style*="50, 168, 115"] .index-preview-img { border: 2px solid rgba(50, 168, 115, 0.8) !important; }
+        .crop-card .item-preview-img { border: 2px solid rgba(243, 156, 18, 0.9) !important; }
     </style>
 </head>
 <body>
@@ -464,11 +468,6 @@
             <button class="close-btn" onclick="toggleDrawer()">✕</button>
         </div>
 
-        <!-- MATERIAL & ITEM INDEX (CORE PINNED TOP) -->
-        <div class="drawer-section-title">📚 Material & Item Index</div>
-        <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
-        <div class="drawer-link" onclick="loadActiveEventIndex()">🪄 Magic Academy Index</div>
-
         <!-- COLLAPSED PAST EVENTS ACCORDION -->
         <details class="drawer-accordion">
             <summary>📜 Past Event Archives</summary>
@@ -478,14 +477,19 @@
             </div>
         </details>
 
+        <!-- MATERIAL & ITEM INDEX (CORE PINNED TOP) -->
+        <div class="drawer-section-title">📚 Material & Item Index</div>
+        <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
+        <div class="drawer-link" onclick="loadActiveEventIndex()">🪄 Magic Academy Index</div>
+
         <!-- EXTERNAL GAME RESOURCES -->
-        <div class="drawer-section-title">🔗 Game Resources</div>
+        <div class="drawer-section-title">🔗 Helpful PT Links</div>
         <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
         <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
         <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
 
         <!-- CREATOR & SOCIAL LINKS -->
-        <div class="drawer-section-title">👤 Creator & Socials</div>
+        <div class="drawer-section-title">👤 My Stuff :D</div>
         <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
         <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
         <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
@@ -550,15 +554,161 @@
     <script src="js/playtogether_core.js"></script>
     <script src="js/gwidam_data.js"></script>
     <script src="js/desert_oasis_data.js"></script>
-    <script src="js/magic_academy_data.js"></script>
 
 <script>
 /* =====================================================================
-   ACTIVE EVENT DATA BINDINGS (Magic Academy Active Engine)
+   ACTIVE EVENT DATA BINDINGS (Magic Academy Data Array)
    ===================================================================== */
-let items = typeof magicAcademyItems !== 'undefined' ? magicAcademyItems : [];
-let pets = typeof magicAcademyPets !== 'undefined' ? magicAcademyPets : [];
-let glossary = typeof magicAcademyGlossary !== 'undefined' ? magicAcademyGlossary : [];
+const magicAcademyItems = [
+    { 
+        id: "mandragora_seed", 
+        name: "Mandragora Seed", 
+        type: "crop",
+        timeMinutes: 40, 
+        mats: { "Wizard Coin": 250, "Magic Tome": 5, "Mimic": 5, "Suspicious Potion": 10 }, 
+        lore: "A seed that grows into a strange plant root. (Single Harvest)", 
+        image: "Images/MagicAcademy/Mandragora Seed.png" 
+    },
+    { 
+        id: "food_props", 
+        name: "Magic Academy Food Props", 
+        timeMinutes: 40, 
+        mats: { "Wizard Coin": 50, "Suspicious Potion": 10, "Turkey Meat": 1 }, 
+        lore: "A special meal for students learning magic.", 
+        image: "Images/MagicAcademy/Magic Academy Food Props.png" 
+    },
+    { 
+        id: "dining_chair", 
+        name: "Magic Academy Dining Chair", 
+        timeMinutes: 100, 
+        mats: { "Wizard Coin": 100, "Magic Letter": 10, "Tree Branch": 10 }, 
+        lore: "A chair that pairs perfectly with the long dining table.", 
+        image: "Images/MagicAcademy/Magic Academy Dining Chair.png" 
+    },
+    { 
+        id: "stained_glass", 
+        name: "Magic Academy Stained Glass", 
+        timeMinutes: 180, 
+        mats: { "Wizard Coin": 250, "Magic Pendant": 5, "Magic Quill": 20, "Glass Greenhouse Cube": 1 }, 
+        lore: "Modeled after the magnificent windows of the Magic Academy.", 
+        image: "Images/MagicAcademy/Magic Academy Stained Glass.png" 
+    },
+    { 
+        id: "candle", 
+        name: "Magic Academy Candle", 
+        timeMinutes: 135, 
+        mats: { "Wizard Coin": 150, "Magic Tome": 2, "Magic Letter": 5 }, 
+        lore: "It floats gently in the air with the power of magic.", 
+        image: "Images/MagicAcademy/Magic Academy Candle.png" 
+    },
+    { 
+        id: "glass_cabinet", 
+        name: "Magic Academy Glass Cabinet", 
+        timeMinutes: 90, 
+        mats: { "Wizard Coin": 150, "Magic Pendant": 1, "Glass Greenhouse Cube": 1 }, 
+        lore: "It's filled with all kinds of mysterious magical items.", 
+        image: "Images/MagicAcademy/Magic Academy Glass Cabinet.png" 
+    },
+    { 
+        id: "armor_statue", 
+        name: "Magic Academy Armor Statue", 
+        timeMinutes: 90, 
+        mats: { "Wizard Coin": 150, "Dark Stone": 20, "Iron Ore": 3 }, 
+        lore: "A magical statue that guards the Magic Academy.", 
+        image: "Images/MagicAcademy/Magic Academy Armor Statue.png" 
+    },
+    { 
+        id: "wizard_portrait", 
+        name: "Magic Academy Wizard Portrait", 
+        timeMinutes: 80, 
+        mats: { "Wizard Coin": 150, "Dark Stone": 10, "Magic Quill": 10 }, 
+        lore: "A portrait of a legendary wizard.", 
+        image: "Images/MagicAcademy/Magic Academy Wizard Portrait.png" 
+    },
+    { 
+        id: "cat_portrait", 
+        name: "Magic Academy Cat Portrait", 
+        timeMinutes: 80, 
+        mats: { "Wizard Coin": 150, "Dark Stone": 10, "Magic Letter": 5 }, 
+        lore: "A portrait of a legendary wizard.", 
+        image: "Images/MagicAcademy/Magic Academy Cat Portrait.png" 
+    },
+    { 
+        id: "chair", 
+        name: "Magic Academy Chair", 
+        timeMinutes: 80, 
+        mats: { "Wizard Coin": 100, "Mimic": 5 }, 
+        lore: "It feels like all kinds of magical inspiration could come to mind.", 
+        image: "Images/MagicAcademy/Magic Academy Chair.png" 
+    },
+    { 
+        id: "banner", 
+        name: "Magic Academy Banner", 
+        timeMinutes: 40, 
+        mats: { "Wizard Coin": 80, "Magic Quill": 10 }, 
+        lore: "A banner bearing the emblem of Magic Academy.", 
+        image: "Images/MagicAcademy/Magic Academy Banner.png" 
+    },
+    { 
+        id: "long_dining_table", 
+        name: "Magic Academy Long Dining Table", 
+        timeMinutes: 135, 
+        mats: { "Wizard Coin": 150, "Mimic": 5, "Tree Branch": 20 }, 
+        lore: "Versatile enough for use in the Great Hall or classrooms.", 
+        image: "Images/MagicAcademy/Magic Academy Long Dining Table.png" 
+    }
+];
+
+const magicAcademyPets = [
+    { 
+        id: "otter_draw", 
+        name: "Otter Draw", 
+        timeMinutes: 170, 
+        mats: { "Wizard Coin": 200, "Magic Pendant": 5 }, 
+        lore: "Wanna join me on a trip on the cool waves?", 
+        image: "Images/MagicAcademy/Otter Draw.png" 
+    },
+    { 
+        id: "deer_egg", 
+        name: "Deer Egg", 
+        timeMinutes: 1900, 
+        mats: { "Wizard Coin": 300, "Premium Egg": 3 }, 
+        lore: "Inside the egg is a cute deer! Which one will hatch from it?", 
+        image: "Images/MagicAcademy/Deer Egg.png" 
+    },
+    { 
+        id: "lizard_egg", 
+        name: "Lizard Egg", 
+        timeMinutes: 100, 
+        mats: { "Wizard Coin": 200, "Normal Egg": 1 }, 
+        lore: "A cute lizard is waiting to be hatched! Which one will it be?", 
+        image: "Images/MagicAcademy/Lizard Egg.png" 
+    },
+    { 
+        id: "owl_draw", 
+        name: "Magic Shop Owl Draw", 
+        timeMinutes: 80, 
+        mats: { "Wizard Coin": 200, "Magic Tome": 3, "Eurasian Tree Sparrow": 1 }, 
+        lore: "The magical items you ordered today will be delivered by our friendly owl!", 
+        image: "Images/MagicAcademy/Magic Shop Owl Draw.png" 
+    }
+];
+
+// Cleaned up: Standard/Core items removed to eliminate duplicates with coreGlossary
+const magicAcademyGlossary = [
+    { name: "Wizard Coin", lore: "Can be used in the Magic Soup game and at the workshop.", source: "Event", image: "Images/MagicAcademy/Wizard Coin.png" },
+    { name: "Magic Tome", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Tome.png" },
+    { name: "Mimic", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Mimic.png" },
+    { name: "Suspicious Potion", lore: "You can feel an ominous energy stirring within.", source: "Event", image: "Images/MagicAcademy/Suspicious Potion.png" },
+    { name: "Magic Pendant", lore: "A symbol bestowed upon those who follow dark magic.", source: "Event", image: "Images/MagicAcademy/Magic Pendant.png" },
+    { name: "Magic Quill", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Quill.png" },
+    { name: "Dark Stone", lore: "It grants immense magical power, but is said to lead its user to ruin.", source: "Event", image: "Images/MagicAcademy/Dark Stone.png" },
+    { name: "Magic Letter", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Letter.png" }
+];
+
+let items = magicAcademyItems;
+let pets = magicAcademyPets;
+let glossary = magicAcademyGlossary;
 
 /* =====================================================================
    EVENT COUNTDOWN TIMER (UTC CONVERSION)
@@ -723,19 +873,17 @@ function renderGrid() {
 
     const activeItems = currentCategory === 'furniture' ? items : pets;
 
-    if (activeItems.length === 0) {
-        grid.innerHTML = `<div class="coming-soon-card" style="grid-column: 1 / -1;">
-            <div class="coming-soon-title">Magic Academy — Maintenance In Progress</div>
-            <div class="coming-soon-text">Event data will populate automatically as soon as maintenance completes!</div>
-        </div>`;
-        return;
-    }
-
     activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
-        const cardClass = currentCategory === 'pets' ? "item-card pet-card" : "item-card";
+        
+        let cardClass = "item-card";
+        if (currentCategory === 'pets') {
+            cardClass = "item-card pet-card";
+        } else if (item.type === 'crop') {
+            cardClass = "item-card crop-card";
+        }
 
         const card = document.createElement("div");
         card.className = cardClass;
@@ -821,11 +969,14 @@ function toggleCompletedVisibility(type) {
 }
 
 function getCategoryForMaterial(matName) {
-    const excavationItems = ["Torn Papyrus", "Cracked Clay Tablet", "Broken Pottery Shards"];
-    if (excavationItems.includes(matName)) return "Excavation";
-    if (matName === "Tree Branch") return "Gathering";
-    if (matName === "Stone") return "Mining";
+    const gatheringItems = ["Tree Branch", "Magic Quill", "Magic Tome", "Magic Letter", "Mimic"];
+    const shopItems = ["Glass Greenhouse Cube", "Turkey Meat"];
+    if (matName === "Wizard Coin" || matName === "Suspicious Potion" || matName === "Magic Pendant" || matName === "Dark Stone") return "Event Materials";
+    if (gatheringItems.includes(matName)) return "Gathering & Magic Spawns";
+    if (matName === "Iron Ore") return "Mining";
+    if (matName === "Eurasian Tree Sparrow") return "Wild Birds";
     if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
+    if (shopItems.includes(matName)) return "Town Shops";
     return "Event Materials";
 }
 
@@ -911,13 +1062,13 @@ function renderChecklist() {
     if (hasFurniture || hasCompletedFurniture) {
         html += `<div class="checklist-section" style="margin-top: 32px;">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span>🔨 Magic Academy Furniture</span>
+                        <span>🔨 Magic Academy Workshop</span>
                     </div>
                     ${furnitureActiveHtml}`;
                     
         if (hasCompletedFurniture) {
             html += `<div class="completed-toggle" onclick="toggleCompletedVisibility('furniture')">
-                        ${showCompleted.furniture ? 'Hide' : 'Show'} Completed Furniture
+                        ${showCompleted.furniture ? 'Hide' : 'Show'} Completed Items
                      </div>
                      <div class="completed-container" style="display: ${showCompleted.furniture ? 'block' : 'none'};">
                         ${furnitureCompletedHtml}
@@ -1116,18 +1267,10 @@ function loadActiveEventIndex() {
     const grid = document.getElementById('archiveGrid');
     grid.innerHTML = "";
 
-    if (items.length === 0 && pets.length === 0) {
-        grid.innerHTML = `<div class="coming-soon-card" style="grid-column: 1 / -1;">
-            <div class="coming-soon-title">Magic Academy Catalog Empty</div>
-            <div class="coming-soon-text">Catalog data will populate automatically as soon as maintenance completes!</div>
-        </div>`;
-        return;
-    }
-
-    // Furniture
+    // Furniture Header
     const furnitureHeader = document.createElement("h2");
     furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    furnitureHeader.innerText = "🔨 Furniture";
+    furnitureHeader.innerText = "🔨 Furniture & Crop";
     grid.appendChild(furnitureHeader);
 
     items.forEach(item => {
@@ -1135,9 +1278,12 @@ function loadActiveEventIndex() {
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
         card.className = "glossary-card";
+        if (item.type === 'crop') {
+            card.style.borderColor = "rgba(243, 156, 18, 0.8)";
+        }
         card.innerHTML = `
             ${imgHtml}
-            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-title" ${item.type === 'crop' ? 'style="color: var(--accent-crop);"' : ''}>${item.name}</div>
             <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
             <div class="glossary-lore">"${item.lore}"</div>
             <div class="glossary-source">📦 Materials: ${matString}</div>
@@ -1145,7 +1291,7 @@ function loadActiveEventIndex() {
         grid.appendChild(card);
     });
 
-    // Pets
+    // Pets Header
     const petsHeader = document.createElement("h2");
     petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     petsHeader.innerText = "🐾 Pets";
@@ -1166,6 +1312,25 @@ function loadActiveEventIndex() {
         `;
         grid.appendChild(card);
     });
+
+    // Event Materials Header
+    const materialsHeader = document.createElement("h2");
+    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
+    materialsHeader.innerText = "📌 Event Materials";
+    grid.appendChild(materialsHeader);
+
+    glossary.forEach(mat => {
+        const imgHtml = mat.image ? `<div class="card-img-container"><img src="${mat.image}" alt="${mat.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${mat.name}</div>
+            <div class="glossary-lore">"${mat.lore}"</div>
+            <div class="glossary-source">📍 Location: ${mat.source}</div>
+        `;
+        grid.appendChild(card);
+    });
 }
 
 function loadDesertOasisIndex() {
@@ -1178,7 +1343,6 @@ function loadDesertOasisIndex() {
         return;
     }
 
-    // Furniture Header
     const furnitureHeader = document.createElement("h2");
     furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     furnitureHeader.innerText = "🔨 Furniture";
@@ -1199,7 +1363,6 @@ function loadDesertOasisIndex() {
         grid.appendChild(card);
     });
 
-    // Pets Header
     const petsHeader = document.createElement("h2");
     petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     petsHeader.innerText = "🐾 Pets & Incubator Items";
@@ -1221,7 +1384,6 @@ function loadDesertOasisIndex() {
         grid.appendChild(card);
     });
 
-    // Materials Header
     const materialsHeader = document.createElement("h2");
     materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     materialsHeader.innerText = "📌 Event Materials";
