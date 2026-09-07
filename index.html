@@ -132,20 +132,25 @@
             display: block;
         }
 
-        /* PARALLAX HERO BANNER & TIMER BADGE OVERLAY */
+        /* PARALLAX HERO BANNER WITH FLEXIBLE OVERLAY CONTAINER */
         .hero-banner-container {
             position: relative;
             width: 100%;
-            height: 220px;
+            min-height: 220px;
+            height: auto;
             overflow: hidden;
             display: block;
         }
 
         .hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
+            z-index: 1;
         }
 
         .hero-fade-overlay {
@@ -153,21 +158,29 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0) 20%, rgba(10, 10, 10, 1) 100%);
+            top: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.2) 0%, rgba(10, 10, 10, 0.95) 100%);
+            z-index: 2;
+        }
+
+        .hero-content-wrapper {
+            position: relative;
+            z-index: 3;
+            padding-top: 40px;
+            padding-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .hero-title {
-            position: absolute;
-            bottom: 12px;
-            width: 100%;
-            text-align: center;
             color: var(--accent-gold);
             font-size: 1.5rem;
             font-weight: 700;
             text-transform: uppercase;
             text-shadow: 0 2px 8px rgba(0,0,0,0.9);
             margin: 0;
+            text-align: center;
         }
 
         .event-timer-badge {
@@ -185,6 +198,166 @@
             border-radius: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
             white-space: nowrap;
+        }
+
+        /* STREAMLINED HERO OVERLAY PROGRESS SUMMARY CARD */
+        .summary-progress-card {
+            width: calc(100% - 32px);
+            max-width: 860px;
+            margin: 16px auto 0;
+            background: rgba(10, 10, 10, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--accent-gold);
+            border-radius: var(--border-radius);
+            padding: 14px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .progress-card-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .stats-link-btn {
+            display: inline-block;
+            background: rgba(232, 195, 64, 0.15);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 4px;
+        }
+
+        .stats-link-btn:hover {
+            background: var(--accent-gold);
+            color: #0A0A0A;
+        }
+
+        /* EXPORTABLE STATS CARD WRAPPER */
+        .stats-export-card {
+            background: #0A0A0A;
+            border: 2px solid var(--accent-gold);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            margin-top: 16px;
+        }
+
+        .stats-banner-header {
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 16px;
+        }
+
+        .stats-banner-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .stats-banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.95) 100%);
+            z-index: 2;
+        }
+
+        .stats-banner-title {
+            position: relative;
+            z-index: 3;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            margin: 0;
+            text-align: center;
+        }
+
+        /* LIFETIME STATS PAGE STYLING */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .stats-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-purple);
+            border-radius: var(--border-radius);
+            padding: 16px;
+        }
+
+        .stats-card-title {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(232, 195, 64, 0.3);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #A0A0A0;
+        }
+
+        .stat-val {
+            font-weight: bold;
+            color: var(--text-light);
         }
 
         /* SLIDE-OUT DRAWER WITH VERTICAL SCROLLING */
@@ -316,29 +489,6 @@
             margin-top: 4px;
         }
 
-        /* PLACEHOLDER COMING SOON CARD */
-        .coming-soon-card {
-            background: var(--card-bg);
-            border: 1px dashed var(--accent-purple);
-            border-radius: var(--border-radius);
-            padding: 32px 20px;
-            text-align: center;
-            margin-top: 12px;
-        }
-
-        .coming-soon-title {
-            color: var(--accent-gold);
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .coming-soon-text {
-            color: #A0A0A0;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
         /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Quicksand', sans-serif; }
@@ -386,7 +536,7 @@
         .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
         .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
         .checklist-section.collapsed .checklist-header::after { transform: rotate(-90deg); }
-        .checklist-section.collapsed .check-item, .checklist-section.collapsed .completed-toggle, .checklist-section.collapsed .completed-container { display: none !important; }
+        .checklist-section.collapsed .check-item { display: none !important; }
 
         .check-item { display: flex; align-items: center; background: var(--card-bg); padding: 12px 16px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: all 0.2s ease; user-select: none; }
         .check-item:hover { background: #222; }
@@ -400,8 +550,6 @@
         .check-qty { color: var(--accent-blue); font-weight: bold; font-size: 1rem; padding: 4px 10px; background: rgba(23, 178, 178, 0.15); border-radius: 6px; margin-left: 12px; }
         .check-item.completed .check-qty { opacity: 0.5; }
 
-        .completed-toggle { font-size: 0.85rem; color: #8e839e; text-align: center; margin: 12px 0 8px; padding: 8px; cursor: pointer; background: rgba(0, 0, 0, 0.2); border-radius: 6px; user-select: none; transition: all 0.2s; }
-        .completed-toggle:hover { color: var(--accent-gold); background: rgba(0, 0, 0, 0.4); }
         .empty-state { text-align: center; color: #8e839e; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-purple); }
 
         /* BOTTOM SHEET */
@@ -441,6 +589,7 @@
             .btn { width: 28px; height: 28px; font-size: 1rem; }
             .qty-input { width: 28px; font-size: 0.9rem; }
             .event-timer-badge { font-size: 0.7rem; padding: 4px 10px; top: 10px; right: 10px; }
+            .summary-progress-card { margin: 12px auto 0; width: calc(100% - 20px); padding: 10px; }
         }
 
         .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(138, 43, 226, 0.8) !important; }
@@ -454,8 +603,9 @@
         <button class="menu-btn" onclick="toggleDrawer()">≡</button>
         <button class="home-btn" id="homeBtn" onclick="loadActiveEventView()">🏠 Back to Current Event</button>
         <div class="tab-btn-container" id="tabBtnContainer">
-            <button class="tab-btn active" onclick="switchTab('calculatorTab', this)">Calculator</button>
+            <button class="tab-btn active" id="navCalc" onclick="switchTab('calculatorTab', this)">Calculator</button>
             <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
+            <button class="tab-btn" id="navStats" onclick="switchTab('statsTab', this)">Lifetime Stats</button>
             <button class="tab-btn" onclick="loadActiveEventIndex()">Magic Academy Catalog</button>
         </div>
     </div>
@@ -504,7 +654,12 @@
             <div class="event-timer-badge" id="eventTimerBadge">⏳ Calculating...</div>
             <img src="Images/MagicAcademy/Magic Academy Key Art.jpg" alt="Magic Academy Key Art" class="hero-img">
             <div class="hero-fade-overlay"></div>
-            <h1 class="hero-title">Magic Academy</h1>
+            
+            <div class="hero-content-wrapper">
+                <h1 class="hero-title">Magic Academy</h1>
+                <!-- HERO HUD PROGRESS OVERLAY CONTAINER -->
+                <div id="heroProgressOverlay" style="width: 100%;"></div>
+            </div>
         </div>
 
         <div id="calculatorTab" class="tab-content active">
@@ -519,6 +674,26 @@
 
         <div id="checklistTab" class="tab-content">
             <div id="checklistContainer"></div>
+        </div>
+
+        <div id="statsTab" class="tab-content">
+            <h2 style="text-align: center; color: var(--accent-gold); margin-top: 0;">📊 Workshop Lifetime Stats</h2>
+            
+            <div style="text-align: center; margin-bottom: 16px;">
+                <button class="stats-link-btn" onclick="exportStatsAsImage()" style="font-size: 0.85rem; padding: 10px 20px;">
+                    📸 Share / Save Stats Image
+                </button>
+            </div>
+
+            <!-- EXPORTABLE CANVAS WRAPPER CONTAINING HERO BANNER + STATS -->
+            <div class="stats-export-card" id="statsExportContainer">
+                <div class="stats-banner-header">
+                    <img src="Images/MagicAcademy/Magic Academy Key Art.jpg" alt="Magic Academy Header" class="stats-banner-img">
+                    <div class="stats-banner-overlay"></div>
+                    <h3 class="stats-banner-title">Magic Academy Stats</h3>
+                </div>
+                <div class="stats-grid" id="statsGrid"></div>
+            </div>
         </div>
 
         <div class="bottom-sheet" id="bottomSheet">
@@ -549,6 +724,9 @@
         <h1 id="archiveTitle" class="archive-title" style="text-align: center; color: var(--accent-gold); margin-bottom: 20px; margin-top: 0;">Event Archive</h1>
         <div class="index-grid" id="archiveGrid"></div>
     </div>
+
+    <!-- HTML2CANVAS LIBRARY FOR IMAGE EXPORT -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <!-- DATA SOURCES -->
     <script src="js/playtogether_core.js"></script>
@@ -694,7 +872,6 @@ const magicAcademyPets = [
     }
 ];
 
-// Cleaned up: Standard/Core items removed to eliminate duplicates with coreGlossary
 const magicAcademyGlossary = [
     { name: "Wizard Coin", lore: "Can be used in the Magic Soup game and at the workshop.", source: "Event", image: "Images/MagicAcademy/Wizard Coin.png" },
     { name: "Magic Tome", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Tome.png" },
@@ -704,6 +881,12 @@ const magicAcademyGlossary = [
     { name: "Magic Quill", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Quill.png" },
     { name: "Dark Stone", lore: "It grants immense magical power, but is said to lead its user to ruin.", source: "Event", image: "Images/MagicAcademy/Dark Stone.png" },
     { name: "Magic Letter", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Letter.png" }
+];
+
+// Definition of Net-Caught Critters
+const NET_CAUGHT_CRITTERS = [
+    "Mimic", "Magic Quill", "Magic Tome", "Magic Letter", 
+    "Straw Scarecrow", "Cursed Scarecrow", "Will-o'-the-Wisp", "Eoduksini"
 ];
 
 let items = magicAcademyItems;
@@ -746,13 +929,18 @@ setInterval(updateEventCountdown, 60000);
 updateEventCountdown();
 
 /* =====================================================================
-   STATE MANAGEMENT
+   STATE MANAGEMENT & LIFETIME STATS
    ===================================================================== */
 let quantities = {};
 let completedCrafts = {};
 let checklistProgress = {};
-let showCompleted = { furniture: false, pets: false };
 let currentCategory = 'furniture'; 
+let lifetimeStats = {
+    totalItemsCrafted: 0,
+    totalCraftingTimeMinutes: 0,
+    materialsConsumed: {},
+    crittersCaught: {}
+};
 
 function loadSavedData() {
     try {
@@ -764,6 +952,9 @@ function loadSavedData() {
 
         const savedChecklist = localStorage.getItem("magic_academy_checklist");
         if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
+
+        const savedStats = localStorage.getItem("lifetime_stats");
+        if (savedStats) lifetimeStats = JSON.parse(savedStats);
         
         if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
             renderChecklist();
@@ -785,6 +976,43 @@ function saveCompleted() {
 
 function saveChecklist() {
     try { localStorage.setItem("magic_academy_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
+}
+
+function saveLifetimeStats() {
+    try { localStorage.setItem("lifetime_stats", JSON.stringify(lifetimeStats)); } catch (e) {}
+}
+
+function recordCraftInStats(item) {
+    lifetimeStats.totalItemsCrafted = (lifetimeStats.totalItemsCrafted || 0) + 1;
+    lifetimeStats.totalCraftingTimeMinutes = (lifetimeStats.totalCraftingTimeMinutes || 0) + item.timeMinutes;
+
+    if (item.mats) {
+        Object.entries(item.mats).forEach(([mat, count]) => {
+            lifetimeStats.materialsConsumed[mat] = (lifetimeStats.materialsConsumed[mat] || 0) + count;
+            
+            if (NET_CAUGHT_CRITTERS.includes(mat)) {
+                lifetimeStats.crittersCaught[mat] = (lifetimeStats.crittersCaught[mat] || 0) + count;
+            }
+        });
+    }
+    saveLifetimeStats();
+}
+
+function undoCraftInStats(item) {
+    lifetimeStats.totalItemsCrafted = Math.max(0, (lifetimeStats.totalItemsCrafted || 0) - 1);
+    lifetimeStats.totalCraftingTimeMinutes = Math.max(0, (lifetimeStats.totalCraftingTimeMinutes || 0) - item.timeMinutes);
+
+    if (item.mats) {
+        Object.entries(item.mats).forEach(([mat, count]) => {
+            if (lifetimeStats.materialsConsumed[mat]) {
+                lifetimeStats.materialsConsumed[mat] = Math.max(0, lifetimeStats.materialsConsumed[mat] - count);
+            }
+            if (NET_CAUGHT_CRITTERS.includes(mat) && lifetimeStats.crittersCaught[mat]) {
+                lifetimeStats.crittersCaught[mat] = Math.max(0, lifetimeStats.crittersCaught[mat] - count);
+            }
+        });
+    }
+    saveLifetimeStats();
 }
 
 /* =====================================================================
@@ -814,7 +1042,25 @@ function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
     
     document.getElementById(tabId).classList.add('active');
-    btn.classList.add('active');
+    
+    if (btn) {
+        btn.classList.add('active');
+    } else {
+        if (tabId === 'statsTab') document.getElementById('navStats').classList.add('active');
+        if (tabId === 'checklistTab') document.getElementById('navChecklist').classList.add('active');
+        if (tabId === 'calculatorTab') document.getElementById('navCalc').classList.add('active');
+    }
+
+    const heroOverlay = document.getElementById("heroProgressOverlay");
+    if (tabId === 'checklistTab') {
+        renderHeroBannerOverlay();
+    } else {
+        if (heroOverlay) heroOverlay.innerHTML = '';
+    }
+
+    if (tabId === 'statsTab') {
+        renderLifetimeStats();
+    }
 
     const sheet = document.getElementById('bottomSheet');
     if (tabId === 'calculatorTab') {
@@ -831,6 +1077,7 @@ function loadActiveEventView() {
     document.getElementById('activeEventContainer').style.display = 'block';
     document.getElementById('homeBtn').style.display = 'none';
     document.getElementById('tabBtnContainer').style.display = 'flex';
+    switchTab('calculatorTab', document.getElementById('navCalc'));
     if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
 }
 
@@ -912,8 +1159,7 @@ function generateChecklist() {
         return;
     }
     
-    const navBtn = document.getElementById('navChecklist');
-    switchTab('checklistTab', navBtn);
+    switchTab('checklistTab', document.getElementById('navChecklist'));
     renderChecklist();
     calculateTotals();
 }
@@ -939,9 +1185,14 @@ function completeCraft(itemId, element) {
         element.classList.add('processing'); 
         element.classList.add('completed'); 
         
+        const item = [...items, ...pets].find(i => i.id === itemId);
+
         setTimeout(() => {
             quantities[itemId]--;
             completedCrafts[itemId] = (completedCrafts[itemId] || 0) + 1;
+            
+            if (item) recordCraftInStats(item);
+
             saveQuantities();
             saveCompleted();
             renderGrid();
@@ -955,17 +1206,16 @@ function undoCraft(itemId) {
     if (completedCrafts[itemId] > 0) {
         completedCrafts[itemId]--;
         quantities[itemId]++;
+
+        const item = [...items, ...pets].find(i => i.id === itemId);
+        if (item) undoCraftInStats(item);
+
         saveQuantities();
         saveCompleted();
         renderGrid();
         renderChecklist();
         calculateTotals();
     }
-}
-
-function toggleCompletedVisibility(type) {
-    showCompleted[type] = !showCompleted[type];
-    renderChecklist();
 }
 
 function getCategoryForMaterial(matName) {
@@ -980,8 +1230,43 @@ function getCategoryForMaterial(matName) {
     return "Event Materials";
 }
 
+function renderHeroBannerOverlay() {
+    const heroOverlay = document.getElementById("heroProgressOverlay");
+    if (!heroOverlay) return;
+
+    let activeFurnitureCount = 0;
+    let completedFurnitureCount = 0;
+
+    items.forEach(item => {
+        activeFurnitureCount += (quantities[item.id] || 0);
+        completedFurnitureCount += (completedCrafts[item.id] || 0);
+    });
+
+    const totalFurniture = activeFurnitureCount + completedFurnitureCount;
+    const furniturePercent = totalFurniture > 0 ? Math.round((completedFurnitureCount / totalFurniture) * 100) : 0;
+
+    if (totalFurniture > 0) {
+        heroOverlay.innerHTML = `
+            <div class="summary-progress-card">
+                <div class="progress-card-title">
+                    <span>🏆 Workshop Progress</span>
+                    <span>${furniturePercent}% (${completedFurnitureCount}/${totalFurniture} Crafted)</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: ${furniturePercent}%;"></div>
+                </div>
+                <button class="stats-link-btn" onclick="switchTab('statsTab')">
+                    📊 View Lifetime Stats
+                </button>
+            </div>`;
+    } else {
+        heroOverlay.innerHTML = ``;
+    }
+}
+
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
+    renderHeroBannerOverlay();
 
     const matTotals = {};
     let hasActiveOrCompletedItems = false;
@@ -1012,6 +1297,7 @@ function renderChecklist() {
 
     let html = ``;
 
+    // 1. Material Requirements Section
     for (const [category, mats] of Object.entries(groupedMats)) {
         html += `<div class="checklist-section">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
@@ -1030,110 +1316,164 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    let hasFurniture = false;
-    let hasCompletedFurniture = false;
-    let furnitureActiveHtml = ``;
-    let furnitureCompletedHtml = ``;
+    // 2. Furniture Queue
+    let activeFurnitureHtml = ``;
+    let activeFurnitureCount = 0;
 
     items.forEach(item => {
         const qty = quantities[item.id] || 0;
-        if (qty > 0) hasFurniture = true;
         for (let i = 0; i < qty; i++) {
-            furnitureActiveHtml += `
+            activeFurnitureCount++;
+            activeFurnitureHtml += `
                 <div class="check-item" onclick="completeCraft('${item.id}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${item.name}</div>
                     <div class="check-qty" style="background: rgba(232, 195, 64, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
                 </div>`;
         }
-        
-        const compQty = completedCrafts[item.id] || 0;
-        if (compQty > 0) hasCompletedFurniture = true;
-        for (let i = 0; i < compQty; i++) {
-            furnitureCompletedHtml += `
-                <div class="check-item completed" onclick="undoCraft('${item.id}')">
-                    <div class="checkbox"></div>
-                    <div class="check-text">${item.name}</div>
-                    <div class="check-qty" style="background: rgba(232, 195, 64, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
-                </div>`;
-        }
     });
 
-    if (hasFurniture || hasCompletedFurniture) {
+    if (activeFurnitureCount > 0) {
         html += `<div class="checklist-section" style="margin-top: 32px;">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🔨 Magic Academy Workshop</span>
                     </div>
-                    ${furnitureActiveHtml}`;
-                    
-        if (hasCompletedFurniture) {
-            html += `<div class="completed-toggle" onclick="toggleCompletedVisibility('furniture')">
-                        ${showCompleted.furniture ? 'Hide' : 'Show'} Completed Items
-                     </div>
-                     <div class="completed-container" style="display: ${showCompleted.furniture ? 'block' : 'none'};">
-                        ${furnitureCompletedHtml}
-                     </div>`;
-        }
-        html += `</div>`;
+                    ${activeFurnitureHtml}
+                </div>`;
     }
 
-    let hasPets = false;
-    let hasCompletedPets = false;
-    let petsActiveHtml = ``;
-    let petsCompletedHtml = ``;
+    // 3. Pet Assembly Queue
+    let activePetsHtml = ``;
+    let activePetsCount = 0;
 
     pets.forEach(pet => {
         const qty = quantities[pet.id] || 0;
-        if (qty > 0) hasPets = true;
         for (let i = 0; i < qty; i++) {
-            petsActiveHtml += `
+            activePetsCount++;
+            activePetsHtml += `
                 <div class="check-item" onclick="completeCraft('${pet.id}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${pet.name}</div>
                     <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
                 </div>`;
         }
-        
-        const compQty = completedCrafts[pet.id] || 0;
-        if (compQty > 0) hasCompletedPets = true;
-        for (let i = 0; i < compQty; i++) {
-            petsCompletedHtml += `
-                <div class="check-item completed" onclick="undoCraft('${pet.id}')">
-                    <div class="checkbox"></div>
-                    <div class="check-text">${pet.name}</div>
-                    <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
-                </div>`;
-        }
     });
 
-    if (hasPets || hasCompletedPets) {
+    if (activePetsCount > 0) {
         html += `<div class="checklist-section" style="margin-top: 32px;">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span style="color: var(--accent-pet);">🐾 Pet Incubator</span>
                     </div>
-                    ${petsActiveHtml}`;
-                    
-        if (hasCompletedPets) {
-            html += `<div class="completed-toggle" onclick="toggleCompletedVisibility('pets')">
-                        ${showCompleted.pets ? 'Hide' : 'Show'} Completed Pets
-                     </div>
-                     <div class="completed-container" style="display: ${showCompleted.pets ? 'block' : 'none'};">
-                        ${petsCompletedHtml}
-                     </div>`;
+                    ${activePetsHtml}
+                </div>`;
+    }
+
+    // 4. Completed Items History & Undo Section (Matching Collapsible Accordion Style)
+    let completedHistoryHtml = ``;
+    let totalCompletedCount = 0;
+
+    allCraftables.forEach(item => {
+        const compQty = completedCrafts[item.id] || 0;
+        if (compQty > 0) {
+            totalCompletedCount += compQty;
+            for (let i = 0; i < compQty; i++) {
+                completedHistoryHtml += `
+                    <div class="check-item completed" onclick="undoCraft('${item.id}')">
+                        <div class="checkbox"></div>
+                        <div class="check-text">${item.name} (Tap to Undo)</div>
+                        <div class="check-qty" style="background: rgba(232, 195, 64, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                    </div>`;
+            }
         }
-        html += `</div>`;
+    });
+
+    if (totalCompletedCount > 0) {
+        html += `<div class="checklist-section collapsed" style="margin-top: 32px; border-color: rgba(232, 195, 64, 0.3);">
+                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                        <span>🎉 Completed Crafts (${totalCompletedCount})</span>
+                    </div>
+                    ${completedHistoryHtml}
+                </div>`;
     }
 
     container.innerHTML = html;
 
-    container.querySelectorAll('.checklist-section').forEach(section => {
+    container.querySelectorAll('.checklist-section:not([style*="rgba(232, 195, 64, 0.3)"])').forEach(section => {
         const checkItems = section.querySelectorAll('.check-item');
-        if (checkItems.length > 0 && !section.querySelector('.completed-toggle')) {
+        if (checkItems.length > 0) {
             const allCompleted = Array.from(checkItems).every(item => item.classList.contains('completed'));
             if (allCompleted) {
                 section.classList.add('collapsed');
             }
         }
+    });
+}
+
+function renderLifetimeStats() {
+    const grid = document.getElementById("statsGrid");
+    grid.innerHTML = "";
+
+    const totalCrittersCount = Object.values(lifetimeStats.crittersCaught || {}).reduce((a, b) => a + b, 0);
+
+    // Card 1: Crafting Overview
+    let craftingHtml = `
+        <div class="stats-card">
+            <div class="stats-card-title">🔨 Crafting Overview</div>
+            <div class="stat-row"><span class="stat-label">Total Items Crafted</span><span class="stat-val">${lifetimeStats.totalItemsCrafted || 0}</span></div>
+            <div class="stat-row"><span class="stat-label">Total Cumulative Time</span><span class="stat-val">${formatTime(lifetimeStats.totalCraftingTimeMinutes || 0)}</span></div>
+        </div>`;
+
+    // Card 2: Net-Caught Critters
+    let crittersHtml = `
+        <div class="stats-card">
+            <div class="stats-card-title">🕸️ Net-Caught Critters</div>
+            <div class="stat-row" style="font-weight: bold;"><span class="stat-label" style="color: var(--accent-gold);">Total Critters Caught</span><span class="stat-val" style="color: var(--accent-gold);">${totalCrittersCount}</span></div>`;
+    
+    if (Object.keys(lifetimeStats.crittersCaught || {}).length === 0) {
+        crittersHtml += `<div class="stat-row"><span class="stat-label">No critters caught yet.</span></div>`;
+    } else {
+        Object.entries(lifetimeStats.crittersCaught).forEach(([critter, count]) => {
+            if (count > 0) {
+                crittersHtml += `<div class="stat-row"><span class="stat-label">${critter}</span><span class="stat-val">${count}</span></div>`;
+            }
+        });
+    }
+    crittersHtml += `</div>`;
+
+    // Card 3: Aggregate Material Consumption
+    let matsHtml = `
+        <div class="stats-card">
+            <div class="stats-card-title">📦 Raw Materials Consumed</div>`;
+    
+    if (Object.keys(lifetimeStats.materialsConsumed || {}).length === 0) {
+        matsHtml += `<div class="stat-row"><span class="stat-label">No materials consumed yet.</span></div>`;
+    } else {
+        Object.entries(lifetimeStats.materialsConsumed).forEach(([mat, count]) => {
+            if (count > 0) {
+                matsHtml += `<div class="stat-row"><span class="stat-label">${mat}</span><span class="stat-val">${count.toLocaleString()}</span></div>`;
+            }
+        });
+    }
+    matsHtml += `</div>`;
+
+    grid.innerHTML = craftingHtml + crittersHtml + matsHtml;
+}
+
+function exportStatsAsImage() {
+    const exportTarget = document.getElementById("statsExportContainer");
+    
+    html2canvas(exportTarget, {
+        backgroundColor: "#0A0A0A",
+        scale: 2,
+        useCORS: true
+    }).then(canvas => {
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = `Magic_Academy_Stats_${new Date().toISOString().slice(0, 10)}.png`;
+        link.click();
+    }).catch(err => {
+        alert("Unable to generate image. Please try taking a manual screenshot instead!");
     });
 }
 
@@ -1169,7 +1509,6 @@ function resetQuantities() {
     Object.keys(quantities).forEach(id => quantities[id] = 0);
     Object.keys(completedCrafts).forEach(id => completedCrafts[id] = 0);
     checklistProgress = {};
-    showCompleted = { furniture: false, pets: false };
     
     saveQuantities();
     saveCompleted();
@@ -1267,7 +1606,6 @@ function loadActiveEventIndex() {
     const grid = document.getElementById('archiveGrid');
     grid.innerHTML = "";
 
-    // Furniture Header
     const furnitureHeader = document.createElement("h2");
     furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     furnitureHeader.innerText = "🔨 Furniture & Crop";
@@ -1291,7 +1629,6 @@ function loadActiveEventIndex() {
         grid.appendChild(card);
     });
 
-    // Pets Header
     const petsHeader = document.createElement("h2");
     petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     petsHeader.innerText = "🐾 Pets";
@@ -1313,7 +1650,6 @@ function loadActiveEventIndex() {
         grid.appendChild(card);
     });
 
-    // Event Materials Header
     const materialsHeader = document.createElement("h2");
     materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
     materialsHeader.innerText = "📌 Event Materials";
