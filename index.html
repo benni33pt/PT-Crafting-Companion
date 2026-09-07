@@ -231,32 +231,13 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
         }
 
         .progress-bar-fill {
             height: 100%;
             background: var(--accent-gold);
             transition: width 0.3s ease;
-        }
-
-        .stats-link-btn {
-            display: inline-block;
-            background: rgba(232, 195, 64, 0.15);
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
-            padding: 8px 16px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 4px;
-        }
-
-        .stats-link-btn:hover {
-            background: var(--accent-gold);
-            color: #0A0A0A;
         }
 
         /* LIFETIME STATS PAGE STYLING */
@@ -478,24 +459,70 @@
         .generate-btn { display: block; width: 100%; padding: 16px; background: var(--accent-purple); color: #FFFFFF; font-weight: bold; font-size: 1.1rem; text-align: center; border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; font-family: 'Cinzel', serif; }
         .generate-btn:hover { background: var(--accent-purple-glow); }
 
-        /* CHECKLIST */
+        /* CHECKLIST & RESPONSIVE QUEUE GRID */
         .checklist-section { margin-bottom: 24px; background: rgba(26, 26, 26, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(138, 43, 226, 0.4); }
         .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
         .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
         .checklist-section.collapsed .checklist-header::after { transform: rotate(-90deg); }
-        .checklist-section.collapsed .check-item { display: none !important; }
+        .checklist-section.collapsed .check-item, 
+        .checklist-section.collapsed .checklist-queue-grid { display: none !important; }
 
-        .check-item { display: flex; align-items: center; background: var(--card-bg); padding: 12px 16px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #333; cursor: pointer; transition: all 0.2s ease; user-select: none; }
+        .checklist-queue-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        @media (min-width: 650px) {
+            .checklist-queue-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 900px) {
+            .checklist-queue-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .check-item { 
+            display: flex; 
+            align-items: center; 
+            background: var(--card-bg); 
+            padding: 10px 14px; 
+            margin-bottom: 0; 
+            border-radius: 8px; 
+            border: 1px solid #333; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            user-select: none; 
+        }
         .check-item:hover { background: #222; }
         .check-item.completed { background: rgba(26, 26, 26, 0.6); border-color: rgba(232, 195, 64, 0.2); }
         .check-item.completed .check-text { text-decoration: line-through; color: #8e839e; }
 
-        .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-purple); border-radius: 6px; margin-right: 14px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
+        .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-purple); border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
         .check-item.completed .checkbox { background: var(--accent-purple); border-color: var(--accent-purple); }
         .check-item.completed .checkbox::after { content: "✓"; color: #FFFFFF; font-weight: bold; font-size: 1rem; }
-        .check-text { font-size: 0.95rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; }
-        .check-qty { color: var(--accent-blue); font-weight: bold; font-size: 1rem; padding: 4px 10px; background: rgba(23, 178, 178, 0.15); border-radius: 6px; margin-left: 12px; }
+        .check-text { font-size: 0.9rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; line-height: 1.2; }
+        .check-qty { color: var(--accent-blue); font-weight: bold; font-size: 0.95rem; padding: 4px 10px; background: rgba(23, 178, 178, 0.15); border-radius: 6px; margin-left: 12px; }
         .check-item.completed .check-qty { opacity: 0.5; }
+
+        .check-item-thumb {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--accent-purple);
+            background-color: #ffffff;
+            margin-left: 10px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .pet-card-thumb {
+            border-color: var(--accent-pet);
+        }
 
         .empty-state { text-align: center; color: #8e839e; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-purple); }
 
@@ -1195,7 +1222,7 @@ function renderChecklist() {
             const checkId = `mat_${m.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
             const isChecked = checklistProgress[checkId] ? "completed" : "";
             html += `
-                <div class="check-item ${isChecked}" onclick="toggleCheckItem('${checkId}', this)">
+                <div class="check-item ${isChecked}" style="margin-bottom: 8px;" onclick="toggleCheckItem('${checkId}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${m.name}</div>
                     <div class="check-qty" id="qty_${checkId}">x${m.total.toLocaleString()}</div>
@@ -1204,19 +1231,20 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    // 2. Furniture Queue
+    // 2. Furniture Queue (With Circular Thumbnails and Desktop Grid)
     let activeFurnitureHtml = ``;
     let activeFurnitureCount = 0;
 
     items.forEach(item => {
         const qty = quantities[item.id] || 0;
+        const imgHtml = item.image ? `<img src="${item.image}" alt="${item.name}" class="check-item-thumb">` : '';
         for (let i = 0; i < qty; i++) {
             activeFurnitureCount++;
             activeFurnitureHtml += `
                 <div class="check-item" onclick="completeCraft('${item.id}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${item.name}</div>
-                    <div class="check-qty" style="background: rgba(232, 195, 64, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                    ${imgHtml}
                 </div>`;
         }
     });
@@ -1226,23 +1254,26 @@ function renderChecklist() {
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🔨 Magic Academy Workshop</span>
                     </div>
-                    ${activeFurnitureHtml}
+                    <div class="checklist-queue-grid">
+                        ${activeFurnitureHtml}
+                    </div>
                 </div>`;
     }
 
-    // 3. Pet Assembly Queue
+    // 3. Pet Assembly Queue (With Circular Thumbnails and Desktop Grid)
     let activePetsHtml = ``;
     let activePetsCount = 0;
 
     pets.forEach(pet => {
         const qty = quantities[pet.id] || 0;
+        const imgHtml = pet.image ? `<img src="${pet.image}" alt="${pet.name}" class="check-item-thumb pet-card-thumb">` : '';
         for (let i = 0; i < qty; i++) {
             activePetsCount++;
             activePetsHtml += `
                 <div class="check-item" onclick="completeCraft('${pet.id}', this)">
                     <div class="checkbox"></div>
                     <div class="check-text">${pet.name}</div>
-                    <div class="check-qty" style="background: rgba(50, 168, 115, 0.15); color: var(--accent-pet);">⏱️ ${formatTime(pet.timeMinutes)}</div>
+                    ${imgHtml}
                 </div>`;
         }
     });
@@ -1252,11 +1283,13 @@ function renderChecklist() {
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span style="color: var(--accent-pet);">🐾 Pet Incubator</span>
                     </div>
-                    ${activePetsHtml}
+                    <div class="checklist-queue-grid">
+                        ${activePetsHtml}
+                    </div>
                 </div>`;
     }
 
-    // 4. Completed Items History & Undo Section
+    // 4. Completed Items History Section (With Circular Thumbnails and Desktop Grid)
     let completedHistoryHtml = ``;
     let totalCompletedCount = 0;
 
@@ -1264,12 +1297,15 @@ function renderChecklist() {
         const compQty = completedCrafts[item.id] || 0;
         if (compQty > 0) {
             totalCompletedCount += compQty;
+            const isPet = pets.some(p => p.id === item.id);
+            const thumbClass = isPet ? "check-item-thumb pet-card-thumb" : "check-item-thumb";
+            const imgHtml = item.image ? `<img src="${item.image}" alt="${item.name}" class="${thumbClass}">` : '';
             for (let i = 0; i < compQty; i++) {
                 completedHistoryHtml += `
                     <div class="check-item completed" onclick="undoCraft('${item.id}')">
                         <div class="checkbox"></div>
                         <div class="check-text">${item.name} (Tap to Undo)</div>
-                        <div class="check-qty" style="background: rgba(232, 195, 64, 0.15); color: var(--accent-gold);">⏱️ ${formatTime(item.timeMinutes)}</div>
+                        ${imgHtml}
                     </div>`;
             }
         }
@@ -1280,7 +1316,9 @@ function renderChecklist() {
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🎉 Completed Crafts (${totalCompletedCount})</span>
                     </div>
-                    ${completedHistoryHtml}
+                    <div class="checklist-queue-grid">
+                        ${completedHistoryHtml}
+                    </div>
                 </div>`;
     }
 
