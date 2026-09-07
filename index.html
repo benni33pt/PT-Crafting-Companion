@@ -550,7 +550,7 @@
         <button class="menu-btn" onclick="toggleDrawer()">≡</button>
         <button class="home-btn" id="homeBtn" onclick="loadActiveEventView()">🏠 Back to Current Event</button>
         <div class="tab-btn-container" id="tabBtnContainer">
-            <button class="tab-btn active" id="navCalc" onclick="switchTab('calculatorTab', this)">Calculator</button>
+            <button class="tab-btn" id="navCalc" onclick="switchTab('calculatorTab', this)">Calculator</button>
             <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
             <button class="tab-btn" id="navStats" onclick="switchTab('statsTab', this)">Lifetime Stats</button>
             <button class="tab-btn" onclick="loadActiveEventIndex()">Magic Academy Catalog</button>
@@ -609,7 +609,7 @@
             </div>
         </div>
 
-        <div id="calculatorTab" class="tab-content active">
+        <div id="calculatorTab" class="tab-content">
             <div class="sub-nav" id="activeSubNav">
                 <button class="sub-btn active-furniture" id="subTabFurniture" onclick="switchCategory('furniture')">Furniture</button>
                 <button class="sub-btn" id="subTabPets" onclick="switchCategory('pets')">Pets</button>
@@ -858,18 +858,12 @@ setInterval(updateEventCountdown, 60000);
 updateEventCountdown();
 
 /* =====================================================================
-   STATE MANAGEMENT & LIFETIME STATS
+   STATE MANAGEMENT & STORAGE
    ===================================================================== */
 let quantities = {};
 let completedCrafts = {};
 let checklistProgress = {};
 let currentCategory = 'furniture'; 
-let lifetimeStats = {
-    totalItemsCrafted: 0,
-    totalCraftingTimeMinutes: 0,
-    materialsConsumed: {},
-    crittersCaught: {}
-};
 
 function loadSavedData() {
     try {
@@ -882,16 +876,20 @@ function loadSavedData() {
         const savedChecklist = localStorage.getItem("magic_academy_checklist");
         if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
 
-        const savedStats = localStorage.getItem("lifetime_stats");
-        if (savedStats) lifetimeStats = JSON.parse(savedStats);
-        
-        if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
-            renderChecklist();
+        renderChecklist();
+
+        const hasActiveOrCompleted = Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0);
+
+        if (hasActiveOrCompleted) {
+            switchTab('checklistTab');
+        } else {
+            switchTab('calculatorTab');
         }
     } catch (e) {
         quantities = {};
         completedCrafts = {};
         checklistProgress = {};
+        switchTab('calculatorTab');
     }
 }
 
@@ -905,43 +903,6 @@ function saveCompleted() {
 
 function saveChecklist() {
     try { localStorage.setItem("magic_academy_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
-}
-
-function saveLifetimeStats() {
-    try { localStorage.setItem("lifetime_stats", JSON.stringify(lifetimeStats)); } catch (e) {}
-}
-
-function recordCraftInStats(item) {
-    lifetimeStats.totalItemsCrafted = (lifetimeStats.totalItemsCrafted || 0) + 1;
-    lifetimeStats.totalCraftingTimeMinutes = (lifetimeStats.totalCraftingTimeMinutes || 0) + item.timeMinutes;
-
-    if (item.mats) {
-        Object.entries(item.mats).forEach(([mat, count]) => {
-            lifetimeStats.materialsConsumed[mat] = (lifetimeStats.materialsConsumed[mat] || 0) + count;
-            
-            if (NET_CAUGHT_CRITTERS.includes(mat)) {
-                lifetimeStats.crittersCaught[mat] = (lifetimeStats.crittersCaught[mat] || 0) + count;
-            }
-        });
-    }
-    saveLifetimeStats();
-}
-
-function undoCraftInStats(item) {
-    lifetimeStats.totalItemsCrafted = Math.max(0, (lifetimeStats.totalItemsCrafted || 0) - 1);
-    lifetimeStats.totalCraftingTimeMinutes = Math.max(0, (lifetimeStats.totalCraftingTimeMinutes || 0) - item.timeMinutes);
-
-    if (item.mats) {
-        Object.entries(item.mats).forEach(([mat, count]) => {
-            if (lifetimeStats.materialsConsumed[mat]) {
-                lifetimeStats.materialsConsumed[mat] = Math.max(0, lifetimeStats.materialsConsumed[mat] - count);
-            }
-            if (NET_CAUGHT_CRITTERS.includes(mat) && lifetimeStats.crittersCaught[mat]) {
-                lifetimeStats.crittersCaught[mat] = Math.max(0, lifetimeStats.crittersCaught[mat] - count);
-            }
-        });
-    }
-    saveLifetimeStats();
 }
 
 /* =====================================================================
@@ -981,7 +942,9 @@ function switchTab(tabId, btn) {
     }
 
     const heroOverlay = document.getElementById("heroProgressOverlay");
+    
     if (tabId === 'checklistTab') {
+        renderChecklist();
         renderHeroBannerOverlay();
     } else {
         if (heroOverlay) heroOverlay.innerHTML = '';
@@ -1006,7 +969,14 @@ function loadActiveEventView() {
     document.getElementById('activeEventContainer').style.display = 'block';
     document.getElementById('homeBtn').style.display = 'none';
     document.getElementById('tabBtnContainer').style.display = 'flex';
-    switchTab('calculatorTab', document.getElementById('navCalc'));
+    
+    const hasActiveOrCompleted = Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0);
+    if (hasActiveOrCompleted) {
+        switchTab('checklistTab');
+    } else {
+        switchTab('calculatorTab');
+    }
+    
     if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
 }
 
@@ -1113,14 +1083,10 @@ function completeCraft(itemId, element) {
     if (quantities[itemId] > 0 && !element.classList.contains('processing')) {
         element.classList.add('processing'); 
         element.classList.add('completed'); 
-        
-        const item = [...items, ...pets].find(i => i.id === itemId);
 
         setTimeout(() => {
             quantities[itemId]--;
             completedCrafts[itemId] = (completedCrafts[itemId] || 0) + 1;
-            
-            if (item) recordCraftInStats(item);
 
             saveQuantities();
             saveCompleted();
@@ -1135,9 +1101,6 @@ function undoCraft(itemId) {
     if (completedCrafts[itemId] > 0) {
         completedCrafts[itemId]--;
         quantities[itemId]++;
-
-        const item = [...items, ...pets].find(i => i.id === itemId);
-        if (item) undoCraftInStats(item);
 
         saveQuantities();
         saveCompleted();
@@ -1184,9 +1147,6 @@ function renderHeroBannerOverlay() {
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" style="width: ${furniturePercent}%;"></div>
                 </div>
-                <button class="stats-link-btn" onclick="switchTab('statsTab')">
-                    📊 View Lifetime Stats
-                </button>
             </div>`;
     } else {
         heroOverlay.innerHTML = ``;
@@ -1195,7 +1155,6 @@ function renderHeroBannerOverlay() {
 
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
-    renderHeroBannerOverlay();
 
     const matTotals = {};
     let hasActiveOrCompletedItems = false;
@@ -1297,7 +1256,7 @@ function renderChecklist() {
                 </div>`;
     }
 
-    // 4. Completed Items History & Undo Section (Matching Collapsible Accordion Style)
+    // 4. Completed Items History & Undo Section
     let completedHistoryHtml = ``;
     let totalCompletedCount = 0;
 
@@ -1338,18 +1297,47 @@ function renderChecklist() {
     });
 }
 
+/* =====================================================================
+   SELF-HEALING DYNAMIC LIFETIME STATS COMPUTATION
+   ===================================================================== */
 function renderLifetimeStats() {
     const grid = document.getElementById("statsGrid");
     grid.innerHTML = "";
 
-    const totalCrittersCount = Object.values(lifetimeStats.crittersCaught || {}).reduce((a, b) => a + b, 0);
+    const allCraftables = [...items, ...pets];
+    
+    let totalItems = 0;
+    let totalTime = 0;
+    const matsConsumed = {};
+    const critters = {};
+
+    allCraftables.forEach(item => {
+        const count = completedCrafts[item.id] || 0;
+        if (count > 0) {
+            totalItems += count;
+            totalTime += (item.timeMinutes || 0) * count;
+
+            if (item.mats) {
+                Object.entries(item.mats).forEach(([mat, qty]) => {
+                    const totalMatQty = qty * count;
+                    matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
+
+                    if (NET_CAUGHT_CRITTERS.includes(mat)) {
+                        critters[mat] = (critters[mat] || 0) + totalMatQty;
+                    }
+                });
+            }
+        }
+    });
+
+    const totalCrittersCount = Object.values(critters).reduce((a, b) => a + b, 0);
 
     // Card 1: Crafting Overview
     let craftingHtml = `
         <div class="stats-card">
             <div class="stats-card-title">🔨 Crafting Overview</div>
-            <div class="stat-row"><span class="stat-label">Total Items Crafted</span><span class="stat-val">${lifetimeStats.totalItemsCrafted || 0}</span></div>
-            <div class="stat-row"><span class="stat-label">Total Cumulative Time</span><span class="stat-val">${formatTime(lifetimeStats.totalCraftingTimeMinutes || 0)}</span></div>
+            <div class="stat-row"><span class="stat-label">Total Items Crafted</span><span class="stat-val">${totalItems}</span></div>
+            <div class="stat-row"><span class="stat-label">Total Cumulative Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
         </div>`;
 
     // Card 2: Net-Caught Critters
@@ -1358,10 +1346,10 @@ function renderLifetimeStats() {
             <div class="stats-card-title">🕸️ Net-Caught Critters</div>
             <div class="stat-row" style="font-weight: bold;"><span class="stat-label" style="color: var(--accent-gold);">Total Critters Caught</span><span class="stat-val" style="color: var(--accent-gold);">${totalCrittersCount}</span></div>`;
     
-    if (Object.keys(lifetimeStats.crittersCaught || {}).length === 0) {
+    if (Object.keys(critters).length === 0) {
         crittersHtml += `<div class="stat-row"><span class="stat-label">No critters caught yet.</span></div>`;
     } else {
-        Object.entries(lifetimeStats.crittersCaught).forEach(([critter, count]) => {
+        Object.entries(critters).forEach(([critter, count]) => {
             if (count > 0) {
                 crittersHtml += `<div class="stat-row"><span class="stat-label">${critter}</span><span class="stat-val">${count}</span></div>`;
             }
@@ -1374,10 +1362,10 @@ function renderLifetimeStats() {
         <div class="stats-card">
             <div class="stats-card-title">📦 Raw Materials Consumed</div>`;
     
-    if (Object.keys(lifetimeStats.materialsConsumed || {}).length === 0) {
+    if (Object.keys(matsConsumed).length === 0) {
         matsHtml += `<div class="stat-row"><span class="stat-label">No materials consumed yet.</span></div>`;
     } else {
-        Object.entries(lifetimeStats.materialsConsumed).forEach(([mat, count]) => {
+        Object.entries(matsConsumed).forEach(([mat, count]) => {
             if (count > 0) {
                 matsHtml += `<div class="stat-row"><span class="stat-label">${mat}</span><span class="stat-val">${count.toLocaleString()}</span></div>`;
             }
@@ -1712,6 +1700,7 @@ function loadGwidamIndex() {
         const card = document.createElement("div");
         card.className = "glossary-card";
         card.innerHTML = `
+            ${imgHtml}
             <div class="glossary-title">${mat.name}</div>
             <div class="glossary-lore">"${mat.lore}"</div>
             <div class="glossary-source">📍 Location: ${mat.source}</div>
