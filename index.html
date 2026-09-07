@@ -624,7 +624,7 @@
         </div>
 
         <div id="statsTab" class="tab-content">
-            <h2 style="text-align: center; color: var(--accent-gold); margin-top: 0;">📊 Workshop Lifetime Stats</h2>
+            <h2 style="text-align: center; color: var(--accent-gold); margin-top: 0;">📊 Lifetime Stats</h2>
             <div class="stats-grid" id="statsGrid"></div>
         </div>
 
@@ -1141,7 +1141,7 @@ function renderHeroBannerOverlay() {
         heroOverlay.innerHTML = `
             <div class="summary-progress-card">
                 <div class="progress-card-title">
-                    <span>🏆 Workshop Progress</span>
+                    <span>🏆 Progress</span>
                     <span>${furniturePercent}% (${completedFurnitureCount}/${totalFurniture} Crafted)</span>
                 </div>
                 <div class="progress-bar-bg">
@@ -1337,13 +1337,13 @@ function renderLifetimeStats() {
         <div class="stats-card">
             <div class="stats-card-title">🔨 Crafting Overview</div>
             <div class="stat-row"><span class="stat-label">Total Items Crafted</span><span class="stat-val">${totalItems}</span></div>
-            <div class="stat-row"><span class="stat-label">Total Cumulative Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
+            <div class="stat-row"><span class="stat-label">Cumulative Crafting Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
         </div>`;
 
     // Card 2: Net-Caught Critters
     let crittersHtml = `
         <div class="stats-card">
-            <div class="stats-card-title">🕸️ Net-Caught Critters</div>
+            <div class="stats-card-title">🦋 Critters Caught</div>
             <div class="stat-row" style="font-weight: bold;"><span class="stat-label" style="color: var(--accent-gold);">Total Critters Caught</span><span class="stat-val" style="color: var(--accent-gold);">${totalCrittersCount}</span></div>`;
     
     if (Object.keys(critters).length === 0) {
@@ -1360,7 +1360,7 @@ function renderLifetimeStats() {
     // Card 3: Aggregate Material Consumption
     let matsHtml = `
         <div class="stats-card">
-            <div class="stats-card-title">📦 Raw Materials Consumed</div>`;
+            <div class="stats-card-title">📦 Resources Consumed</div>`;
     
     if (Object.keys(matsConsumed).length === 0) {
         matsHtml += `<div class="stat-row"><span class="stat-label">No materials consumed yet.</span></div>`;
