@@ -1231,7 +1231,7 @@ function renderChecklist() {
         html += `</div>`;
     }
 
-    // 2. Furniture Queue (With Circular Thumbnails and Desktop Grid)
+    // 2. Furniture Queue
     let activeFurnitureHtml = ``;
     let activeFurnitureCount = 0;
 
@@ -1260,7 +1260,7 @@ function renderChecklist() {
                 </div>`;
     }
 
-    // 3. Pet Assembly Queue (With Circular Thumbnails and Desktop Grid)
+    // 3. Pet Assembly Queue
     let activePetsHtml = ``;
     let activePetsCount = 0;
 
@@ -1289,7 +1289,7 @@ function renderChecklist() {
                 </div>`;
     }
 
-    // 4. Completed Items History Section (With Circular Thumbnails and Desktop Grid)
+    // 4. Completed Items History Section
     let completedHistoryHtml = ``;
     let totalCompletedCount = 0;
 
@@ -1336,7 +1336,7 @@ function renderChecklist() {
 }
 
 /* =====================================================================
-   SELF-HEALING DYNAMIC LIFETIME STATS COMPUTATION
+   DYNAMIC LIFETIME STATS COMPUTATION & ITEMIZED BREAKDOWN (SORTED)
    ===================================================================== */
 function renderLifetimeStats() {
     const grid = document.getElementById("statsGrid");
@@ -1345,7 +1345,11 @@ function renderLifetimeStats() {
     const allCraftables = [...items, ...pets];
     
     let totalItems = 0;
+    let totalFurniture = 0;
+    let totalPets = 0;
     let totalTime = 0;
+
+    const itemCounts = [];
     const matsConsumed = {};
     const critters = {};
 
@@ -1355,13 +1359,23 @@ function renderLifetimeStats() {
             totalItems += count;
             totalTime += (item.timeMinutes || 0) * count;
 
+            const isPet = pets.some(p => p.id === item.id);
+            if (isPet) {
+                totalPets += count;
+            } else {
+                totalFurniture += count;
+            }
+
+            itemCounts.push({ name: item.name, count });
+
             if (item.mats) {
                 Object.entries(item.mats).forEach(([mat, qty]) => {
                     const totalMatQty = qty * count;
-                    matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
 
                     if (NET_CAUGHT_CRITTERS.includes(mat)) {
                         critters[mat] = (critters[mat] || 0) + totalMatQty;
+                    } else {
+                        matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
                     }
                 });
             }
@@ -1369,49 +1383,78 @@ function renderLifetimeStats() {
     });
 
     const totalCrittersCount = Object.values(critters).reduce((a, b) => a + b, 0);
+    const totalResourcesCount = Object.values(matsConsumed).reduce((a, b) => a + b, 0);
 
-    // Card 1: Crafting Overview
+    // Sort itemized lists from most to least
+    itemCounts.sort((a, b) => b.count - a.count);
+
+    const sortedCritters = Object.entries(critters)
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count);
+
+    const sortedMats = Object.entries(matsConsumed)
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count);
+
+    // Card 1: Expanded Crafting Overview
     let craftingHtml = `
         <div class="stats-card">
             <div class="stats-card-title">🔨 Crafting Overview</div>
             <div class="stat-row"><span class="stat-label">Total Items Crafted</span><span class="stat-val">${totalItems}</span></div>
+            <div class="stat-row"><span class="stat-label">Furniture & Crops Crafted</span><span class="stat-val">${totalFurniture}</span></div>
+            <div class="stat-row"><span class="stat-label">Pets Hatched</span><span class="stat-val">${totalPets}</span></div>
             <div class="stat-row"><span class="stat-label">Cumulative Crafting Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
+            <div class="stat-row"><span class="stat-label">Total Critters Caught</span><span class="stat-val">${totalCrittersCount.toLocaleString()}</span></div>
+            <div class="stat-row"><span class="stat-label">Total Resources Consumed</span><span class="stat-val">${totalResourcesCount.toLocaleString()}</span></div>
         </div>`;
 
-    // Card 2: Net-Caught Critters
+    // Card 2: Itemized Crafts Breakdown (Most to Least)
+    let itemizedHtml = `
+        <div class="stats-card">
+            <div class="stats-card-title">🎨 Crafts Breakdown</div>`;
+    
+    if (itemCounts.length === 0) {
+        itemizedHtml += `<div class="stat-row"><span class="stat-label">No items crafted yet.</span></div>`;
+    } else {
+        itemCounts.forEach(item => {
+            itemizedHtml += `<div class="stat-row"><span class="stat-label">${item.name}</span><span class="stat-val">${item.count}</span></div>`;
+        });
+    }
+    itemizedHtml += `</div>`;
+
+    // Card 3: Net-Caught Critters (Most to Least)
     let crittersHtml = `
         <div class="stats-card">
-            <div class="stats-card-title">🦋 Critters Caught</div>
-            <div class="stat-row" style="font-weight: bold;"><span class="stat-label" style="color: var(--accent-gold);">Total Critters Caught</span><span class="stat-val" style="color: var(--accent-gold);">${totalCrittersCount}</span></div>`;
+            <div class="stats-card-title">🦋 Critters Caught</div>`;
     
-    if (Object.keys(critters).length === 0) {
+    if (sortedCritters.length === 0) {
         crittersHtml += `<div class="stat-row"><span class="stat-label">No critters caught yet.</span></div>`;
     } else {
-        Object.entries(critters).forEach(([critter, count]) => {
-            if (count > 0) {
-                crittersHtml += `<div class="stat-row"><span class="stat-label">${critter}</span><span class="stat-val">${count}</span></div>`;
+        sortedCritters.forEach(critter => {
+            if (critter.count > 0) {
+                crittersHtml += `<div class="stat-row"><span class="stat-label">${critter.name}</span><span class="stat-val">${critter.count.toLocaleString()}</span></div>`;
             }
         });
     }
     crittersHtml += `</div>`;
 
-    // Card 3: Aggregate Material Consumption
+    // Card 4: Aggregate Material Consumption (Most to Least)
     let matsHtml = `
         <div class="stats-card">
             <div class="stats-card-title">📦 Resources Consumed</div>`;
     
-    if (Object.keys(matsConsumed).length === 0) {
+    if (sortedMats.length === 0) {
         matsHtml += `<div class="stat-row"><span class="stat-label">No materials consumed yet.</span></div>`;
     } else {
-        Object.entries(matsConsumed).forEach(([mat, count]) => {
-            if (count > 0) {
-                matsHtml += `<div class="stat-row"><span class="stat-label">${mat}</span><span class="stat-val">${count.toLocaleString()}</span></div>`;
+        sortedMats.forEach(mat => {
+            if (mat.count > 0) {
+                matsHtml += `<div class="stat-row"><span class="stat-label">${mat.name}</span><span class="stat-val">${mat.count.toLocaleString()}</span></div>`;
             }
         });
     }
     matsHtml += `</div>`;
 
-    grid.innerHTML = craftingHtml + crittersHtml + matsHtml;
+    grid.innerHTML = craftingHtml + itemizedHtml + crittersHtml + matsHtml;
 }
 
 function updateQty(id, change) {
