@@ -213,6 +213,7 @@
             padding: 14px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
             text-align: center;
+            transition: all 0.5s ease;
         }
 
         .progress-card-title {
@@ -226,10 +227,11 @@
         }
 
         .progress-bar-bg {
+            position: relative;
             width: 100%;
-            height: 8px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 5px;
             overflow: hidden;
             margin-bottom: 4px;
         }
@@ -237,7 +239,40 @@
         .progress-bar-fill {
             height: 100%;
             background: var(--accent-gold);
-            transition: width 0.3s ease;
+            transition: width 0.4s ease;
+        }
+
+        /* 100% GOAL COMPLETED CELEBRATION EFFECTS */
+        .summary-progress-card.goal-completed {
+            border-color: #FFF;
+            box-shadow: 0 0 20px rgba(232, 195, 64, 0.8), inset 0 0 15px rgba(232, 195, 64, 0.3);
+            animation: cardGlowPulse 2s infinite alternate;
+        }
+
+        .summary-progress-card.goal-completed .progress-bar-fill {
+            background: linear-gradient(90deg, #E8C340, #FFF, #E8C340);
+            background-size: 200% 100%;
+            animation: shimmerSweep 1.5s infinite linear;
+        }
+
+        .summary-progress-card.goal-completed .trophy-icon {
+            display: inline-block;
+            animation: trophyBounce 0.8s infinite ease-in-out alternate;
+        }
+
+        @keyframes cardGlowPulse {
+            0% { box-shadow: 0 0 12px rgba(232, 195, 64, 0.6); }
+            100% { box-shadow: 0 0 25px rgba(255, 223, 0, 1), 0 0 10px rgba(255, 255, 255, 0.8); }
+        }
+
+        @keyframes shimmerSweep {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        @keyframes trophyBounce {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-4px) scale(1.2); }
         }
 
         /* LIFETIME STATS PAGE STYLING */
@@ -456,8 +491,8 @@
             outline: none;
         }
 
-        .generate-btn { display: block; width: 100%; padding: 16px; background: var(--accent-purple); color: #FFFFFF; font-weight: bold; font-size: 1.1rem; text-align: center; border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s ease; font-family: 'Cinzel', serif; }
-        .generate-btn:hover { background: var(--accent-purple-glow); }
+        .reset-page-btn { display: block; width: 100%; padding: 12px; background: transparent; color: #d9534f; font-weight: bold; font-size: 0.85rem; text-align: center; border: 1px dashed rgba(217, 83, 79, 0.4); border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; transition: all 0.2s ease; font-family: 'Quicksand', sans-serif; }
+        .reset-page-btn:hover { background: rgba(217, 83, 79, 0.1); border-color: #d9534f; }
 
         /* CHECKLIST & RESPONSIVE QUEUE GRID */
         .checklist-section { margin-bottom: 24px; background: rgba(26, 26, 26, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(138, 43, 226, 0.4); }
@@ -505,8 +540,6 @@
         .check-item.completed .checkbox { background: var(--accent-purple); border-color: var(--accent-purple); }
         .check-item.completed .checkbox::after { content: "✓"; color: #FFFFFF; font-weight: bold; font-size: 1rem; }
         .check-text { font-size: 0.9rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; line-height: 1.2; }
-        .check-qty { color: var(--accent-blue); font-weight: bold; font-size: 0.95rem; padding: 4px 10px; background: rgba(23, 178, 178, 0.15); border-radius: 6px; margin-left: 12px; }
-        .check-item.completed .check-qty { opacity: 0.5; }
 
         .check-item-thumb {
             width: 32px;
@@ -537,7 +570,6 @@
         .sheet-body { padding: 0 16px 20px; max-height: 50vh; overflow-y: auto; }
         .sheet-action-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
         .sheet-title { font-size: 0.85rem; font-weight: bold; color: var(--text-light); }
-        .reset-link { font-size: 0.75rem; color: #d9534f; background: none; border: none; cursor: pointer; text-decoration: underline; }
         .materials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .mat-tile { background-color: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
         .tile-title { font-size: 0.75rem; color: #bfaecf; }
@@ -572,6 +604,9 @@
     </style>
 </head>
 <body>
+
+    <!-- CONFETTI CANVAS OVERLAY -->
+    <canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></canvas>
 
     <div class="nav-header">
         <button class="menu-btn" onclick="toggleDrawer()">≡</button>
@@ -643,7 +678,7 @@
             </div>
 
             <div class="furniture-grid" id="furnitureGrid"></div>
-            <button class="generate-btn" id="generateBtn" onclick="generateChecklist()">Start!</button>
+            <button class="reset-page-btn" onclick="resetQuantities()">⚠️ Reset All Quantities</button>
         </div>
 
         <div id="checklistTab" class="tab-content">
@@ -655,6 +690,7 @@
             <div class="stats-grid" id="statsGrid"></div>
         </div>
 
+        <!-- UNIVERSAL MATERIAL BOTTOM DRAWER (SHARED ACROSS CALCULATOR & CHECKLIST) -->
         <div class="bottom-sheet" id="bottomSheet">
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
@@ -667,7 +703,6 @@
             <div class="sheet-body">
                 <div class="sheet-action-row">
                     <span class="sheet-title">Required Materials</span>
-                    <button class="reset-link" onclick="resetQuantities()">Reset Quantities</button>
                 </div>
                 <div class="materials-grid" id="materialsGrid">
                     <div class="mat-tile">
@@ -849,6 +884,65 @@ let items = magicAcademyItems;
 let pets = magicAcademyPets;
 let glossary = magicAcademyGlossary;
 
+let hasCelebratedCompletion = false;
+
+/* =====================================================================
+   PURE JS CONFETTI ENGINE
+   ===================================================================== */
+function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const pieces = [];
+    const colors = ['#E8C340', '#8A2BE2', '#17B2B2', '#32a873', '#FFFFFF', '#FFDF00'];
+
+    for (let i = 0; i < 120; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 8 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speedY: Math.random() * 3 + 2,
+            speedX: Math.random() * 2 - 1,
+            rotation: Math.random() * 360,
+            rotSpeed: Math.random() * 10 - 5
+        });
+    }
+
+    let animationFrame;
+    const startTime = Date.now();
+
+    function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        pieces.forEach(p => {
+            p.y += p.speedY;
+            p.x += p.speedX;
+            p.rotation += p.rotSpeed;
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.restore();
+        });
+
+        if (Date.now() - startTime < 3500) {
+            animationFrame = requestAnimationFrame(update);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            cancelAnimationFrame(animationFrame);
+        }
+    }
+
+    update();
+}
+
 /* =====================================================================
    EVENT COUNTDOWN TIMER (UTC CONVERSION)
    ===================================================================== */
@@ -889,7 +983,6 @@ updateEventCountdown();
    ===================================================================== */
 let quantities = {};
 let completedCrafts = {};
-let checklistProgress = {};
 let currentCategory = 'furniture'; 
 
 function loadSavedData() {
@@ -899,9 +992,6 @@ function loadSavedData() {
         
         const savedCompleted = localStorage.getItem("magic_academy_completed");
         if (savedCompleted) completedCrafts = JSON.parse(savedCompleted);
-
-        const savedChecklist = localStorage.getItem("magic_academy_checklist");
-        if (savedChecklist) checklistProgress = JSON.parse(savedChecklist);
 
         renderChecklist();
 
@@ -915,7 +1005,6 @@ function loadSavedData() {
     } catch (e) {
         quantities = {};
         completedCrafts = {};
-        checklistProgress = {};
         switchTab('calculatorTab');
     }
 }
@@ -926,10 +1015,6 @@ function saveQuantities() {
 
 function saveCompleted() {
     try { localStorage.setItem("magic_academy_completed", JSON.stringify(completedCrafts)); } catch (e) {}
-}
-
-function saveChecklist() {
-    try { localStorage.setItem("magic_academy_checklist", JSON.stringify(checklistProgress)); } catch (e) {}
 }
 
 /* =====================================================================
@@ -982,7 +1067,7 @@ function switchTab(tabId, btn) {
     }
 
     const sheet = document.getElementById('bottomSheet');
-    if (tabId === 'calculatorTab') {
+    if (tabId === 'calculatorTab' || tabId === 'checklistTab') {
         sheet.style.display = 'block';
         document.body.style.paddingBottom = 'calc(var(--bar-height) + 40px)';
     } else {
@@ -1037,6 +1122,18 @@ function formatTime(minutes) {
     return `${hrs}h ${mins}m`;
 }
 
+function getCategoryForMaterial(matName) {
+    const gatheringItems = ["Tree Branch", "Magic Quill", "Magic Tome", "Magic Letter", "Mimic"];
+    const shopItems = ["Glass Greenhouse Cube", "Turkey Meat"];
+    if (matName === "Wizard Coin" || matName === "Suspicious Potion" || matName === "Magic Pendant" || matName === "Dark Stone") return "Event Materials";
+    if (gatheringItems.includes(matName)) return "Gathering & Magic Spawns";
+    if (matName === "Iron Ore") return "Mining";
+    if (matName === "Eurasian Tree Sparrow") return "Wild Birds";
+    if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
+    if (shopItems.includes(matName)) return "Town Shops";
+    return "Event Materials";
+}
+
 /* =====================================================================
    CALCULATOR & CHECKLIST LOGIC
    ===================================================================== */
@@ -1077,33 +1174,8 @@ function renderGrid() {
     });
 }
 
-function generateChecklist() {
-    const hasItems = Object.values(quantities).some(q => q > 0);
-    const hasCompleted = Object.values(completedCrafts).some(q => q > 0);
-    if (!hasItems && !hasCompleted) {
-        alert("Please select at least one item in the calculator first!");
-        return;
-    }
-    
-    switchTab('checklistTab', document.getElementById('navChecklist'));
-    renderChecklist();
-    calculateTotals();
-}
-
 function toggleChecklistSection(element) {
     element.parentElement.classList.toggle('collapsed');
-}
-
-function toggleCheckItem(id, element) {
-    checklistProgress[id] = !checklistProgress[id];
-    saveChecklist();
-    
-    if (checklistProgress[id]) {
-        element.classList.add("completed");
-    } else {
-        element.classList.remove("completed");
-    }
-    calculateTotals();
 }
 
 function completeCraft(itemId, element) {
@@ -1119,6 +1191,7 @@ function completeCraft(itemId, element) {
             saveCompleted();
             renderGrid();
             renderChecklist();
+            renderHeroBannerOverlay();
             calculateTotals();
         }, 500); 
     }
@@ -1133,20 +1206,9 @@ function undoCraft(itemId) {
         saveCompleted();
         renderGrid();
         renderChecklist();
+        renderHeroBannerOverlay();
         calculateTotals();
     }
-}
-
-function getCategoryForMaterial(matName) {
-    const gatheringItems = ["Tree Branch", "Magic Quill", "Magic Tome", "Magic Letter", "Mimic"];
-    const shopItems = ["Glass Greenhouse Cube", "Turkey Meat"];
-    if (matName === "Wizard Coin" || matName === "Suspicious Potion" || matName === "Magic Pendant" || matName === "Dark Stone") return "Event Materials";
-    if (gatheringItems.includes(matName)) return "Gathering & Magic Spawns";
-    if (matName === "Iron Ore") return "Mining";
-    if (matName === "Eurasian Tree Sparrow") return "Wild Birds";
-    if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
-    if (shopItems.includes(matName)) return "Town Shops";
-    return "Event Materials";
 }
 
 function renderHeroBannerOverlay() {
@@ -1164,12 +1226,21 @@ function renderHeroBannerOverlay() {
     const totalFurniture = activeFurnitureCount + completedFurnitureCount;
     const furniturePercent = totalFurniture > 0 ? Math.round((completedFurnitureCount / totalFurniture) * 100) : 0;
 
+    const isGoalComplete = (furniturePercent === 100 && totalFurniture > 0);
+
+    if (isGoalComplete && !hasCelebratedCompletion) {
+        hasCelebratedCompletion = true;
+        launchConfetti();
+    } else if (furniturePercent < 100) {
+        hasCelebratedCompletion = false;
+    }
+
     if (totalFurniture > 0) {
         heroOverlay.innerHTML = `
-            <div class="summary-progress-card">
+            <div class="summary-progress-card ${isGoalComplete ? 'goal-completed' : ''}">
                 <div class="progress-card-title">
-                    <span>🏆 Progress</span>
-                    <span>${furniturePercent}% (${completedFurnitureCount}/${totalFurniture} Crafted)</span>
+                    <span><span class="trophy-icon">🏆</span> Progress</span>
+                    <span>${isGoalComplete ? '🎉 100% COMPLETE!' : `${furniturePercent}% (${completedFurnitureCount}/${totalFurniture} Crafted)`}</span>
                 </div>
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" style="width: ${furniturePercent}%;"></div>
@@ -1183,7 +1254,6 @@ function renderHeroBannerOverlay() {
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
 
-    const matTotals = {};
     let hasActiveOrCompletedItems = false;
     const allCraftables = [...items, ...pets];
 
@@ -1191,47 +1261,16 @@ function renderChecklist() {
         const activeQty = quantities[item.id] || 0;
         const completedQty = completedCrafts[item.id] || 0;
         if (activeQty > 0 || completedQty > 0) hasActiveOrCompletedItems = true;
-        if (activeQty > 0) {
-            Object.entries(item.mats).forEach(([mat, count]) => {
-                matTotals[mat] = (matTotals[mat] || 0) + (count * activeQty);
-            });
-        }
     });
 
     if (!hasActiveOrCompletedItems) {
-        container.innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start!" to generate your checklist.</div>`;
+        container.innerHTML = `<div class="empty-state">No active project. Adjust quantities on the Calculator tab to see your goals here.</div>`;
         return;
     }
 
-    const groupedMats = {};
-    Object.entries(matTotals).forEach(([mat, total]) => {
-        const category = getCategoryForMaterial(mat);
-        if (!groupedMats[category]) groupedMats[category] = [];
-        groupedMats[category].push({ name: mat, total });
-    });
-
     let html = ``;
 
-    // 1. Material Requirements Section
-    for (const [category, mats] of Object.entries(groupedMats)) {
-        html += `<div class="checklist-section">
-                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span>📌 ${category}</span>
-                    </div>`;
-        mats.forEach(m => {
-            const checkId = `mat_${m.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
-            const isChecked = checklistProgress[checkId] ? "completed" : "";
-            html += `
-                <div class="check-item ${isChecked}" style="margin-bottom: 8px;" onclick="toggleCheckItem('${checkId}', this)">
-                    <div class="checkbox"></div>
-                    <div class="check-text">${m.name}</div>
-                    <div class="check-qty" id="qty_${checkId}">x${m.total.toLocaleString()}</div>
-                </div>`;
-        });
-        html += `</div>`;
-    }
-
-    // 2. Furniture Queue
+    // 1. Furniture Queue
     let activeFurnitureHtml = ``;
     let activeFurnitureCount = 0;
 
@@ -1250,7 +1289,7 @@ function renderChecklist() {
     });
 
     if (activeFurnitureCount > 0) {
-        html += `<div class="checklist-section" style="margin-top: 32px;">
+        html += `<div class="checklist-section">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🔨 Magic Academy Workshop</span>
                     </div>
@@ -1260,7 +1299,7 @@ function renderChecklist() {
                 </div>`;
     }
 
-    // 3. Pet Assembly Queue
+    // 2. Pet Assembly Queue
     let activePetsHtml = ``;
     let activePetsCount = 0;
 
@@ -1279,7 +1318,7 @@ function renderChecklist() {
     });
 
     if (activePetsCount > 0) {
-        html += `<div class="checklist-section" style="margin-top: 32px;">
+        html += `<div class="checklist-section">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span style="color: var(--accent-pet);">🐾 Pet Incubator</span>
                     </div>
@@ -1289,7 +1328,7 @@ function renderChecklist() {
                 </div>`;
     }
 
-    // 4. Completed Items History Section
+    // 3. Completed Items History Section
     let completedHistoryHtml = ``;
     let totalCompletedCount = 0;
 
@@ -1312,7 +1351,7 @@ function renderChecklist() {
     });
 
     if (totalCompletedCount > 0) {
-        html += `<div class="checklist-section collapsed" style="margin-top: 32px; border-color: rgba(232, 195, 64, 0.3);">
+        html += `<div class="checklist-section collapsed" style="border-color: rgba(232, 195, 64, 0.3);">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🎉 Completed Crafts (${totalCompletedCount})</span>
                     </div>
@@ -1323,16 +1362,6 @@ function renderChecklist() {
     }
 
     container.innerHTML = html;
-
-    container.querySelectorAll('.checklist-section:not([style*="rgba(232, 195, 64, 0.3)"])').forEach(section => {
-        const checkItems = section.querySelectorAll('.check-item');
-        if (checkItems.length > 0) {
-            const allCompleted = Array.from(checkItems).every(item => item.classList.contains('completed'));
-            if (allCompleted) {
-                section.classList.add('collapsed');
-            }
-        }
-    });
 }
 
 /* =====================================================================
@@ -1465,7 +1494,7 @@ function updateQty(id, change) {
     if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
         renderChecklist(); 
     } else {
-        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start!" to generate your checklist.</div>`;
+        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Adjust quantities on the Calculator tab to see your goals here.</div>`;
     }
     
     calculateTotals();
@@ -1479,26 +1508,31 @@ function handleManualInput(id, value) {
     if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
         renderChecklist(); 
     } else {
-        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Select items in the Calculator and click "Start!" to generate your checklist.</div>`;
+        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Adjust quantities on the Calculator tab to see your goals here.</div>`;
     }
     
     calculateTotals();
 }
 
 function resetQuantities() {
+    if (!confirm("Are you sure you want to reset all item quantities and completed progress?")) return;
+
     Object.keys(quantities).forEach(id => quantities[id] = 0);
     Object.keys(completedCrafts).forEach(id => completedCrafts[id] = 0);
-    checklistProgress = {};
+    hasCelebratedCompletion = false;
     
     saveQuantities();
     saveCompleted();
-    saveChecklist();
     
     renderGrid();
     renderChecklist();
+    renderHeroBannerOverlay();
     calculateTotals();
 }
 
+/* =====================================================================
+   MATERIAL DRAWER COMPUTATION WITH COMPACT INLINE CATEGORY BADGES
+   ===================================================================== */
 function calculateTotals() {
     const matTotals = {};
     const taskDurations = [];
@@ -1524,7 +1558,28 @@ function calculateTotals() {
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
-    const activeMats = Object.entries(matTotals).filter(([_, count]) => count > 0).sort((a, b) => b[1] - a[1]);
+    const categoryOrder = {
+        "Event Materials": 1,
+        "Gathering & Magic Spawns": 2,
+        "Mining": 3,
+        "Town Shops": 4,
+        "Wild Birds": 5,
+        "Pet Paradise": 6
+    };
+
+    const activeMats = Object.entries(matTotals)
+        .filter(([_, count]) => count > 0)
+        .map(([name, count]) => ({
+            name,
+            count,
+            category: getCategoryForMaterial(name)
+        }))
+        .sort((a, b) => {
+            const catA = categoryOrder[a.category] || 99;
+            const catB = categoryOrder[b.category] || 99;
+            if (catA !== catB) return catA - catB;
+            return b.count - a.count;
+        });
 
     if (activeMats.length === 0) {
         matsGridEl.innerHTML = `
@@ -1532,27 +1587,36 @@ function calculateTotals() {
                 <span class="tile-title">No Active Materials Selected</span>
             </div>`;
     } else {
-        activeMats.forEach(([mat, currentReq]) => {
-            const matCheckId = `mat_${mat.replace(/[^a-zA-Z0-9]/g, '_')}`;
-            const isChecked = checklistProgress[matCheckId];
+        activeMats.forEach(m => {
+            let badge = "Event";
+            let badgeColor = "var(--accent-gold)";
             
+            if (m.category.includes("Gathering")) {
+                badge = "Gather";
+                badgeColor = "var(--accent-blue)";
+            } else if (m.category.includes("Mining")) {
+                badge = "Mine";
+                badgeColor = "#A0A0A0";
+            } else if (m.category.includes("Shops")) {
+                badge = "Shop";
+                badgeColor = "var(--accent-purple)";
+            } else if (m.category.includes("Birds")) {
+                badge = "Wild";
+                badgeColor = "var(--accent-crop)";
+            } else if (m.category.includes("Pet")) {
+                badge = "Pet";
+                badgeColor = "var(--accent-pet)";
+            }
+
             const tile = document.createElement("div");
             tile.className = "mat-tile";
-            
-            if (isChecked) {
-                tile.style.opacity = "0.4";
-                tile.style.borderColor = "rgba(232, 195, 64, 0.2)";
-            }
-
             tile.innerHTML = `
-                <span class="tile-title">${mat}</span>
-                <span class="tile-count">${currentReq.toLocaleString()}</span>`;
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span class="tile-title">${m.name}</span>
+                    <span style="font-size: 0.65rem; color: ${badgeColor}; font-weight: bold; text-transform: uppercase;">[${badge}]</span>
+                </div>
+                <span class="tile-count">${m.count.toLocaleString()}</span>`;
             matsGridEl.appendChild(tile);
-
-            const checklistQtyEl = document.getElementById(`qty_${matCheckId}`);
-            if (checklistQtyEl) {
-                checklistQtyEl.innerHTML = `x${currentReq.toLocaleString()}`;
-            }
         });
     }
 
