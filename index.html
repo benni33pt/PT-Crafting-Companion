@@ -12,15 +12,16 @@
     
     <style>
         :root {
-            --bg-color: #120D1D;
-            --card-bg: #221A33;
-            --accent-gold: #FCE77D;
-            --accent-purple: #9D7BFF;
-            --accent-purple-glow: #8E44AD;
+            /* MOON KINGDOM PLAYFUL KEY ART PALETTE */
+            --bg-color: #120D1D;               /* Night Sky Midnight Violet */
+            --card-bg: #221A33;                /* Deep Moonlit Purple Card */
+            --accent-gold: #FCE77D;          /* Pastel Buttercup Yellow (Yellow Hood / Moons) */
+            --accent-purple: #9D7BFF;        /* Cute Lavender Violet (Purple Bunny) */
+            --accent-purple-glow: #8E44AD;   /* Deep Lavender Glow */
             --text-light: #F4F4F5;
-            --accent-blue: #73D7FF;
-            --accent-pet: #FFA8E0;
-            --accent-crop: #FFBE76;
+            --accent-blue: #73D7FF;          /* Soft Sky Aqua Blue (Roof / Trim Accents) */
+            --accent-pet: #FFA8E0;           /* Soft Bubblegum Pink (Rabbit Ears & Cheeks) */
+            --accent-crop: #FFBE76;          /* Carrot Orange / Golden Wheat */
             --border-radius: 14px;
             --bar-height: 60px;
         }
@@ -29,6 +30,7 @@
             box-sizing: border-box;
         }
 
+        /* PREVENT MOBILE DOUBLE-TAP ZOOM */
         button, .btn, .check-item, input, .tab-btn, .sub-btn, .drawer-link {
             touch-action: manipulation;
         }
@@ -42,11 +44,13 @@
             padding-bottom: calc(var(--bar-height) + 50px);
         }
 
+        /* PLAYFUL MOON BUNNY TITLES */
         h1, h2, h3, .hero-title, .drawer-title, .coming-soon-title, .archive-title {
             font-family: 'Sniglet', cursive, sans-serif;
             letter-spacing: 0.5px;
         }
 
+        /* STICKY HEADER & EDGE-TO-EDGE NAV */
         .nav-header {
             position: sticky;
             top: 0;
@@ -129,6 +133,7 @@
             display: block;
         }
 
+        /* PARALLAX HERO BANNER WITH FLEXIBLE OVERLAY CONTAINER */
         .hero-banner-container {
             position: relative;
             width: 100%;
@@ -196,6 +201,7 @@
             white-space: nowrap;
         }
 
+        /* PROGRESS SUMMARY CARD */
         .summary-progress-card {
             width: calc(100% - 32px);
             max-width: 860px;
@@ -237,6 +243,7 @@
             transition: width 0.4s ease;
         }
 
+        /* 100% GOAL COMPLETED CELEBRATION EFFECTS */
         .summary-progress-card.goal-completed {
             border-color: #FFF;
             box-shadow: 0 0 20px rgba(252, 231, 125, 0.8), inset 0 0 15px rgba(252, 231, 125, 0.3);
@@ -269,6 +276,7 @@
             100% { transform: translateY(-4px) scale(1.2); }
         }
 
+        /* LIFETIME STATS PAGE STYLING */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -316,6 +324,7 @@
             color: var(--text-light);
         }
 
+        /* SLIDE-OUT DRAWER WITH VERTICAL SCROLLING */
         .drawer-overlay {
             position: fixed;
             top: 0;
@@ -401,6 +410,7 @@
             color: var(--accent-gold);
         }
 
+        /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
         .sub-btn.active-furniture { background-color: rgba(155, 89, 182, 0.25); color: var(--accent-gold); border-color: var(--accent-purple); }
@@ -442,6 +452,7 @@
         .reset-page-btn { display: block; width: 100%; padding: 12px; background: transparent; color: #d9534f; font-weight: bold; font-size: 0.85rem; text-align: center; border: 1px dashed rgba(217, 83, 79, 0.4); border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
         .reset-page-btn:hover { background: rgba(217, 83, 79, 0.1); border-color: #d9534f; }
 
+        /* CHECKLIST & RESPONSIVE QUEUE GRID */
         .checklist-section { margin-bottom: 24px; background: rgba(27, 21, 40, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(155, 89, 182, 0.4); }
         .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
         .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
@@ -506,6 +517,7 @@
 
         .empty-state { text-align: center; color: #8e839e; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-purple); }
 
+        /* BOTTOM SHEET (WITH PWA BEZEL CLEARANCE FIX) */
         .bottom-sheet { 
             position: fixed; 
             bottom: 0; 
@@ -535,6 +547,7 @@
         .tile-title { font-size: 0.75rem; color: #bfaecf; }
         .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
 
+        /* GALLERY & BORDER STYLES */
         .card-img-container { padding: 0 !important; margin-bottom: 8px !important; background: transparent !important; }
         .index-preview-img, .item-preview-img { border-radius: 10px; background-color: #ffffff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5); box-sizing: border-box; display: block; margin: 0 auto; }
         .item-preview-img { width: 100%; max-width: 160px; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
@@ -564,6 +577,7 @@
 </head>
 <body>
 
+    <!-- CONFETTI CANVAS OVERLAY -->
     <canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></canvas>
 
     <div class="nav-header">
@@ -577,6 +591,7 @@
         </div>
     </div>
 
+    <!-- SLIDE-OUT HAMBURGER DRAWER -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
     <div class="drawer" id="drawer">
         <div class="drawer-header">
@@ -584,6 +599,7 @@
             <button class="close-btn" onclick="toggleDrawer()">✕</button>
         </div>
 
+        <!-- SINGLE CONSOLIDATED MATERIAL & ITEM INDEX -->
         <div class="drawer-section-title">📚 Material & Item Index</div>
         <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
         <div class="drawer-link" onclick="loadActiveEventIndex()">🐰 Moon Kingdom Index</div>
@@ -591,11 +607,13 @@
         <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
         <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
 
+        <!-- EXTERNAL GAME RESOURCES -->
         <div class="drawer-section-title">🔗 Helpful PT Links</div>
         <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
         <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
         <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
 
+        <!-- CREATOR & SOCIAL LINKS -->
         <div class="drawer-section-title">👤 My Stuff :D</div>
         <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
         <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
@@ -608,12 +626,13 @@
 
     <div id="activeEventContainer">
         <div class="hero-banner-container" id="heroBanner">
-            <div class="event-timer-badge" id="eventTimerBadge">⏳ Event Active</div>
+            <div class="event-timer-badge" id="eventTimerBadge">⏳ Maintenance End...</div>
             <img src="Images/MoonKingdom/Moon Kingdom Key Art.jpg" alt="Moon Kingdom Key Art" class="hero-img">
             <div class="hero-fade-overlay"></div>
             
             <div class="hero-content-wrapper">
                 <h1 class="hero-title">Moon Kingdom</h1>
+                <!-- HERO HUD PROGRESS OVERLAY CONTAINER -->
                 <div id="heroProgressOverlay" style="width: 100%;"></div>
             </div>
         </div>
@@ -637,6 +656,7 @@
             <div class="stats-grid" id="statsGrid"></div>
         </div>
 
+        <!-- UNIVERSAL MATERIAL BOTTOM DRAWER -->
         <div class="bottom-sheet" id="bottomSheet">
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
@@ -665,6 +685,7 @@
         <div class="index-grid" id="archiveGrid"></div>
     </div>
 
+    <!-- DATA SOURCES -->
     <script src="js/playtogether_core.js"></script>
     <script src="js/gwidam_data.js"></script>
     <script src="js/desert_oasis_data.js"></script>
@@ -672,12 +693,23 @@
     <script src="js/moon_kingdom_data.js"></script>
 
 <script>
+/* =====================================================================
+   ACTIVE EVENT DATA BINDINGS (Default Moon Kingdom Data Array)
+   ===================================================================== */
 let items = typeof moonKingdomItems !== 'undefined' ? moonKingdomItems : [];
 let pets = typeof moonKingdomPets !== 'undefined' ? moonKingdomPets : [];
 let glossary = typeof moonKingdomGlossary !== 'undefined' ? moonKingdomGlossary : [];
 
+// Definition of Net-Caught Critters
+const NET_CAUGHT_CRITTERS = [
+    "Straw Scarecrow", "Cursed Scarecrow", "Will-o'-the-Wisp", "Eoduksini"
+];
+
 let hasCelebratedCompletion = false;
 
+/* =====================================================================
+   PURE JS CONFETTI ENGINE
+   ===================================================================== */
 function launchConfetti() {
     const canvas = document.getElementById('confettiCanvas');
     if (!canvas) return;
@@ -732,6 +764,9 @@ function launchConfetti() {
     update();
 }
 
+/* =====================================================================
+   EVENT COUNTDOWN TIMER (FULL TIME: DAYS, HOURS, MINS TO SEPT 30 UTC)
+   ===================================================================== */
 const EVENT_END_UTC = new Date(Date.UTC(2026, 8, 30, 23, 59, 59)); 
 
 function updateEventCountdown() {
@@ -759,6 +794,9 @@ function updateEventCountdown() {
 setInterval(updateEventCountdown, 60000);
 updateEventCountdown();
 
+/* =====================================================================
+   STATE MANAGEMENT & STORAGE
+   ===================================================================== */
 let quantities = {};
 let completedCrafts = {};
 let currentCategory = 'furniture'; 
@@ -795,6 +833,9 @@ function saveCompleted() {
     try { localStorage.setItem("moon_kingdom_completed", JSON.stringify(completedCrafts)); } catch (e) {}
 }
 
+/* =====================================================================
+   NAVIGATION & UI CONTROLS
+   ===================================================================== */
 function toggleDrawer() {
     document.getElementById('drawer').classList.toggle('open');
     document.getElementById('drawerOverlay').classList.toggle('open');
@@ -908,10 +949,12 @@ function getCategoryForMaterial(matName) {
     if (miningItems.includes(matName)) return "Mining";
     if (gatheringItems.includes(matName)) return "Gathering & Spawns";
     if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
-    if (matName === "Star Cash") return "Events & Quests";
     return "Event Materials";
 }
 
+/* =====================================================================
+   CALCULATOR & CHECKLIST LOGIC
+   ===================================================================== */
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
@@ -919,7 +962,7 @@ function renderGrid() {
     const activeItems = currentCategory === 'furniture' ? items : pets;
 
     if (activeItems.length === 0) {
-        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Maintenance underway! Item details will be added as soon as the event opens.</div>`;
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Maintenance underway! Item details will be added as soon as the Moon Kingdom opens.</div>`;
         return;
     }
 
@@ -1050,6 +1093,7 @@ function renderChecklist() {
 
     let html = ``;
 
+    // 1. Furniture Queue
     let activeFurnitureHtml = ``;
     let activeFurnitureCount = 0;
 
@@ -1070,7 +1114,7 @@ function renderChecklist() {
     if (activeFurnitureCount > 0) {
         html += `<div class="checklist-section">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span>🔨 Workshop Queue</span>
+                        <span>🔨 Moon Kingdom Workshop</span>
                     </div>
                     <div class="checklist-queue-grid">
                         ${activeFurnitureHtml}
@@ -1078,6 +1122,7 @@ function renderChecklist() {
                 </div>`;
     }
 
+    // 2. Pet Assembly Queue
     let activePetsHtml = ``;
     let activePetsCount = 0;
 
@@ -1106,6 +1151,7 @@ function renderChecklist() {
                 </div>`;
     }
 
+    // 3. Completed Items History Section
     let completedHistoryHtml = ``;
     let totalCompletedCount = 0;
 
@@ -1141,6 +1187,9 @@ function renderChecklist() {
     container.innerHTML = html;
 }
 
+/* =====================================================================
+   LIFETIME STATS COMPUTATION
+   ===================================================================== */
 function renderLifetimeStats() {
     const grid = document.getElementById("statsGrid");
     grid.innerHTML = "";
@@ -1154,6 +1203,7 @@ function renderLifetimeStats() {
 
     const itemCounts = [];
     const matsConsumed = {};
+    const critters = {};
 
     allCraftables.forEach(item => {
         const count = completedCrafts[item.id] || 0;
@@ -1173,15 +1223,25 @@ function renderLifetimeStats() {
             if (item.mats) {
                 Object.entries(item.mats).forEach(([mat, qty]) => {
                     const totalMatQty = qty * count;
-                    matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
+
+                    if (NET_CAUGHT_CRITTERS.includes(mat)) {
+                        critters[mat] = (critters[mat] || 0) + totalMatQty;
+                    } else {
+                        matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
+                    }
                 });
             }
         }
     });
 
+    const totalCrittersCount = Object.values(critters).reduce((a, b) => a + b, 0);
     const totalResourcesCount = Object.values(matsConsumed).reduce((a, b) => a + b, 0);
 
     itemCounts.sort((a, b) => b.count - a.count);
+
+    const sortedCritters = Object.entries(critters)
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count);
 
     const sortedMats = Object.entries(matsConsumed)
         .map(([name, count]) => ({ name, count }))
@@ -1194,6 +1254,7 @@ function renderLifetimeStats() {
             <div class="stat-row"><span class="stat-label">Furniture & Crops Crafted</span><span class="stat-val">${totalFurniture}</span></div>
             <div class="stat-row"><span class="stat-label">Pets Hatched</span><span class="stat-val">${totalPets}</span></div>
             <div class="stat-row"><span class="stat-label">Cumulative Crafting Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
+            <div class="stat-row"><span class="stat-label">Total Critters Caught</span><span class="stat-val">${totalCrittersCount.toLocaleString()}</span></div>
             <div class="stat-row"><span class="stat-label">Total Resources Consumed</span><span class="stat-val">${totalResourcesCount.toLocaleString()}</span></div>
         </div>`;
 
@@ -1210,6 +1271,21 @@ function renderLifetimeStats() {
     }
     itemizedHtml += `</div>`;
 
+    let crittersHtml = `
+        <div class="stats-card">
+            <div class="stats-card-title">🦋 Critters Caught</div>`;
+    
+    if (sortedCritters.length === 0) {
+        crittersHtml += `<div class="stat-row"><span class="stat-label">No critters caught yet.</span></div>`;
+    } else {
+        sortedCritters.forEach(critter => {
+            if (critter.count > 0) {
+                crittersHtml += `<div class="stat-row"><span class="stat-label">${critter.name}</span><span class="stat-val">${critter.count.toLocaleString()}</span></div>`;
+            }
+        });
+    }
+    crittersHtml += `</div>`;
+
     let matsHtml = `
         <div class="stats-card">
             <div class="stats-card-title">📦 Resources Consumed</div>`;
@@ -1225,7 +1301,7 @@ function renderLifetimeStats() {
     }
     matsHtml += `</div>`;
 
-    grid.innerHTML = craftingHtml + itemizedHtml + matsHtml;
+    grid.innerHTML = craftingHtml + itemizedHtml + crittersHtml + matsHtml;
 }
 
 function updateQty(id, change) {
@@ -1272,6 +1348,9 @@ function resetQuantities() {
     calculateTotals();
 }
 
+/* =====================================================================
+   MATERIAL DRAWER COMPUTATION
+   ===================================================================== */
 function calculateTotals() {
     const matTotals = {};
     const taskDurations = [];
@@ -1303,8 +1382,7 @@ function calculateTotals() {
         "Mining": 3,
         "Mega Mart": 4,
         "Furniture Shop": 5,
-        "Pet Paradise": 6,
-        "Events & Quests": 7
+        "Pet Paradise": 6
     };
 
     const activeMats = Object.entries(matTotals)
@@ -1346,9 +1424,6 @@ function calculateTotals() {
             } else if (m.category === "Pet Paradise") {
                 badge = "Pet";
                 badgeColor = "var(--accent-pet)";
-            } else if (m.category === "Events & Quests") {
-                badge = "Cash";
-                badgeColor = "var(--accent-crop)";
             }
 
             const tile = document.createElement("div");
@@ -1385,6 +1460,9 @@ function calculateParallelTime(durations, maxSlots) {
     return Math.max(...slots);
 }
 
+/* =====================================================================
+   INDEX & ARCHIVE LOADERS
+   ===================================================================== */
 function loadActiveEventIndex() {
     showArchiveView("Moon Kingdom Catalog & Lore");
     const grid = document.getElementById('archiveGrid');
@@ -1436,6 +1514,27 @@ function loadActiveEventIndex() {
         `;
         grid.appendChild(card);
     });
+
+    // RESTORED: EVENT MATERIALS GLOSSARY SECTION
+    if (glossary && glossary.length > 0) {
+        const materialsHeader = document.createElement("h2");
+        materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
+        materialsHeader.innerText = "📌 Event Materials";
+        grid.appendChild(materialsHeader);
+
+        glossary.forEach(mat => {
+            const imgHtml = mat.image ? `<div class="card-img-container"><img src="${mat.image}" alt="${mat.name}" class="index-preview-img"></div>` : '';
+            const card = document.createElement("div");
+            card.className = "glossary-card";
+            card.innerHTML = `
+                ${imgHtml}
+                <div class="glossary-title">${mat.name}</div>
+                <div class="glossary-lore">"${mat.lore}"</div>
+                <div class="glossary-source">📍 Location: ${mat.source}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
 }
 
 function loadMagicAcademyIndex() {
@@ -1547,6 +1646,7 @@ function showArchiveView(title) {
     if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
 }
 
+// Initialization
 loadSavedData();
 renderGrid();
 calculateTotals();
