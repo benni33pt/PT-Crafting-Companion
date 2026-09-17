@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayTogether Workshop Companion</title>
     
-    <!-- GOOGLE FONTS: CINZEL (SERIF TITLES) & QUICKSAND (BODY) -->
+    <!-- GOOGLE FONTS: SNIGLET (PLAYFUL TITLE FONT) & COMFORTAA (ROUNDED BODY FONT) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Sniglet:wght@800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-color: #0A0A0A;
-            --card-bg: #1A1A1A;
-            --accent-purple: #8A2BE2; /* Arcane Purple for Magic Academy theme */
-            --accent-purple-glow: #6A0DAD;
+            --bg-color: #120D1D;
+            --card-bg: #221A33;
+            --accent-gold: #FCE77D;
+            --accent-purple: #9D7BFF;
+            --accent-purple-glow: #8E44AD;
             --text-light: #F4F4F5;
-            --accent-gold: #E8C340;
-            --accent-blue: #17B2B2; /* Nile Teal */
-            --accent-pet: #32a873; 
-            --accent-crop: #F39C12; /* Distinct Sun Gold for Farm Crop */
-            --border-radius: 12px;
+            --accent-blue: #73D7FF;
+            --accent-pet: #FFA8E0;
+            --accent-crop: #FFBE76;
+            --border-radius: 14px;
             --bar-height: 60px;
         }
 
@@ -29,32 +29,29 @@
             box-sizing: border-box;
         }
 
-        /* PREVENT MOBILE DOUBLE-TAP ZOOM */
         button, .btn, .check-item, input, .tab-btn, .sub-btn, .drawer-link {
             touch-action: manipulation;
         }
 
         body {
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-light);
             margin: 0;
             padding: 0;
-            padding-bottom: calc(var(--bar-height) + 40px);
+            padding-bottom: calc(var(--bar-height) + 50px);
         }
 
-        /* SERIF TITLES FOR FANTASY ACADEMY VIBE */
         h1, h2, h3, .hero-title, .drawer-title, .coming-soon-title, .archive-title {
-            font-family: 'Cinzel', Georgia, serif;
-            letter-spacing: 1px;
+            font-family: 'Sniglet', cursive, sans-serif;
+            letter-spacing: 0.5px;
         }
 
-        /* STICKY HEADER & EDGE-TO-EDGE NAV */
         .nav-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: rgba(10, 10, 10, 0.95);
+            background-color: rgba(14, 11, 22, 0.95);
             backdrop-filter: blur(8px);
             border-bottom: 2px solid var(--accent-gold);
             display: flex;
@@ -76,7 +73,7 @@
 
         .home-btn {
             background-color: var(--accent-gold);
-            color: #0A0A0A;
+            color: #0E0B16;
             border: none;
             padding: 6px 12px;
             border-radius: 20px;
@@ -113,12 +110,12 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s ease;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Comfortaa', sans-serif;
         }
 
         .tab-btn.active {
             background-color: var(--accent-gold);
-            color: #0A0A0A;
+            color: #0E0B16;
         }
 
         .tab-content {
@@ -132,7 +129,6 @@
             display: block;
         }
 
-        /* PARALLAX HERO BANNER WITH FLEXIBLE OVERLAY CONTAINER */
         .hero-banner-container {
             position: relative;
             width: 100%;
@@ -159,7 +155,7 @@
             left: 0;
             right: 0;
             top: 0;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.2) 0%, rgba(10, 10, 10, 0.95) 100%);
+            background: linear-gradient(to bottom, rgba(14, 11, 22, 0.2) 0%, rgba(14, 11, 22, 0.95) 100%);
             z-index: 2;
         }
 
@@ -188,7 +184,7 @@
             top: 12px;
             right: 12px;
             z-index: 10;
-            background: rgba(10, 10, 10, 0.85);
+            background: rgba(14, 11, 22, 0.85);
             backdrop-filter: blur(6px);
             border: 1px solid var(--accent-purple);
             color: var(--accent-gold);
@@ -200,12 +196,11 @@
             white-space: nowrap;
         }
 
-        /* STREAMLINED HERO OVERLAY PROGRESS SUMMARY CARD */
         .summary-progress-card {
             width: calc(100% - 32px);
             max-width: 860px;
             margin: 16px auto 0;
-            background: rgba(10, 10, 10, 0.82);
+            background: rgba(14, 11, 22, 0.82);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--accent-gold);
@@ -242,15 +237,14 @@
             transition: width 0.4s ease;
         }
 
-        /* 100% GOAL COMPLETED CELEBRATION EFFECTS */
         .summary-progress-card.goal-completed {
             border-color: #FFF;
-            box-shadow: 0 0 20px rgba(232, 195, 64, 0.8), inset 0 0 15px rgba(232, 195, 64, 0.3);
+            box-shadow: 0 0 20px rgba(252, 231, 125, 0.8), inset 0 0 15px rgba(252, 231, 125, 0.3);
             animation: cardGlowPulse 2s infinite alternate;
         }
 
         .summary-progress-card.goal-completed .progress-bar-fill {
-            background: linear-gradient(90deg, #E8C340, #FFF, #E8C340);
+            background: linear-gradient(90deg, #FCE77D, #FFF, #FCE77D);
             background-size: 200% 100%;
             animation: shimmerSweep 1.5s infinite linear;
         }
@@ -261,8 +255,8 @@
         }
 
         @keyframes cardGlowPulse {
-            0% { box-shadow: 0 0 12px rgba(232, 195, 64, 0.6); }
-            100% { box-shadow: 0 0 25px rgba(255, 223, 0, 1), 0 0 10px rgba(255, 255, 255, 0.8); }
+            0% { box-shadow: 0 0 12px rgba(252, 231, 125, 0.6); }
+            100% { box-shadow: 0 0 25px rgba(252, 231, 125, 1), 0 0 10px rgba(255, 255, 255, 0.8); }
         }
 
         @keyframes shimmerSweep {
@@ -275,7 +269,6 @@
             100% { transform: translateY(-4px) scale(1.2); }
         }
 
-        /* LIFETIME STATS PAGE STYLING */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -291,10 +284,10 @@
         }
 
         .stats-card-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Sniglet', cursive, serif;
             color: var(--accent-gold);
             font-size: 1rem;
-            border-bottom: 1px solid rgba(232, 195, 64, 0.3);
+            border-bottom: 1px solid rgba(252, 231, 125, 0.3);
             padding-bottom: 8px;
             margin-bottom: 12px;
             display: flex;
@@ -323,7 +316,6 @@
             color: var(--text-light);
         }
 
-        /* SLIDE-OUT DRAWER WITH VERTICAL SCROLLING */
         .drawer-overlay {
             position: fixed;
             top: 0;
@@ -405,64 +397,20 @@
         }
 
         .drawer-link:hover {
-            background: rgba(232, 195, 64, 0.15);
+            background: rgba(252, 231, 125, 0.15);
             color: var(--accent-gold);
         }
 
-        /* ACCORDION STYLING FOR PAST EVENTS */
-        .drawer-accordion {
-            margin-top: 8px;
-            margin-bottom: 8px;
-        }
-
-        .drawer-accordion summary {
-            font-size: 0.75rem;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 8px 0;
-            user-select: none;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .drawer-accordion summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .drawer-accordion summary::after {
-            content: "▼";
-            font-size: 0.7rem;
-            color: var(--accent-gold);
-            transition: transform 0.2s ease;
-        }
-
-        .drawer-accordion[open] summary::after {
-            transform: rotate(180deg);
-        }
-
-        .drawer-accordion-content {
-            padding-left: 8px;
-            border-left: 2px solid rgba(232, 195, 64, 0.2);
-            margin-left: 4px;
-            margin-top: 4px;
-        }
-
-        /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
-        .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Quicksand', sans-serif; }
-        .sub-btn.active-furniture { background-color: rgba(138, 43, 226, 0.25); color: var(--accent-gold); border-color: var(--accent-purple); }
-        .sub-btn.active-pets { background-color: rgba(50, 168, 115, 0.15); color: var(--accent-pet); border-color: var(--accent-pet); }
+        .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
+        .sub-btn.active-furniture { background-color: rgba(155, 89, 182, 0.25); color: var(--accent-gold); border-color: var(--accent-purple); }
+        .sub-btn.active-pets { background-color: rgba(243, 166, 131, 0.15); color: var(--accent-pet); border-color: var(--accent-pet); }
 
         .furniture-grid, .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
         .item-card, .glossary-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 14px; border: 1px solid #333; transition: border-color 0.2s ease; }
         .item-card { display: flex; flex-direction: column; justify-content: space-between; }
-        .item-card.pet-card { border: 1px solid rgba(50, 168, 115, 0.4); }
-        .item-card.crop-card { border: 1px solid rgba(243, 156, 18, 0.6); }
+        .item-card.pet-card { border: 1px solid rgba(243, 166, 131, 0.4); }
+        .item-card.crop-card { border: 1px solid rgba(247, 215, 148, 0.6); }
 
         .card-img-container { text-align: center; margin-bottom: 12px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 8px; }
         .item-preview-img { max-width: 100%; height: 100px; object-fit: contain; }
@@ -474,12 +422,12 @@
         .crop-card .item-name { color: var(--accent-crop); }
         .item-time, .glossary-sub { font-size: 0.8rem; color: var(--accent-blue); margin-bottom: 8px; }
         .item-mats, .glossary-source { font-size: 0.75rem; color: #bfaecf; margin-bottom: 12px; line-height: 1.3; }
-        .glossary-source { background: rgba(232, 195, 64, 0.15); color: var(--text-light); padding: 4px 8px; border-radius: 4px; display: inline-block; }
+        .glossary-source { background: rgba(252, 231, 125, 0.15); color: var(--text-light); padding: 4px 8px; border-radius: 4px; display: inline-block; }
         .glossary-lore { font-size: 0.8rem; color: #CCCCCC; font-style: italic; margin-bottom: 10px; line-height: 1.35; }
 
         .controls { display: flex; align-items: center; justify-content: space-between; background: var(--bg-color); border-radius: 8px; padding: 4px; }
         .btn { background: var(--accent-purple); color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-        .qty-input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; font-family: 'Quicksand', sans-serif; }
+        .qty-input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; font-family: 'Comfortaa', sans-serif; }
         
         .qty-input::-webkit-outer-spin-button,
         .qty-input::-webkit-inner-spin-button {
@@ -491,11 +439,10 @@
             outline: none;
         }
 
-        .reset-page-btn { display: block; width: 100%; padding: 12px; background: transparent; color: #d9534f; font-weight: bold; font-size: 0.85rem; text-align: center; border: 1px dashed rgba(217, 83, 79, 0.4); border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; transition: all 0.2s ease; font-family: 'Quicksand', sans-serif; }
+        .reset-page-btn { display: block; width: 100%; padding: 12px; background: transparent; color: #d9534f; font-weight: bold; font-size: 0.85rem; text-align: center; border: 1px dashed rgba(217, 83, 79, 0.4); border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
         .reset-page-btn:hover { background: rgba(217, 83, 79, 0.1); border-color: #d9534f; }
 
-        /* CHECKLIST & RESPONSIVE QUEUE GRID */
-        .checklist-section { margin-bottom: 24px; background: rgba(26, 26, 26, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(138, 43, 226, 0.4); }
+        .checklist-section { margin-bottom: 24px; background: rgba(27, 21, 40, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(155, 89, 182, 0.4); }
         .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
         .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
         .checklist-section.collapsed .checklist-header::after { transform: rotate(-90deg); }
@@ -532,8 +479,8 @@
             transition: all 0.2s ease; 
             user-select: none; 
         }
-        .check-item:hover { background: #222; }
-        .check-item.completed { background: rgba(26, 26, 26, 0.6); border-color: rgba(232, 195, 64, 0.2); }
+        .check-item:hover { background: #221a30; }
+        .check-item.completed { background: rgba(27, 21, 40, 0.6); border-color: rgba(252, 231, 125, 0.2); }
         .check-item.completed .check-text { text-decoration: line-through; color: #8e839e; }
 
         .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-purple); border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
@@ -559,8 +506,21 @@
 
         .empty-state { text-align: center; color: #8e839e; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-purple); }
 
-        /* BOTTOM SHEET */
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background-color: #111; border-top: 2px solid var(--accent-purple); border-top-left-radius: 16px; border-top-right-radius: 16px; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.8); z-index: 1000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(calc(100% - var(--bar-height))); }
+        .bottom-sheet { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background-color: #110e1a; 
+            border-top: 2px solid var(--accent-purple); 
+            border-top-left-radius: 16px; 
+            border-top-right-radius: 16px; 
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.8); 
+            z-index: 1000; 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            transform: translateY(calc(100% - var(--bar-height) - 12px));
+            padding-bottom: env(safe-area-inset-bottom, 12px);
+        }
         .bottom-sheet.open { transform: translateY(0); }
         .sheet-header { height: var(--bar-height); padding: 8px 16px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; user-select: none; }
         .drag-handle { width: 36px; height: 4px; background-color: #333; border-radius: 2px; margin: 0 auto 6px; }
@@ -575,7 +535,6 @@
         .tile-title { font-size: 0.75rem; color: #bfaecf; }
         .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
 
-        /* GALLERY & BORDER STYLES */
         .card-img-container { padding: 0 !important; margin-bottom: 8px !important; background: transparent !important; }
         .index-preview-img, .item-preview-img { border-radius: 10px; background-color: #ffffff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5); box-sizing: border-box; display: block; margin: 0 auto; }
         .item-preview-img { width: 100%; max-width: 160px; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
@@ -598,14 +557,13 @@
             .summary-progress-card { margin: 12px auto 0; width: calc(100% - 20px); padding: 10px; }
         }
 
-        .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(138, 43, 226, 0.8) !important; }
-        .pet-card .item-preview-img, .glossary-card[style*="50, 168, 115"] .index-preview-img { border: 2px solid rgba(50, 168, 115, 0.8) !important; }
-        .crop-card .item-preview-img { border: 2px solid rgba(243, 156, 18, 0.9) !important; }
+        .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(155, 89, 182, 0.8) !important; }
+        .pet-card .item-preview-img, .glossary-card[style*="243, 166, 131"] .index-preview-img { border: 2px solid rgba(243, 166, 131, 0.8) !important; }
+        .crop-card .item-preview-img { border: 2px solid rgba(247, 215, 148, 0.9) !important; }
     </style>
 </head>
 <body>
 
-    <!-- CONFETTI CANVAS OVERLAY -->
     <canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></canvas>
 
     <div class="nav-header">
@@ -615,11 +573,10 @@
             <button class="tab-btn" id="navCalc" onclick="switchTab('calculatorTab', this)">Calculator</button>
             <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
             <button class="tab-btn" id="navStats" onclick="switchTab('statsTab', this)">Lifetime Stats</button>
-            <button class="tab-btn" onclick="loadActiveEventIndex()">Magic Academy Catalog</button>
+            <button class="tab-btn" onclick="loadActiveEventIndex()">Moon Kingdom Catalog</button>
         </div>
     </div>
 
-    <!-- SLIDE-OUT HAMBURGER DRAWER -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
     <div class="drawer" id="drawer">
         <div class="drawer-header">
@@ -627,27 +584,18 @@
             <button class="close-btn" onclick="toggleDrawer()">✕</button>
         </div>
 
-        <!-- COLLAPSED PAST EVENTS ACCORDION -->
-        <details class="drawer-accordion">
-            <summary>📜 Past Event Archives</summary>
-            <div class="drawer-accordion-content">
-                <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
-                <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
-            </div>
-        </details>
-
-        <!-- MATERIAL & ITEM INDEX (CORE PINNED TOP) -->
         <div class="drawer-section-title">📚 Material & Item Index</div>
         <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
-        <div class="drawer-link" onclick="loadActiveEventIndex()">🪄 Magic Academy Index</div>
+        <div class="drawer-link" onclick="loadActiveEventIndex()">🐰 Moon Kingdom Index</div>
+        <div class="drawer-link" onclick="loadMagicAcademyIndex()">🪄 Magic Academy Index</div>
+        <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
+        <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
 
-        <!-- EXTERNAL GAME RESOURCES -->
         <div class="drawer-section-title">🔗 Helpful PT Links</div>
         <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
         <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
         <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
 
-        <!-- CREATOR & SOCIAL LINKS -->
         <div class="drawer-section-title">👤 My Stuff :D</div>
         <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
         <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
@@ -660,13 +608,12 @@
 
     <div id="activeEventContainer">
         <div class="hero-banner-container" id="heroBanner">
-            <div class="event-timer-badge" id="eventTimerBadge">⏳ Calculating...</div>
-            <img src="Images/MagicAcademy/Magic Academy Key Art.jpg" alt="Magic Academy Key Art" class="hero-img">
+            <div class="event-timer-badge" id="eventTimerBadge">⏳ Event Active</div>
+            <img src="Images/MoonKingdom/Moon Kingdom Key Art.jpg" alt="Moon Kingdom Key Art" class="hero-img">
             <div class="hero-fade-overlay"></div>
             
             <div class="hero-content-wrapper">
-                <h1 class="hero-title">Magic Academy</h1>
-                <!-- HERO HUD PROGRESS OVERLAY CONTAINER -->
+                <h1 class="hero-title">Moon Kingdom</h1>
                 <div id="heroProgressOverlay" style="width: 100%;"></div>
             </div>
         </div>
@@ -690,7 +637,6 @@
             <div class="stats-grid" id="statsGrid"></div>
         </div>
 
-        <!-- UNIVERSAL MATERIAL BOTTOM DRAWER (SHARED ACROSS CALCULATOR & CHECKLIST) -->
         <div class="bottom-sheet" id="bottomSheet">
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
@@ -719,176 +665,19 @@
         <div class="index-grid" id="archiveGrid"></div>
     </div>
 
-    <!-- DATA SOURCES -->
     <script src="js/playtogether_core.js"></script>
     <script src="js/gwidam_data.js"></script>
     <script src="js/desert_oasis_data.js"></script>
+    <script src="js/magic_academy_data.js"></script>
+    <script src="js/moon_kingdom_data.js"></script>
 
 <script>
-/* =====================================================================
-   ACTIVE EVENT DATA BINDINGS (Magic Academy Data Array)
-   ===================================================================== */
-const magicAcademyItems = [
-    { 
-        id: "mandragora_seed", 
-        name: "Mandragora Seed", 
-        type: "crop",
-        timeMinutes: 40, 
-        mats: { "Wizard Coin": 250, "Magic Tome": 5, "Mimic": 5, "Suspicious Potion": 10 }, 
-        lore: "A seed that grows into a strange plant root. (Single Harvest)", 
-        image: "Images/MagicAcademy/Mandragora Seed.png" 
-    },
-    { 
-        id: "food_props", 
-        name: "Magic Academy Food Props", 
-        timeMinutes: 40, 
-        mats: { "Wizard Coin": 50, "Suspicious Potion": 10, "Turkey Meat": 1 }, 
-        lore: "A special meal for students learning magic.", 
-        image: "Images/MagicAcademy/Magic Academy Food Props.png" 
-    },
-    { 
-        id: "dining_chair", 
-        name: "Magic Academy Dining Chair", 
-        timeMinutes: 100, 
-        mats: { "Wizard Coin": 100, "Magic Letter": 10, "Tree Branch": 10 }, 
-        lore: "A chair that pairs perfectly with the long dining table.", 
-        image: "Images/MagicAcademy/Magic Academy Dining Chair.png" 
-    },
-    { 
-        id: "stained_glass", 
-        name: "Magic Academy Stained Glass", 
-        timeMinutes: 180, 
-        mats: { "Wizard Coin": 250, "Magic Pendant": 5, "Magic Quill": 20, "Glass Greenhouse Cube": 1 }, 
-        lore: "Modeled after the magnificent windows of the Magic Academy.", 
-        image: "Images/MagicAcademy/Magic Academy Stained Glass.png" 
-    },
-    { 
-        id: "candle", 
-        name: "Magic Academy Candle", 
-        timeMinutes: 135, 
-        mats: { "Wizard Coin": 150, "Magic Tome": 2, "Magic Letter": 5 }, 
-        lore: "It floats gently in the air with the power of magic.", 
-        image: "Images/MagicAcademy/Magic Academy Candle.png" 
-    },
-    { 
-        id: "glass_cabinet", 
-        name: "Magic Academy Glass Cabinet", 
-        timeMinutes: 90, 
-        mats: { "Wizard Coin": 150, "Magic Pendant": 1, "Glass Greenhouse Cube": 1 }, 
-        lore: "It's filled with all kinds of mysterious magical items.", 
-        image: "Images/MagicAcademy/Magic Academy Glass Cabinet.png" 
-    },
-    { 
-        id: "armor_statue", 
-        name: "Magic Academy Armor Statue", 
-        timeMinutes: 90, 
-        mats: { "Wizard Coin": 150, "Dark Stone": 20, "Iron Ore": 3 }, 
-        lore: "A magical statue that guards the Magic Academy.", 
-        image: "Images/MagicAcademy/Magic Academy Armor Statue.png" 
-    },
-    { 
-        id: "wizard_portrait", 
-        name: "Magic Academy Wizard Portrait", 
-        timeMinutes: 80, 
-        mats: { "Wizard Coin": 150, "Dark Stone": 10, "Magic Quill": 10 }, 
-        lore: "A portrait of a legendary wizard.", 
-        image: "Images/MagicAcademy/Magic Academy Wizard Portrait.png" 
-    },
-    { 
-        id: "cat_portrait", 
-        name: "Magic Academy Cat Portrait", 
-        timeMinutes: 80, 
-        mats: { "Wizard Coin": 150, "Dark Stone": 10, "Magic Letter": 5 }, 
-        lore: "A portrait of a legendary wizard.", 
-        image: "Images/MagicAcademy/Magic Academy Cat Portrait.png" 
-    },
-    { 
-        id: "chair", 
-        name: "Magic Academy Chair", 
-        timeMinutes: 80, 
-        mats: { "Wizard Coin": 100, "Mimic": 5 }, 
-        lore: "It feels like all kinds of magical inspiration could come to mind.", 
-        image: "Images/MagicAcademy/Magic Academy Chair.png" 
-    },
-    { 
-        id: "banner", 
-        name: "Magic Academy Banner", 
-        timeMinutes: 40, 
-        mats: { "Wizard Coin": 80, "Magic Quill": 10 }, 
-        lore: "A banner bearing the emblem of Magic Academy.", 
-        image: "Images/MagicAcademy/Magic Academy Banner.png" 
-    },
-    { 
-        id: "long_dining_table", 
-        name: "Magic Academy Long Dining Table", 
-        timeMinutes: 135, 
-        mats: { "Wizard Coin": 150, "Mimic": 5, "Tree Branch": 20 }, 
-        lore: "Versatile enough for use in the Great Hall or classrooms.", 
-        image: "Images/MagicAcademy/Magic Academy Long Dining Table.png" 
-    }
-];
-
-const magicAcademyPets = [
-    { 
-        id: "otter_draw", 
-        name: "Otter Egg", 
-        timeMinutes: 170, 
-        mats: { "Wizard Coin": 200, "Magic Pendant": 5 }, 
-        lore: "Wanna join me on a trip on the cool waves?", 
-        image: "Images/MagicAcademy/Otter Draw.png" 
-    },
-    { 
-        id: "deer_egg", 
-        name: "Deer Egg", 
-        timeMinutes: 1900, 
-        mats: { "Wizard Coin": 300, "Premium Egg": 3 }, 
-        lore: "Inside the egg is a cute deer! Which one will hatch from it?", 
-        image: "Images/MagicAcademy/Deer Egg.png" 
-    },
-    { 
-        id: "lizard_egg", 
-        name: "Lizard Egg", 
-        timeMinutes: 100, 
-        mats: { "Wizard Coin": 200, "Normal Egg": 1 }, 
-        lore: "A cute lizard is waiting to be hatched! Which one will it be?", 
-        image: "Images/MagicAcademy/Lizard Egg.png" 
-    },
-    { 
-        id: "owl_draw", 
-        name: "Magic Shop Owl Egg", 
-        timeMinutes: 80, 
-        mats: { "Wizard Coin": 200, "Magic Tome": 3, "Eurasian Tree Sparrow": 1 }, 
-        lore: "The magical items you ordered today will be delivered by our friendly owl!", 
-        image: "Images/MagicAcademy/Magic Shop Owl Draw.png" 
-    }
-];
-
-const magicAcademyGlossary = [
-    { name: "Wizard Coin", lore: "Can be used in the Magic Soup game and at the workshop.", source: "Event", image: "Images/MagicAcademy/Wizard Coin.png" },
-    { name: "Magic Tome", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Tome.png" },
-    { name: "Mimic", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Mimic.png" },
-    { name: "Suspicious Potion", lore: "You can feel an ominous energy stirring within.", source: "Event", image: "Images/MagicAcademy/Suspicious Potion.png" },
-    { name: "Magic Pendant", lore: "A symbol bestowed upon those who follow dark magic.", source: "Event", image: "Images/MagicAcademy/Magic Pendant.png" },
-    { name: "Magic Quill", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Quill.png" },
-    { name: "Dark Stone", lore: "It grants immense magical power, but is said to lead its user to ruin.", source: "Event", image: "Images/MagicAcademy/Dark Stone.png" },
-    { name: "Magic Letter", lore: "Appears at All Areas All Day during Magic Academy Season.", source: "All Areas (Event)", image: "Images/MagicAcademy/Magic Letter.png" }
-];
-
-// Definition of Net-Caught Critters
-const NET_CAUGHT_CRITTERS = [
-    "Mimic", "Magic Quill", "Magic Tome", "Magic Letter", 
-    "Straw Scarecrow", "Cursed Scarecrow", "Will-o'-the-Wisp", "Eoduksini"
-];
-
-let items = magicAcademyItems;
-let pets = magicAcademyPets;
-let glossary = magicAcademyGlossary;
+let items = typeof moonKingdomItems !== 'undefined' ? moonKingdomItems : [];
+let pets = typeof moonKingdomPets !== 'undefined' ? moonKingdomPets : [];
+let glossary = typeof moonKingdomGlossary !== 'undefined' ? moonKingdomGlossary : [];
 
 let hasCelebratedCompletion = false;
 
-/* =====================================================================
-   PURE JS CONFETTI ENGINE
-   ===================================================================== */
 function launchConfetti() {
     const canvas = document.getElementById('confettiCanvas');
     if (!canvas) return;
@@ -898,7 +687,7 @@ function launchConfetti() {
     canvas.height = window.innerHeight;
 
     const pieces = [];
-    const colors = ['#E8C340', '#8A2BE2', '#17B2B2', '#32a873', '#FFFFFF', '#FFDF00'];
+    const colors = ['#FCE77D', '#9B59B6', '#70A1FF', '#F3A683', '#FFFFFF', '#F7D794'];
 
     for (let i = 0; i < 120; i++) {
         pieces.push({
@@ -943,24 +732,12 @@ function launchConfetti() {
     update();
 }
 
-/* =====================================================================
-   EVENT COUNTDOWN TIMER (UTC CONVERSION)
-   ===================================================================== */
-const EVENT_START_UTC = new Date(Date.UTC(2026, 8, 3, 4, 0, 0));   // Sept 3, 04:00 UTC
-const EVENT_END_UTC = new Date(Date.UTC(2026, 8, 16, 23, 59, 59));  // Sept 16, 23:59 UTC
+const EVENT_END_UTC = new Date(Date.UTC(2026, 8, 30, 23, 59, 59)); 
 
 function updateEventCountdown() {
     const now = new Date();
     const timerElement = document.getElementById("eventTimerBadge");
     if (!timerElement) return;
-
-    if (now < EVENT_START_UTC) {
-        const diff = EVENT_START_UTC - now;
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const mins = Math.floor((diff / 1000 / 60) % 60);
-        timerElement.innerText = `⏳ Starts in ${hours}h ${mins}m`;
-        return;
-    }
 
     const diff = EVENT_END_UTC - now;
     if (diff <= 0) {
@@ -972,25 +749,26 @@ function updateEventCountdown() {
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const mins = Math.floor((diff / 1000 / 60) % 60);
 
-    timerElement.innerText = `⏳ ${days}d ${hours}h ${mins}m left`;
+    if (days > 0) {
+        timerElement.innerText = `⏳ ${days}d ${hours}h ${mins}m left`;
+    } else {
+        timerElement.innerText = `⏳ ${hours}h ${mins}m left`;
+    }
 }
 
 setInterval(updateEventCountdown, 60000);
 updateEventCountdown();
 
-/* =====================================================================
-   STATE MANAGEMENT & STORAGE
-   ===================================================================== */
 let quantities = {};
 let completedCrafts = {};
 let currentCategory = 'furniture'; 
 
 function loadSavedData() {
     try {
-        const savedQuantities = localStorage.getItem("magic_academy_quantities");
+        const savedQuantities = localStorage.getItem("moon_kingdom_quantities");
         if (savedQuantities) quantities = JSON.parse(savedQuantities);
         
-        const savedCompleted = localStorage.getItem("magic_academy_completed");
+        const savedCompleted = localStorage.getItem("moon_kingdom_completed");
         if (savedCompleted) completedCrafts = JSON.parse(savedCompleted);
 
         renderChecklist();
@@ -1010,16 +788,13 @@ function loadSavedData() {
 }
 
 function saveQuantities() {
-    try { localStorage.setItem("magic_academy_quantities", JSON.stringify(quantities)); } catch (e) {}
+    try { localStorage.setItem("moon_kingdom_quantities", JSON.stringify(quantities)); } catch (e) {}
 }
 
 function saveCompleted() {
-    try { localStorage.setItem("magic_academy_completed", JSON.stringify(completedCrafts)); } catch (e) {}
+    try { localStorage.setItem("moon_kingdom_completed", JSON.stringify(completedCrafts)); } catch (e) {}
 }
 
-/* =====================================================================
-   NAVIGATION & UI CONTROLS
-   ===================================================================== */
 function toggleDrawer() {
     document.getElementById('drawer').classList.toggle('open');
     document.getElementById('drawerOverlay').classList.toggle('open');
@@ -1069,7 +844,7 @@ function switchTab(tabId, btn) {
     const sheet = document.getElementById('bottomSheet');
     if (tabId === 'calculatorTab' || tabId === 'checklistTab') {
         sheet.style.display = 'block';
-        document.body.style.paddingBottom = 'calc(var(--bar-height) + 40px)';
+        document.body.style.paddingBottom = 'calc(var(--bar-height) + 50px)';
     } else {
         sheet.style.display = 'none';
         document.body.style.paddingBottom = '40px';
@@ -1123,25 +898,30 @@ function formatTime(minutes) {
 }
 
 function getCategoryForMaterial(matName) {
-    const gatheringItems = ["Tree Branch", "Magic Quill", "Magic Tome", "Magic Letter", "Mimic"];
-    const shopItems = ["Glass Greenhouse Cube", "Turkey Meat"];
-    if (matName === "Wizard Coin" || matName === "Suspicious Potion" || matName === "Magic Pendant" || matName === "Dark Stone") return "Event Materials";
-    if (gatheringItems.includes(matName)) return "Gathering & Magic Spawns";
-    if (matName === "Iron Ore") return "Mining";
-    if (matName === "Eurasian Tree Sparrow") return "Wild Birds";
+    const megaMartItems = ["Water", "Cheese", "Lettuce", "Onion", "Salt", "Turkey Meat"];
+    const furnitureShopItems = ["Glass Greenhouse Cube", "Bright Grass Cube"];
+    const miningItems = ["Iron Ore", "Silver Ore", "Gold Ore", "Stone"];
+    const gatheringItems = ["Tree Branch", "Eurasian Tree Sparrow"];
+
+    if (megaMartItems.includes(matName)) return "Mega Mart";
+    if (furnitureShopItems.includes(matName)) return "Furniture Shop";
+    if (miningItems.includes(matName)) return "Mining";
+    if (gatheringItems.includes(matName)) return "Gathering & Spawns";
     if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
-    if (shopItems.includes(matName)) return "Town Shops";
+    if (matName === "Star Cash") return "Events & Quests";
     return "Event Materials";
 }
 
-/* =====================================================================
-   CALCULATOR & CHECKLIST LOGIC
-   ===================================================================== */
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
 
     const activeItems = currentCategory === 'furniture' ? items : pets;
+
+    if (activeItems.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Maintenance underway! Item details will be added as soon as the event opens.</div>`;
+        return;
+    }
 
     activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
@@ -1270,7 +1050,6 @@ function renderChecklist() {
 
     let html = ``;
 
-    // 1. Furniture Queue
     let activeFurnitureHtml = ``;
     let activeFurnitureCount = 0;
 
@@ -1291,7 +1070,7 @@ function renderChecklist() {
     if (activeFurnitureCount > 0) {
         html += `<div class="checklist-section">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span>🔨 Magic Academy Workshop</span>
+                        <span>🔨 Workshop Queue</span>
                     </div>
                     <div class="checklist-queue-grid">
                         ${activeFurnitureHtml}
@@ -1299,7 +1078,6 @@ function renderChecklist() {
                 </div>`;
     }
 
-    // 2. Pet Assembly Queue
     let activePetsHtml = ``;
     let activePetsCount = 0;
 
@@ -1328,7 +1106,6 @@ function renderChecklist() {
                 </div>`;
     }
 
-    // 3. Completed Items History Section
     let completedHistoryHtml = ``;
     let totalCompletedCount = 0;
 
@@ -1351,7 +1128,7 @@ function renderChecklist() {
     });
 
     if (totalCompletedCount > 0) {
-        html += `<div class="checklist-section collapsed" style="border-color: rgba(232, 195, 64, 0.3);">
+        html += `<div class="checklist-section" style="border-color: rgba(252, 231, 125, 0.3);">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🎉 Completed Crafts (${totalCompletedCount})</span>
                     </div>
@@ -1364,9 +1141,6 @@ function renderChecklist() {
     container.innerHTML = html;
 }
 
-/* =====================================================================
-   DYNAMIC LIFETIME STATS COMPUTATION & ITEMIZED BREAKDOWN (SORTED)
-   ===================================================================== */
 function renderLifetimeStats() {
     const grid = document.getElementById("statsGrid");
     grid.innerHTML = "";
@@ -1380,7 +1154,6 @@ function renderLifetimeStats() {
 
     const itemCounts = [];
     const matsConsumed = {};
-    const critters = {};
 
     allCraftables.forEach(item => {
         const count = completedCrafts[item.id] || 0;
@@ -1400,32 +1173,20 @@ function renderLifetimeStats() {
             if (item.mats) {
                 Object.entries(item.mats).forEach(([mat, qty]) => {
                     const totalMatQty = qty * count;
-
-                    if (NET_CAUGHT_CRITTERS.includes(mat)) {
-                        critters[mat] = (critters[mat] || 0) + totalMatQty;
-                    } else {
-                        matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
-                    }
+                    matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
                 });
             }
         }
     });
 
-    const totalCrittersCount = Object.values(critters).reduce((a, b) => a + b, 0);
     const totalResourcesCount = Object.values(matsConsumed).reduce((a, b) => a + b, 0);
 
-    // Sort itemized lists from most to least
     itemCounts.sort((a, b) => b.count - a.count);
-
-    const sortedCritters = Object.entries(critters)
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count);
 
     const sortedMats = Object.entries(matsConsumed)
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count);
 
-    // Card 1: Expanded Crafting Overview
     let craftingHtml = `
         <div class="stats-card">
             <div class="stats-card-title">🔨 Crafting Overview</div>
@@ -1433,11 +1194,9 @@ function renderLifetimeStats() {
             <div class="stat-row"><span class="stat-label">Furniture & Crops Crafted</span><span class="stat-val">${totalFurniture}</span></div>
             <div class="stat-row"><span class="stat-label">Pets Hatched</span><span class="stat-val">${totalPets}</span></div>
             <div class="stat-row"><span class="stat-label">Cumulative Crafting Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
-            <div class="stat-row"><span class="stat-label">Total Critters Caught</span><span class="stat-val">${totalCrittersCount.toLocaleString()}</span></div>
             <div class="stat-row"><span class="stat-label">Total Resources Consumed</span><span class="stat-val">${totalResourcesCount.toLocaleString()}</span></div>
         </div>`;
 
-    // Card 2: Itemized Crafts Breakdown (Most to Least)
     let itemizedHtml = `
         <div class="stats-card">
             <div class="stats-card-title">🎨 Crafts Breakdown</div>`;
@@ -1451,23 +1210,6 @@ function renderLifetimeStats() {
     }
     itemizedHtml += `</div>`;
 
-    // Card 3: Net-Caught Critters (Most to Least)
-    let crittersHtml = `
-        <div class="stats-card">
-            <div class="stats-card-title">🦋 Critters Caught</div>`;
-    
-    if (sortedCritters.length === 0) {
-        crittersHtml += `<div class="stat-row"><span class="stat-label">No critters caught yet.</span></div>`;
-    } else {
-        sortedCritters.forEach(critter => {
-            if (critter.count > 0) {
-                crittersHtml += `<div class="stat-row"><span class="stat-label">${critter.name}</span><span class="stat-val">${critter.count.toLocaleString()}</span></div>`;
-            }
-        });
-    }
-    crittersHtml += `</div>`;
-
-    // Card 4: Aggregate Material Consumption (Most to Least)
     let matsHtml = `
         <div class="stats-card">
             <div class="stats-card-title">📦 Resources Consumed</div>`;
@@ -1483,7 +1225,7 @@ function renderLifetimeStats() {
     }
     matsHtml += `</div>`;
 
-    grid.innerHTML = craftingHtml + itemizedHtml + crittersHtml + matsHtml;
+    grid.innerHTML = craftingHtml + itemizedHtml + matsHtml;
 }
 
 function updateQty(id, change) {
@@ -1530,9 +1272,6 @@ function resetQuantities() {
     calculateTotals();
 }
 
-/* =====================================================================
-   MATERIAL DRAWER COMPUTATION WITH COMPACT INLINE CATEGORY BADGES
-   ===================================================================== */
 function calculateTotals() {
     const matTotals = {};
     const taskDurations = [];
@@ -1560,11 +1299,12 @@ function calculateTotals() {
 
     const categoryOrder = {
         "Event Materials": 1,
-        "Gathering & Magic Spawns": 2,
+        "Gathering & Spawns": 2,
         "Mining": 3,
-        "Town Shops": 4,
-        "Wild Birds": 5,
-        "Pet Paradise": 6
+        "Mega Mart": 4,
+        "Furniture Shop": 5,
+        "Pet Paradise": 6,
+        "Events & Quests": 7
     };
 
     const activeMats = Object.entries(matTotals)
@@ -1591,21 +1331,24 @@ function calculateTotals() {
             let badge = "Event";
             let badgeColor = "var(--accent-gold)";
             
-            if (m.category.includes("Gathering")) {
-                badge = "Gather";
-                badgeColor = "var(--accent-blue)";
-            } else if (m.category.includes("Mining")) {
-                badge = "Mine";
-                badgeColor = "#A0A0A0";
-            } else if (m.category.includes("Shops")) {
+            if (m.category === "Mega Mart") {
+                badge = "Mart";
+                badgeColor = "var(--accent-purple)";
+            } else if (m.category === "Furniture Shop") {
                 badge = "Shop";
                 badgeColor = "var(--accent-purple)";
-            } else if (m.category.includes("Birds")) {
-                badge = "Wild";
-                badgeColor = "var(--accent-crop)";
-            } else if (m.category.includes("Pet")) {
+            } else if (m.category === "Mining") {
+                badge = "Mine";
+                badgeColor = "#A0A0A0";
+            } else if (m.category.includes("Gathering")) {
+                badge = "Gather";
+                badgeColor = "var(--accent-blue)";
+            } else if (m.category === "Pet Paradise") {
                 badge = "Pet";
                 badgeColor = "var(--accent-pet)";
+            } else if (m.category === "Events & Quests") {
+                badge = "Cash";
+                badgeColor = "var(--accent-crop)";
             }
 
             const tile = document.createElement("div");
@@ -1642,13 +1385,15 @@ function calculateParallelTime(durations, maxSlots) {
     return Math.max(...slots);
 }
 
-/* =====================================================================
-   INDEX & ARCHIVE LOADERS
-   ===================================================================== */
 function loadActiveEventIndex() {
-    showArchiveView("Magic Academy Catalog & Lore");
+    showArchiveView("Moon Kingdom Catalog & Lore");
     const grid = document.getElementById('archiveGrid');
     grid.innerHTML = "";
+
+    if (items.length === 0 && pets.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Catalog details are being retrieved during maintenance!</div>`;
+        return;
+    }
 
     const furnitureHeader = document.createElement("h2");
     furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
@@ -1660,9 +1405,7 @@ function loadActiveEventIndex() {
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
         card.className = "glossary-card";
-        if (item.type === 'crop') {
-            card.style.borderColor = "rgba(243, 156, 18, 0.8)";
-        }
+        if (item.type === 'crop') card.style.borderColor = "rgba(247, 215, 148, 0.8)";
         card.innerHTML = `
             ${imgHtml}
             <div class="glossary-title" ${item.type === 'crop' ? 'style="color: var(--accent-crop);"' : ''}>${item.name}</div>
@@ -1683,7 +1426,7 @@ function loadActiveEventIndex() {
         const imgHtml = pet.image ? `<div class="card-img-container"><img src="${pet.image}" alt="${pet.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
         card.className = "glossary-card";
-        card.style.borderColor = "rgba(50, 168, 115, 0.4)";
+        card.style.borderColor = "rgba(243, 166, 131, 0.4)";
         card.innerHTML = `
             ${imgHtml}
             <div class="glossary-title" style="color: var(--accent-pet);">${pet.name}</div>
@@ -1693,21 +1436,29 @@ function loadActiveEventIndex() {
         `;
         grid.appendChild(card);
     });
+}
 
-    const materialsHeader = document.createElement("h2");
-    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    materialsHeader.innerText = "📌 Event Materials";
-    grid.appendChild(materialsHeader);
+function loadMagicAcademyIndex() {
+    showArchiveView("Magic Academy Catalog & Lore");
+    const grid = document.getElementById('archiveGrid');
+    grid.innerHTML = "";
 
-    glossary.forEach(mat => {
-        const imgHtml = mat.image ? `<div class="card-img-container"><img src="${mat.image}" alt="${mat.name}" class="index-preview-img"></div>` : '';
+    if (typeof magicAcademyItems === 'undefined') {
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/magic_academy_data.js data not found!</div>';
+        return;
+    }
+
+    magicAcademyItems.forEach(item => {
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
         card.className = "glossary-card";
         card.innerHTML = `
             ${imgHtml}
-            <div class="glossary-title">${mat.name}</div>
-            <div class="glossary-lore">"${mat.lore}"</div>
-            <div class="glossary-source">📍 Location: ${mat.source}</div>
+            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
+            <div class="glossary-lore">"${item.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
         `;
         grid.appendChild(card);
     });
@@ -1719,14 +1470,9 @@ function loadDesertOasisIndex() {
     grid.innerHTML = "";
 
     if (typeof desertOasisItems === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/desert_oasis_data.js data not found! Ensure the file is uploaded to GitHub.</div>';
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/desert_oasis_data.js data not found!</div>';
         return;
     }
-
-    const furnitureHeader = document.createElement("h2");
-    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    furnitureHeader.innerText = "🔨 Furniture";
-    grid.appendChild(furnitureHeader);
 
     desertOasisItems.forEach(item => {
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
@@ -1742,45 +1488,6 @@ function loadDesertOasisIndex() {
         `;
         grid.appendChild(card);
     });
-
-    const petsHeader = document.createElement("h2");
-    petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    petsHeader.innerText = "🐾 Pets & Incubator Items";
-    grid.appendChild(petsHeader);
-
-    desertOasisPets.forEach(pet => {
-        const matString = Object.entries(pet.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = pet.image ? `<div class="card-img-container"><img src="${pet.image}" alt="${pet.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.style.borderColor = "rgba(50, 168, 115, 0.4)";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title" style="color: var(--accent-pet);">${pet.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(pet.timeMinutes)}</div>
-            <div class="glossary-lore">"${pet.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
-
-    const materialsHeader = document.createElement("h2");
-    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    materialsHeader.innerText = "📌 Event Materials";
-    grid.appendChild(materialsHeader);
-
-    desertOasisGlossary.forEach(mat => {
-        const imgHtml = mat.image ? `<div class="card-img-container"><img src="${mat.image}" alt="${mat.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title">${mat.name}</div>
-            <div class="glossary-lore">"${mat.lore}"</div>
-            <div class="glossary-source">📍 Location: ${mat.source}</div>
-        `;
-        grid.appendChild(card);
-    });
 }
 
 function loadCoreIndex() {
@@ -1789,7 +1496,7 @@ function loadCoreIndex() {
     grid.innerHTML = "";
 
     if (typeof coreGlossary === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/playtogether_core.js data not found! Ensure the file is uploaded to GitHub.</div>';
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/playtogether_core.js data not found!</div>';
         return;
     }
 
@@ -1811,17 +1518,11 @@ function loadGwidamIndex() {
     grid.innerHTML = "";
 
     if (typeof gwidamItems === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/gwidam_data.js data not found! Ensure the file is uploaded to GitHub.</div>';
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/gwidam_data.js data not found!</div>';
         return;
     }
 
-    const furnitureHeader = document.createElement("h2");
-    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    furnitureHeader.innerText = "🔨 Furniture & Pets";
-    grid.appendChild(furnitureHeader);
-
-    const allGwidamCraftables = [...gwidamItems, ...gwidamPets];
-    allGwidamCraftables.forEach(item => {
+    gwidamItems.forEach(item => {
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
@@ -1832,23 +1533,6 @@ function loadGwidamIndex() {
             <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
             <div class="glossary-lore">"${item.lore}"</div>
             <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
-
-    const materialsHeader = document.createElement("h2");
-    materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    materialsHeader.innerText = "📌 Event Materials";
-    grid.appendChild(materialsHeader);
-
-    gwidamGlossary.forEach(mat => {
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title">${mat.name}</div>
-            <div class="glossary-lore">"${mat.lore}"</div>
-            <div class="glossary-source">📍 Location: ${mat.source}</div>
         `;
         grid.appendChild(card);
     });
@@ -1863,7 +1547,6 @@ function showArchiveView(title) {
     if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
 }
 
-// Initialization
 loadSavedData();
 renderGrid();
 calculateTotals();
