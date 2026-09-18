@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ginseng Pull Odds - PT Companion</title>
+    
+    <!-- THEMATIC GARDEN/PLANT FONTS: GAEGU (HANDWRITTEN) & OUTFIT (CLEAN UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* HERBAL GINSENG THEME PALETTE */
+            --bg-color: #120D1D;             /* Deep Purple Background */
+            --card-bg: #1F172B;              /* Darkened Card Surface */
+            --accent-gold: #E8C17F;          /* Warm Ginseng Root Tan */
+            --accent-purple: #3A2B52;        /* Structural Violet Border */
+            --accent-berry: #E52E3D;         /* Crimson Berry Red */
+            --accent-leaf: #3AA856;          /* Fresh Stem Green */
+            --accent-aqua: #51E5FF;          /* Sprout Glow Cyan */
+            --accent-blue: #73D7FF;          /* Navigation Accent Blue */
+            --text-light: #F4F4F5;
+            --border-radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0 0 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* STICKY HEADER & NAV BAR */
+        .nav-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(14, 11, 22, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+
+        .home-btn {
+            background-color: var(--accent-gold);
+            color: #0E0B16;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+            transition: background 0.2s ease;
+        }
+
+        .home-btn:hover {
+            background-color: #FFFFFF;
+        }
+
+        /* SLIDE-OUT HAMBURGER DRAWER */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            display: none;
+        }
+
+        .drawer-overlay.open {
+            display: block;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 280px;
+            max-height: 100vh;
+            background: var(--card-bg);
+            border-right: 2px solid var(--accent-gold);
+            z-index: 201;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 20px 16px 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .drawer.open {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--accent-gold);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .drawer-title {
+            font-family: 'Gaegu', cursive, sans-serif;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .drawer-section-title {
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 16px 0 8px;
+            font-weight: bold;
+        }
+
+        .drawer-link {
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            transition: background 0.2s;
+        }
+
+        .drawer-link:hover {
+            background: rgba(232, 193, 127, 0.15);
+            color: var(--accent-gold);
+        }
+
+        /* CONTAINER & CALCULATOR CARD */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 0 16px;
+        }
+
+        /* HERO BANNER SECTION (OVERLAPS CARD) */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            margin-bottom: -24px; /* Pulls card underneath UP */
+            z-index: 2;           /* Floats image ABOVE the card */
+        }
+
+        .hero-ginseng-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-ginseng-container img {
+            max-width: 85%;
+            height: auto;
+            max-height: 140px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.7));
+        }
+
+        h1 {
+            font-family: 'Gaegu', cursive, sans-serif;
+            color: var(--accent-gold);
+            text-align: center;
+            margin: 0 0 16px;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        /* MAIN CALCULATOR CARD */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-gold);
+            border-radius: var(--border-radius);
+            padding: 36px 20px 20px; /* Extra top padding to handle banner overlap */
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+            margin-bottom: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--accent-aqua);
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.8px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            background: var(--bg-color);
+            border: 2px solid var(--accent-purple);
+            color: var(--accent-gold);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: bold;
+            outline: none;
+            text-align: center;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--accent-gold);
+        }
+
+        input[type="number"]::placeholder {
+            color: #8E839E;
+            font-size: 0.95rem;
+            font-weight: normal;
+        }
+
+        /* VERDICT SECTION */
+        .verdict-header {
+            font-family: 'Gaegu', cursive, sans-serif;
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            text-align: center;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .verdict-banner {
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Gaegu', cursive, sans-serif;
+            font-size: 2rem;
+            line-height: 1;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .verdict-yes {
+            background: rgba(58, 168, 86, 0.15);
+            border: 2px solid var(--accent-leaf);
+            color: var(--accent-leaf);
+            text-shadow: 0 0 8px rgba(58, 168, 86, 0.3);
+        }
+
+        .verdict-no {
+            background: rgba(229, 46, 61, 0.15);
+            border: 2px solid var(--accent-berry);
+            color: var(--accent-berry);
+            text-shadow: 0 0 8px rgba(229, 46, 61, 0.3);
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(18, 13, 29, 0.5);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(232, 193, 127, 0.1);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #C2B8D0;
+        }
+
+        .stat-val {
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--accent-gold);
+        }
+
+        .sub-note {
+            font-size: 0.75rem;
+            color: #8E839E;
+            text-align: center;
+            margin-top: 14px;
+            line-height: 1.35;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY TOP HEADER NAV -->
+    <div class="nav-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <button class="menu-btn" onclick="toggleDrawer()">≡</button>
+            <span style="font-family: 'Gaegu', cursive; color: var(--accent-gold); font-size: 1.4rem;">PT Companion</span>
+        </div>
+        <a href="index.html" class="home-btn">🏠 Back to Workshop</a>
+    </div>
+
+    <!-- SLIDE-OUT HAMBURGER DRAWER -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">Navigation Hub</span>
+            <button class="close-btn" onclick="toggleDrawer()">✕</button>
+        </div>
+
+        <!-- MINI-TOOLS & CALCULATORS -->
+        <div class="drawer-section-title">🧮 Mini-Tools & Calculators</div>
+        <a href="ginseng.html" class="drawer-link" style="text-decoration: none; display: block; color: var(--accent-gold); font-weight: bold;">🌱 Ginseng Pull Odds</a>
+
+        <!-- SINGLE CONSOLIDATED MATERIAL & ITEM INDEX -->
+        <div class="drawer-section-title">📚 Material & Item Index</div>
+        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block; font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</a>
+        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🐰 Moon Kingdom Index</a>
+        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🪄 Magic Academy Index</a>
+        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🏺 Desert Oasis Index</a>
+        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🕯️ Gwidam Village Index</a>
+
+        <!-- EXTERNAL GAME RESOURCES -->
+        <div class="drawer-section-title">🔗 Helpful PT Links</div>
+        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
+        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
+        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
+
+        <!-- CREATOR & SOCIAL LINKS -->
+        <div class="drawer-section-title">👤 My Stuff :D</div>
+        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
+        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
+        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
+        <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>💬 Discord: Benni1433</span>
+            <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Ginseng Pull Odds</h1>
+
+        <!-- HERO BANNER (OVERLAPS CARD) -->
+        <div class="hero-banner">
+            <div class="hero-ginseng-container">
+                <img src="Images/Ginseng/hero.png" alt="Ginseng Hero Banner">
+            </div>
+        </div>
+
+        <!-- MAIN CALCULATOR CARD -->
+        <div class="card">
+            <div class="input-group">
+                <label for="packInput">NUMBER OF SEED PACKS</label>
+                <input 
+                    type="number" 
+                    id="packInput" 
+                    min="1" 
+                    max="9999" 
+                    placeholder="Enter pack count..." 
+                    oninput="calculateOdds()"
+                    onfocus="this.select()"
+                >
+            </div>
+
+            <!-- VERDICT DISPLAY -->
+            <div class="verdict-header">WORTH IT??</div>
+            <div id="verdictBanner" class="verdict-banner verdict-no">no :(</div>
+
+            <div class="stats-grid">
+                <div class="stat-row">
+                    <span class="stat-label">At least 1 Ginseng</span>
+                    <span class="stat-val" id="prob1Plus">0.00%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">At least 2 Ginsengs</span>
+                    <span class="stat-val" id="prob2Plus">0.00%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">3 or More Ginsengs</span>
+                    <span class="stat-val" id="prob3Plus">0.00%</span>
+                </div>
+                <div class="stat-row" style="border-top: 1px dashed rgba(229, 46, 61, 0.3); margin-top: 4px; padding-top: 12px;">
+                    <span class="stat-label">0 Ginsengs (Whiff odds)</span>
+                    <span class="stat-val" id="prob0" style="color: var(--accent-berry);">100.00%</span>
+                </div>
+            </div>
+
+            <div class="sub-note">Calculated using a 1% base drop rate per pack. Benchmark "worth it" threshold is 50%+ odds for at least 1 drop.</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDrawer() {
+            document.getElementById('drawer').classList.toggle('open');
+            document.getElementById('drawerOverlay').classList.toggle('open');
+        }
+
+        function copyDiscordHandle() {
+            navigator.clipboard.writeText("Benni1433").then(() => {
+                const badge = document.getElementById("discordCopyBadge");
+                badge.innerText = "Copied!";
+                badge.style.color = "var(--accent-leaf)";
+                setTimeout(() => {
+                    badge.innerText = "Copy";
+                    badge.style.color = "var(--accent-gold)";
+                }, 2000);
+            }).catch(err => {
+                alert("Discord Handle: Benni1433");
+            });
+        }
+
+        function calculateOdds() {
+            const input = document.getElementById("packInput");
+
+            // Handle blank/cleared input state
+            if (input.value === "" || input.value === null) {
+                renderBlankState();
+                return;
+            }
+
+            let n = parseInt(input.value, 10);
+
+            if (isNaN(n) || n < 1) {
+                renderBlankState();
+                return;
+            }
+
+            const p = 0.01;
+            const q = 0.99;
+
+            // Binomial Probabilities
+            const probExact0 = Math.pow(q, n);
+            const probExact1 = n >= 1 ? n * Math.pow(p, 1) * Math.pow(q, n - 1) : 0;
+            const probExact2 = n >= 2 ? (n * (n - 1) / 2) * Math.pow(p, 2) * Math.pow(q, n - 2) : 0;
+
+            // Cumulative Tiers
+            const probAtLeast1 = n > 0 ? (1 - probExact0) : 0;
+            const probAtLeast2 = n > 0 ? (1 - (probExact0 + probExact1)) : 0;
+            const probAtLeast3 = n > 0 ? (1 - (probExact0 + probExact1 + probExact2)) : 0;
+
+            // Render Output
+            document.getElementById("prob1Plus").innerText = (probAtLeast1 * 100).toFixed(2) + "%";
+            document.getElementById("prob2Plus").innerText = (probAtLeast2 * 100).toFixed(2) + "%";
+            document.getElementById("prob3Plus").innerText = (probAtLeast3 * 100).toFixed(2) + "%";
+            document.getElementById("prob0").innerText = (probExact0 * 100).toFixed(2) + "%";
+
+            // Verdict Banner (50%+ threshold for at least 1 drop)
+            const banner = document.getElementById("verdictBanner");
+            if (probAtLeast1 >= 0.50) {
+                banner.className = "verdict-banner verdict-yes";
+                banner.innerText = "yes!";
+            } else {
+                banner.className = "verdict-banner verdict-no";
+                banner.innerText = "no :(";
+            }
+        }
+
+        function renderBlankState() {
+            document.getElementById("prob1Plus").innerText = "0.00%";
+            document.getElementById("prob2Plus").innerText = "0.00%";
+            document.getElementById("prob3Plus").innerText = "0.00%";
+            document.getElementById("prob0").innerText = "100.00%";
+
+            const banner = document.getElementById("verdictBanner");
+            banner.className = "verdict-banner verdict-no";
+            banner.innerText = "no :(";
+        }
+
+        // Run initial calculation on load
+        calculateOdds();
+    </script>
+</body>
+</html>
