@@ -599,6 +599,10 @@
             <button class="close-btn" onclick="toggleDrawer()">✕</button>
         </div>
 
+        <!-- MINI-TOOLS & CALCULATORS -->
+        <div class="drawer-section-title">🧮 Mini-Tools & Calculators</div>
+        <a href="ginseng.html" class="drawer-link" style="text-decoration: none; display: block; color: var(--accent-gold); font-weight: bold;">🌱 Ginseng Pull Odds</a>
+
         <!-- SINGLE CONSOLIDATED MATERIAL & ITEM INDEX -->
         <div class="drawer-section-title">📚 Material & Item Index</div>
         <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
@@ -785,9 +789,9 @@ function updateEventCountdown() {
     const mins = Math.floor((diff / 1000 / 60) % 60);
 
     if (days > 0) {
-        timerElement.innerText = `⏳ ${days}d ${hours}h ${mins}m left`;
+        timerElement.innerText = `⏳ ${days}d ${hours}h${mins}m left`;
     } else {
-        timerElement.innerText = `⏳ ${hours}h ${mins}m left`;
+        timerElement.innerText = `⏳ ${hours}h${mins}m left`;
     }
 }
 
@@ -935,7 +939,7 @@ function formatTime(minutes) {
     const mins = minutes % 60;
     if (hrs === 0) return `${mins}m`;
     if (mins === 0) return `${hrs}h`;
-    return `${hrs}h ${mins}m`;
+    return `${hrs}h${mins}m`;
 }
 
 function getCategoryForMaterial(matName) {
@@ -968,7 +972,7 @@ function renderGrid() {
 
     activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count}${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
         
         let cardClass = "item-card";
@@ -1105,8 +1109,7 @@ function renderChecklist() {
             activeFurnitureHtml += `
                 <div class="check-item" onclick="completeCraft('${item.id}', this)">
                     <div class="checkbox"></div>
-                    <div class="check-text">${item.name}</div>
-                    ${imgHtml}
+                    <div class="check-text">${item.name}</div>${imgHtml}
                 </div>`;
         }
     });
@@ -1134,8 +1137,7 @@ function renderChecklist() {
             activePetsHtml += `
                 <div class="check-item" onclick="completeCraft('${pet.id}', this)">
                     <div class="checkbox"></div>
-                    <div class="check-text">${pet.name}</div>
-                    ${imgHtml}
+                    <div class="check-text">${pet.name}</div>${imgHtml}
                 </div>`;
         }
     });
