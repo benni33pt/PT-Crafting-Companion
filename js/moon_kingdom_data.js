@@ -30,9 +30,8 @@ const moonKingdomItems = [
         }
     },
 
-    // --- 2. FURNITURE & DECOR ---
-	
-	{
+    // --- 2. FURNITURE ---
+    {
         id: "mk_f05",
         name: "Moon Rabbit Tent",
         type: "furniture",
@@ -44,7 +43,6 @@ const moonKingdomItems = [
             "Tree Branch": 5
         }
     },
-	
     {
         id: "mk_f17",
         name: "Moon Kingdom Bench",
@@ -121,6 +119,30 @@ const moonKingdomItems = [
             "Bright Grass Cube": 1
         }
     },
+    {
+        id: "mk_f03",
+        name: "Moon Kingdom Drink Stand",
+        type: "furniture",
+        timeMinutes: 360,
+        lore: "It's stocked with refreshing, sweet drinks from the Moon Kingdom.",
+        image: "Images/MoonKingdom/Moon Kingdom Drink Stand.png",
+        mats: {
+            "Full Moon Coin": 550,
+            "Tree Branch": 20
+        }
+    },
+    {
+        id: "mk_f04",
+        name: "Moon Kingdom Food Stand",
+        type: "furniture",
+        timeMinutes: 360,
+        lore: "Fill up on delicious food from the Moon Kingdom.",
+        image: "Images/MoonKingdom/Moon Kingdom Food Stand.png",
+        mats: {
+            "Full Moon Coin": 550,
+            "Tree Branch": 20
+        }
+    },
 
     // --- 3. TANKS & CRITTER CONTAINERS ---
     {
@@ -133,7 +155,7 @@ const moonKingdomItems = [
         mats: {
             "Full Moon Coin": 75,
             "Water": 5,
-            "Acrylic Sheet": 1,
+            "Glass Greenhouse Cube": 1,
             "Iron Ore": 3
         }
     },
@@ -147,7 +169,7 @@ const moonKingdomItems = [
         mats: {
             "Full Moon Coin": 150,
             "Water": 10,
-            "Acrylic Sheet": 1,
+            "Glass Greenhouse Cube": 1,
             "Copper Ore": 3
         }
     },
@@ -161,7 +183,8 @@ const moonKingdomItems = [
         mats: {
             "Full Moon Coin": 300,
             "Water": 15,
-            "Acrylic Sheet": 1
+            "Glass Greenhouse Cube": 1,
+            "Silver Ore": 3
         }
     },
     {
@@ -174,7 +197,8 @@ const moonKingdomItems = [
         mats: {
             "Full Moon Coin": 450,
             "Water": 20,
-            "Acrylic Sheet": 1
+            "Glass Greenhouse Cube": 1,
+            "Gold Ore": 3
         }
     },
     {
@@ -186,11 +210,13 @@ const moonKingdomItems = [
         image: "Images/MoonKingdom/Dreamland Insect Basket.png",
         mats: {
             "Full Moon Coin": 75,
-            "Acrylic Sheet": 1
+            "Glass Greenhouse Cube": 1
         }
-    },
+    }
+];
 
-    // --- 4. PET STUFF ---
+const moonKingdomPets = [
+    // --- 4. PET STUFF (PET FURNITURE, EGGS & SUPPLEMENTS) ---
     {
         id: "mk_f14",
         name: "Moon Rabbit Pet Bed",
@@ -215,36 +241,6 @@ const moonKingdomItems = [
             "Stone": 5
         }
     },
-
-    // --- 5. MISC (FOOD & DRINK STANDS) ---
-    {
-        id: "mk_f03",
-        name: "Moon Kingdom Drink Stand",
-        type: "furniture",
-        timeMinutes: 360,
-        lore: "It's stocked with refreshing, sweet drinks from the Moon Kingdom.",
-        image: "Images/MoonKingdom/Moon Kingdom Drink Stand.png",
-        mats: {
-            "Full Moon Coin": 550,
-            "Tree Branch": 20
-        }
-    },
-    {
-        id: "mk_f04",
-        name: "Moon Kingdom Food Stand",
-        type: "furniture",
-        timeMinutes: 360,
-        lore: "Fill up on delicious food from the Moon Kingdom.",
-        image: "Images/MoonKingdom/Moon Kingdom Food Stand.png",
-        mats: {
-            "Full Moon Coin": 550,
-            "Tree Branch": 20
-        }
-    }
-];
-
-const moonKingdomPets = [
-    // --- EGGS ---
     {
         id: "mk_p01",
         name: "Moon Rabbit Egg (Premium)",
@@ -269,8 +265,6 @@ const moonKingdomPets = [
             "Normal Egg": 1
         }
     },
-
-    // --- SUPPLEMENTS ---
     {
         id: "mk_p05",
         name: "Moon Carrot Supplement",
@@ -313,9 +307,10 @@ const moonKingdomPets = [
 ];
 
 const moonKingdomGlossary = [
+    // --- 5. EVENT MATERIALS & CURRENCY ---
     {
         name: "Full Moon Coin",
-        lore: "Full Moon Coin",
+        lore: "Used in events.",
         source: "Event",
         image: "Images/MoonKingdom/Full Moon Coin.png"
     },
