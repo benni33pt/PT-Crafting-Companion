@@ -5,24 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ginseng Pull Odds - PT Companion</title>
     
-    <!-- THEMATIC GARDEN/PLANT FONTS: GAEGU (HANDWRITTEN) & OUTFIT (CLEAN UI) -->
+    <!-- THEMATIC GARDEN/PLANT FONTS: GAEGU (HANDWRITTEN TITLES) & OUTFIT (CLEAN UI) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* HERBAL GINSENG THEME PALETTE */
-            --bg-color: #120D1D;             /* Deep Purple Background */
-            --card-bg: #1F172B;              /* Darkened Card Surface */
-            --accent-gold: #E8C17F;          /* Warm Ginseng Root Tan */
-            --accent-purple: #3A2B52;        /* Structural Violet Border */
-            --accent-berry: #E52E3D;         /* Crimson Berry Red */
-            --accent-leaf: #3AA856;          /* Fresh Stem Green */
-            --accent-aqua: #51E5FF;          /* Sprout Glow Cyan */
-            --accent-blue: #73D7FF;          /* Navigation Accent Blue */
-            --text-light: #F4F4F5;
-            --border-radius: 14px;
+            /* WARM GINSENG ROOT LIGHT PALETTE */
+            --bg-color: #E2C8A0;             /* Warm Ginseng Parchment Background */
+            --card-bg: #FFF8ED;              /* Soft Warm Cream Card Surface */
+            --header-bg: #322112;            /* Deep Roasted Root Brown Header */
+            --accent-gold: #D69638;          /* Rich Ginseng Amber Gold */
+            --accent-brown: #5A3B18;         /* Primary Root Earth Brown Text */
+            --accent-berry: #D92B38;         /* Crimson Berry Red */
+            --accent-leaf: #2D8A4E;          /* Stem Green */
+            --accent-aqua: #1B8A99;          /* Sprout Glow Teal */
+            --text-main: #362310;            /* Dark Earth Brown Body Text */
+            --text-muted: #7A6248;           /* Soft Earthy Muted Subtext */
+            --border-radius: 16px;
         }
 
         * {
@@ -33,7 +34,7 @@
         body {
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-light);
+            color: var(--text-main);
             margin: 0;
             padding: 0 0 40px 0;
             display: flex;
@@ -46,40 +47,41 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: rgba(14, 11, 22, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 2px solid var(--accent-gold);
+            background-color: var(--header-bg);
+            border-bottom: 3px solid var(--accent-gold);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 10px 16px;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .menu-btn {
             background: none;
             border: none;
-            color: var(--accent-gold);
-            font-size: 1.5rem;
+            color: #FCE77D;
+            font-size: 1.6rem;
             cursor: pointer;
             padding: 0 4px;
             flex-shrink: 0;
         }
 
         .home-btn {
-            background-color: var(--accent-gold);
-            color: #0E0B16;
+            background-color: #FCE77D;
+            color: var(--header-bg);
             border: none;
             padding: 6px 14px;
             border-radius: 20px;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 0.85rem;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
             white-space: nowrap;
             transition: background 0.2s ease;
+            font-family: 'Outfit', sans-serif;
         }
 
         .home-btn:hover {
@@ -93,7 +95,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.6);
             z-index: 200;
             display: none;
         }
@@ -110,7 +112,7 @@
             width: 280px;
             max-height: 100vh;
             background: var(--card-bg);
-            border-right: 2px solid var(--accent-gold);
+            border-right: 3px solid var(--accent-gold);
             z-index: 201;
             transform: translateX(-100%);
             transition: transform 0.3s ease;
@@ -129,47 +131,49 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
             padding-bottom: 12px;
             margin-bottom: 16px;
         }
 
         .drawer-title {
             font-family: 'Gaegu', cursive, sans-serif;
-            font-size: 1.3rem;
-            color: var(--accent-gold);
+            font-size: 1.5rem;
+            color: var(--accent-brown);
         }
 
         .close-btn {
             background: none;
             border: none;
-            color: var(--text-light);
+            color: var(--accent-brown);
             font-size: 1.2rem;
             cursor: pointer;
         }
 
         .drawer-section-title {
             font-size: 0.75rem;
-            color: var(--accent-blue);
+            color: var(--accent-aqua);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin: 16px 0 8px;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .drawer-link {
             padding: 10px 12px;
             border-radius: 8px;
-            color: var(--text-light);
+            color: var(--text-main);
             cursor: pointer;
             font-size: 0.9rem;
             margin-bottom: 4px;
             transition: background 0.2s;
+            text-decoration: none;
+            font-family: 'Outfit', sans-serif;
         }
 
         .drawer-link:hover {
-            background: rgba(232, 193, 127, 0.15);
-            color: var(--accent-gold);
+            background: rgba(214, 150, 56, 0.2);
+            color: var(--accent-brown);
         }
 
         /* CONTAINER & CALCULATOR CARD */
@@ -177,6 +181,16 @@
             width: 100%;
             max-width: 480px;
             padding: 0 16px;
+        }
+
+        h1 {
+            font-family: 'Gaegu', cursive, sans-serif;
+            color: var(--accent-brown);
+            text-align: center;
+            margin: 0 0 16px;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(255,255,255,0.6);
         }
 
         /* HERO BANNER SECTION (OVERLAPS CARD) */
@@ -199,17 +213,7 @@
             height: auto;
             max-height: 140px;
             object-fit: contain;
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.7));
-        }
-
-        h1 {
-            font-family: 'Gaegu', cursive, sans-serif;
-            color: var(--accent-gold);
-            text-align: center;
-            margin: 0 0 16px;
-            font-size: 2.2rem;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            filter: drop-shadow(0 6px 12px rgba(90, 59, 24, 0.3));
         }
 
         /* MAIN CALCULATOR CARD */
@@ -220,7 +224,7 @@
             border: 2px solid var(--accent-gold);
             border-radius: var(--border-radius);
             padding: 36px 20px 20px; /* Extra top padding to handle banner overlap */
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 24px rgba(90, 59, 24, 0.15);
             margin-bottom: 16px;
         }
 
@@ -241,62 +245,61 @@
 
         input[type="number"] {
             width: 100%;
-            background: var(--bg-color);
-            border: 2px solid var(--accent-purple);
-            color: var(--accent-gold);
+            background: #FFFDF9;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-brown);
             padding: 12px;
             border-radius: 8px;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-family: 'Outfit', sans-serif;
-            font-weight: bold;
+            font-weight: 700;
             outline: none;
             text-align: center;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         input[type="number"]:focus {
-            border-color: var(--accent-gold);
+            border-color: var(--accent-brown);
+            box-shadow: 0 0 0 3px rgba(214, 150, 56, 0.2);
         }
 
         input[type="number"]::placeholder {
-            color: #8E839E;
+            color: #A08C75;
             font-size: 0.95rem;
-            font-weight: normal;
+            font-weight: 400;
         }
 
         /* VERDICT SECTION */
         .verdict-header {
             font-family: 'Gaegu', cursive, sans-serif;
-            font-size: 1.4rem;
-            color: var(--accent-gold);
+            font-size: 1.6rem;
+            color: var(--accent-brown);
             text-align: center;
             margin-bottom: 6px;
             letter-spacing: 1px;
         }
 
         .verdict-banner {
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 10px;
             text-align: center;
             font-family: 'Gaegu', cursive, sans-serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             line-height: 1;
             margin-bottom: 20px;
             transition: all 0.3s ease;
         }
 
         .verdict-yes {
-            background: rgba(58, 168, 86, 0.15);
+            background: rgba(45, 138, 78, 0.12);
             border: 2px solid var(--accent-leaf);
             color: var(--accent-leaf);
-            text-shadow: 0 0 8px rgba(58, 168, 86, 0.3);
         }
 
         .verdict-no {
-            background: rgba(229, 46, 61, 0.15);
+            background: rgba(217, 43, 56, 0.12);
             border: 2px solid var(--accent-berry);
             color: var(--accent-berry);
-            text-shadow: 0 0 8px rgba(229, 46, 61, 0.3);
         }
 
         /* STATS GRID */
@@ -310,29 +313,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(18, 13, 29, 0.5);
-            padding: 10px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(232, 193, 127, 0.1);
+            background: #F7EEDF;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(214, 150, 56, 0.25);
         }
 
         .stat-label {
-            font-size: 0.85rem;
-            color: #C2B8D0;
+            font-size: 0.88rem;
+            color: var(--text-main);
+            font-weight: 500;
         }
 
         .stat-val {
-            font-weight: bold;
-            font-size: 1rem;
-            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--accent-brown);
         }
 
         .sub-note {
             font-size: 0.75rem;
-            color: #8E839E;
+            color: var(--text-muted);
             text-align: center;
-            margin-top: 14px;
-            line-height: 1.35;
+            margin-top: 16px;
+            line-height: 1.45;
         }
     </style>
 </head>
@@ -342,7 +346,7 @@
     <div class="nav-header">
         <div style="display: flex; align-items: center; gap: 10px;">
             <button class="menu-btn" onclick="toggleDrawer()">≡</button>
-            <span style="font-family: 'Gaegu', cursive; color: var(--accent-gold); font-size: 1.4rem;">PT Companion</span>
+            <span style="font-family: 'Gaegu', cursive; color: #FCE77D; font-size: 1.6rem;">PT Companion</span>
         </div>
         <a href="index.html" class="home-btn">🏠 Back to Workshop</a>
     </div>
@@ -356,31 +360,31 @@
         </div>
 
         <!-- MINI-TOOLS & CALCULATORS -->
-        <div class="drawer-section-title">🧮 Mini-Tools</div>
-        <a href="ginseng.html" class="drawer-link" style="text-decoration: none; display: block; color: var(--accent-gold); font-weight: bold;">🌱 Ginseng Pull Odds</a>
+        <div class="drawer-section-title">🧮 Mini-Tools & Calculators</div>
+        <a href="ginseng.html" class="drawer-link" style="color: var(--accent-brown); font-weight: 700;">🌱 Ginseng Pull Odds</a>
 
         <!-- SINGLE CONSOLIDATED MATERIAL & ITEM INDEX -->
         <div class="drawer-section-title">📚 Material & Item Index</div>
-        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block; font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</a>
-        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🐰 Moon Kingdom Index</a>
-        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🪄 Magic Academy Index</a>
-        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🏺 Desert Oasis Index</a>
-        <a href="index.html" class="drawer-link" style="text-decoration: none; display: block;">🕯️ Gwidam Village Index</a>
+        <a href="index.html" class="drawer-link" style="font-weight: 700; color: var(--accent-brown);">⭐ PlayTogether Core Index</a>
+        <a href="index.html" class="drawer-link">🐰 Moon Kingdom Index</a>
+        <a href="index.html" class="drawer-link">🪄 Magic Academy Index</a>
+        <a href="index.html" class="drawer-link">🏺 Desert Oasis Index</a>
+        <a href="index.html" class="drawer-link">🕯️ Gwidam Village Index</a>
 
         <!-- EXTERNAL GAME RESOURCES -->
         <div class="drawer-section-title">🔗 Helpful PT Links</div>
-        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
-        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
-        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
+        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link">🎁 Coupon Redemption ↗</a>
+        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link">📖 PlayTogether Wiki ↗</a>
+        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link">📢 Official Patch Notes ↗</a>
 
         <!-- CREATOR & SOCIAL LINKS -->
         <div class="drawer-section-title">👤 My Stuff :D</div>
-        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
-        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
-        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
+        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link">🏡 Visit My PT House ↗</a>
+        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link">💻 GitHub Profile ↗</a>
+        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link">📸 Instagram ↗</a>
         <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
             <span>💬 Discord: Benni1433</span>
-            <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
+            <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: 700;">Copy</span>
         </div>
     </div>
 
@@ -426,7 +430,7 @@
                     <span class="stat-label">3 or More Ginsengs</span>
                     <span class="stat-val" id="prob3Plus">0.00%</span>
                 </div>
-                <div class="stat-row" style="border-top: 1px dashed rgba(229, 46, 61, 0.3); margin-top: 4px; padding-top: 12px;">
+                <div class="stat-row" style="border-top: 2px dashed rgba(217, 43, 56, 0.35); margin-top: 4px; padding-top: 12px; background: #FAF0E4;">
                     <span class="stat-label">0 Ginsengs (Whiff odds)</span>
                     <span class="stat-val" id="prob0" style="color: var(--accent-berry);">100.00%</span>
                 </div>
@@ -451,7 +455,7 @@
                     badge.innerText = "Copy";
                     badge.style.color = "var(--accent-gold)";
                 }, 2000);
-            }).catch(err => {
+            }).catch(() => {
                 alert("Discord Handle: Benni1433");
             });
         }
