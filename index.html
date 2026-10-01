@@ -5,23 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayTogether Workshop Companion</title>
     
-    <!-- GOOGLE FONTS: SNIGLET (PLAYFUL TITLE FONT) & COMFORTAA (ROUNDED BODY FONT) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Sniglet:wght@800&display=swap" rel="stylesheet">
+    <!-- GLOBAL FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* MOON KINGDOM PLAYFUL KEY ART PALETTE */
-            --bg-color: #120D1D;               /* Night Sky Midnight Violet */
-            --card-bg: #221A33;                /* Deep Moonlit Purple Card */
-            --accent-gold: #FCE77D;          /* Pastel Buttercup Yellow (Yellow Hood / Moons) */
-            --accent-purple: #9D7BFF;        /* Cute Lavender Violet (Purple Bunny) */
-            --accent-purple-glow: #8E44AD;   /* Deep Lavender Glow */
+            /* GIANT VEGGIE PALETTE */
+            --bg-color: #18120B;               /* Deep Earthy Soil */
+            --card-bg: #2A2016;                /* Rich Warm Dirt / Root Brown */
+            --accent-gold: #F3C044;            /* Vibrant Veggie Glow Yellow */
+            --accent-green: #5CB85C;           /* Leafy Broccoli Green */
+            --accent-green-glow: #4B934B;      /* Deep Green Glow */
             --text-light: #F4F4F5;
-            --accent-blue: #73D7FF;          /* Soft Sky Aqua Blue (Roof / Trim Accents) */
-            --accent-pet: #FFA8E0;           /* Soft Bubblegum Pink (Rabbit Ears & Cheeks) */
-            --accent-crop: #FFBE76;          /* Carrot Orange / Golden Wheat */
+            --accent-blue: #48C9B0;            /* Bright Water/Sprout Cyan */
+            --accent-pet: #E2A970;             /* Cowboy Leather / Earthy Beige */
+            --accent-crop: #E65100;            /* Giant Carrot Orange */
             --border-radius: 14px;
             --bar-height: 60px;
         }
@@ -36,26 +34,27 @@
         }
 
         body {
-            font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            padding-bottom: calc(var(--bar-height) + 50px);
-        }
+			font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			background-color: var(--bg-color);
+			color: var(--text-light);
+			margin: 0;
+			padding: 0;
+			padding-bottom: calc(var(--bar-height) + 50px);
+		}
 
-        /* PLAYFUL MOON BUNNY TITLES */
-        h1, h2, h3, .hero-title, .drawer-title, .coming-soon-title, .archive-title {
-            font-family: 'Sniglet', cursive, sans-serif;
-            letter-spacing: 0.5px;
-        }
+		/* UNIFIED PERMANENT FONT FOR ALL TITLES & HEADINGS */
+		h1, h2, h3, .hero-title, .drawer-title, .coming-soon-title, .archive-title {
+			font-family: 'Comfortaa', cursive, sans-serif;
+			font-weight: 700;
+			letter-spacing: 0.5px;
+		}
 
         /* STICKY HEADER & EDGE-TO-EDGE NAV */
         .nav-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background-color: rgba(14, 11, 22, 0.95);
+            background-color: rgba(24, 18, 11, 0.95);
             backdrop-filter: blur(8px);
             border-bottom: 2px solid var(--accent-gold);
             display: flex;
@@ -77,7 +76,7 @@
 
         .home-btn {
             background-color: var(--accent-gold);
-            color: #0E0B16;
+            color: #18120B;
             border: none;
             padding: 6px 12px;
             border-radius: 20px;
@@ -119,7 +118,7 @@
 
         .tab-btn.active {
             background-color: var(--accent-gold);
-            color: #0E0B16;
+            color: #18120B;
         }
 
         .tab-content {
@@ -133,7 +132,7 @@
             display: block;
         }
 
-        /* PARALLAX HERO BANNER WITH FLEXIBLE OVERLAY CONTAINER */
+        /* PARALLAX HERO BANNER */
         .hero-banner-container {
             position: relative;
             width: 100%;
@@ -160,7 +159,7 @@
             left: 0;
             right: 0;
             top: 0;
-            background: linear-gradient(to bottom, rgba(14, 11, 22, 0.2) 0%, rgba(14, 11, 22, 0.95) 100%);
+            background: linear-gradient(to bottom, rgba(24, 18, 11, 0.2) 0%, rgba(24, 18, 11, 0.95) 100%);
             z-index: 2;
         }
 
@@ -189,9 +188,9 @@
             top: 12px;
             right: 12px;
             z-index: 10;
-            background: rgba(14, 11, 22, 0.85);
+            background: rgba(24, 18, 11, 0.85);
             backdrop-filter: blur(6px);
-            border: 1px solid var(--accent-purple);
+            border: 1px solid var(--accent-green);
             color: var(--accent-gold);
             font-size: 0.75rem;
             font-weight: 700;
@@ -206,7 +205,7 @@
             width: calc(100% - 32px);
             max-width: 860px;
             margin: 16px auto 0;
-            background: rgba(14, 11, 22, 0.82);
+            background: rgba(24, 18, 11, 0.82);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--accent-gold);
@@ -246,12 +245,12 @@
         /* 100% GOAL COMPLETED CELEBRATION EFFECTS */
         .summary-progress-card.goal-completed {
             border-color: #FFF;
-            box-shadow: 0 0 20px rgba(252, 231, 125, 0.8), inset 0 0 15px rgba(252, 231, 125, 0.3);
+            box-shadow: 0 0 20px rgba(243, 192, 68, 0.8), inset 0 0 15px rgba(243, 192, 68, 0.3);
             animation: cardGlowPulse 2s infinite alternate;
         }
 
         .summary-progress-card.goal-completed .progress-bar-fill {
-            background: linear-gradient(90deg, #FCE77D, #FFF, #FCE77D);
+            background: linear-gradient(90deg, #F3C044, #FFF, #F3C044);
             background-size: 200% 100%;
             animation: shimmerSweep 1.5s infinite linear;
         }
@@ -262,8 +261,8 @@
         }
 
         @keyframes cardGlowPulse {
-            0% { box-shadow: 0 0 12px rgba(252, 231, 125, 0.6); }
-            100% { box-shadow: 0 0 25px rgba(252, 231, 125, 1), 0 0 10px rgba(255, 255, 255, 0.8); }
+            0% { box-shadow: 0 0 12px rgba(243, 192, 68, 0.6); }
+            100% { box-shadow: 0 0 25px rgba(243, 192, 68, 1), 0 0 10px rgba(255, 255, 255, 0.8); }
         }
 
         @keyframes shimmerSweep {
@@ -286,7 +285,7 @@
 
         .stats-card {
             background: var(--card-bg);
-            border: 1px solid var(--accent-purple);
+            border: 1px solid var(--accent-green);
             border-radius: var(--border-radius);
             padding: 16px;
         }
@@ -295,7 +294,7 @@
             font-family: 'Sniglet', cursive, serif;
             color: var(--accent-gold);
             font-size: 1rem;
-            border-bottom: 1px solid rgba(252, 231, 125, 0.3);
+            border-bottom: 1px solid rgba(243, 192, 68, 0.3);
             padding-bottom: 8px;
             margin-bottom: 12px;
             display: flex;
@@ -406,21 +405,21 @@
         }
 
         .drawer-link:hover {
-            background: rgba(252, 231, 125, 0.15);
+            background: rgba(243, 192, 68, 0.15);
             color: var(--accent-gold);
         }
 
         /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
-        .sub-btn { background-color: var(--bg-color); color: #8e839e; border: 2px solid var(--accent-purple); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
-        .sub-btn.active-furniture { background-color: rgba(155, 89, 182, 0.25); color: var(--accent-gold); border-color: var(--accent-purple); }
-        .sub-btn.active-pets { background-color: rgba(243, 166, 131, 0.15); color: var(--accent-pet); border-color: var(--accent-pet); }
+        .sub-btn { background-color: var(--bg-color); color: #A0988E; border: 2px solid var(--accent-green); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
+        .sub-btn.active-furniture { background-color: rgba(92, 184, 92, 0.25); color: var(--accent-gold); border-color: var(--accent-green); }
+        .sub-btn.active-pets { background-color: rgba(226, 169, 112, 0.2); color: var(--accent-pet); border-color: var(--accent-pet); }
 
         .furniture-grid, .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-        .item-card, .glossary-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 14px; border: 1px solid #333; transition: border-color 0.2s ease; }
+        .item-card, .glossary-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 14px; border: 1px solid #443525; transition: border-color 0.2s ease; }
         .item-card { display: flex; flex-direction: column; justify-content: space-between; }
-        .item-card.pet-card { border: 1px solid rgba(243, 166, 131, 0.4); }
-        .item-card.crop-card { border: 1px solid rgba(247, 215, 148, 0.6); }
+        .item-card.pet-card { border: 1px solid rgba(226, 169, 112, 0.5); }
+        .item-card.crop-card { border: 1px solid rgba(230, 81, 0, 0.7); }
 
         .card-img-container { text-align: center; margin-bottom: 12px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 8px; }
         .item-preview-img { max-width: 100%; height: 100px; object-fit: contain; }
@@ -431,12 +430,14 @@
         .pet-card .item-name { color: var(--accent-pet); }
         .crop-card .item-name { color: var(--accent-crop); }
         .item-time, .glossary-sub { font-size: 0.8rem; color: var(--accent-blue); margin-bottom: 8px; }
-        .item-mats, .glossary-source { font-size: 0.75rem; color: #bfaecf; margin-bottom: 12px; line-height: 1.3; }
-        .glossary-source { background: rgba(252, 231, 125, 0.15); color: var(--text-light); padding: 4px 8px; border-radius: 4px; display: inline-block; }
+        
+        /* SPACING & BREAKING FIX FOR MATERIAL QUANTITIES */
+        .item-mats, .glossary-source { font-size: 0.75rem; color: #d0c4b4; margin-bottom: 12px; line-height: 1.5; word-break: break-word; }
+        .glossary-source { background: rgba(243, 192, 68, 0.15); color: var(--text-light); padding: 4px 8px; border-radius: 4px; display: inline-block; }
         .glossary-lore { font-size: 0.8rem; color: #CCCCCC; font-style: italic; margin-bottom: 10px; line-height: 1.35; }
 
         .controls { display: flex; align-items: center; justify-content: space-between; background: var(--bg-color); border-radius: 8px; padding: 4px; }
-        .btn { background: var(--accent-purple); color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+        .btn { background: var(--accent-green); color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .qty-input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; font-family: 'Comfortaa', sans-serif; }
         
         .qty-input::-webkit-outer-spin-button,
@@ -453,7 +454,7 @@
         .reset-page-btn:hover { background: rgba(217, 83, 79, 0.1); border-color: #d9534f; }
 
         /* CHECKLIST & RESPONSIVE QUEUE GRID */
-        .checklist-section { margin-bottom: 24px; background: rgba(27, 21, 40, 0.4); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(155, 89, 182, 0.4); }
+        .checklist-section { margin-bottom: 24px; background: rgba(30, 22, 14, 0.5); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(92, 184, 92, 0.4); }
         .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
         .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
         .checklist-section.collapsed .checklist-header::after { transform: rotate(-90deg); }
@@ -485,17 +486,17 @@
             padding: 10px 14px; 
             margin-bottom: 0; 
             border-radius: 8px; 
-            border: 1px solid #333; 
+            border: 1px solid #443525; 
             cursor: pointer; 
             transition: all 0.2s ease; 
             user-select: none; 
         }
-        .check-item:hover { background: #221a30; }
-        .check-item.completed { background: rgba(27, 21, 40, 0.6); border-color: rgba(252, 231, 125, 0.2); }
-        .check-item.completed .check-text { text-decoration: line-through; color: #8e839e; }
+        .check-item:hover { background: #35291C; }
+        .check-item.completed { background: rgba(30, 22, 14, 0.7); border-color: rgba(243, 192, 68, 0.2); }
+        .check-item.completed .check-text { text-decoration: line-through; color: #8A7E72; }
 
-        .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-purple); border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
-        .check-item.completed .checkbox { background: var(--accent-purple); border-color: var(--accent-purple); }
+        .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-green); border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
+        .check-item.completed .checkbox { background: var(--accent-green); border-color: var(--accent-green); }
         .check-item.completed .checkbox::after { content: "✓"; color: #FFFFFF; font-weight: bold; font-size: 1rem; }
         .check-text { font-size: 0.9rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; line-height: 1.2; }
 
@@ -504,7 +505,7 @@
             height: 32px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1.5px solid var(--accent-purple);
+            border: 1.5px solid var(--accent-green);
             background-color: #ffffff;
             margin-left: 10px;
             flex-shrink: 0;
@@ -515,16 +516,16 @@
             border-color: var(--accent-pet);
         }
 
-        .empty-state { text-align: center; color: #8e839e; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-purple); }
+        .empty-state { text-align: center; color: #A0988E; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-green); }
 
-        /* BOTTOM SHEET (WITH PWA BEZEL CLEARANCE FIX) */
+        /* BOTTOM SHEET */
         .bottom-sheet { 
             position: fixed; 
             bottom: 0; 
             left: 0; 
             right: 0; 
-            background-color: #110e1a; 
-            border-top: 2px solid var(--accent-purple); 
+            background-color: #120D08; 
+            border-top: 2px solid var(--accent-green); 
             border-top-left-radius: 16px; 
             border-top-right-radius: 16px; 
             box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.8); 
@@ -535,16 +536,16 @@
         }
         .bottom-sheet.open { transform: translateY(0); }
         .sheet-header { height: var(--bar-height); padding: 8px 16px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; user-select: none; }
-        .drag-handle { width: 36px; height: 4px; background-color: #333; border-radius: 2px; margin: 0 auto 6px; }
+        .drag-handle { width: 36px; height: 4px; background-color: #443525; border-radius: 2px; margin: 0 auto 6px; }
         .summary-bar-content { display: flex; justify-content: space-between; align-items: center; }
         .time-badge { font-size: 0.85rem; color: var(--accent-blue); font-weight: bold; }
         .toggle-btn { font-size: 0.8rem; color: var(--accent-gold); font-weight: bold; }
         .sheet-body { padding: 0 16px 20px; max-height: 50vh; overflow-y: auto; }
-        .sheet-action-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; }
+        .sheet-action-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #33271B; padding-bottom: 8px; margin-bottom: 12px; }
         .sheet-title { font-size: 0.85rem; font-weight: bold; color: var(--text-light); }
         .materials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .mat-tile { background-color: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
-        .tile-title { font-size: 0.75rem; color: #bfaecf; }
+        .mat-tile { background-color: var(--card-bg); border: 1px solid #443525; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
+        .tile-title { font-size: 0.75rem; color: #d0c4b4; }
         .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
 
         /* GALLERY & BORDER STYLES */
@@ -570,9 +571,9 @@
             .summary-progress-card { margin: 12px auto 0; width: calc(100% - 20px); padding: 10px; }
         }
 
-        .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(155, 89, 182, 0.8) !important; }
-        .pet-card .item-preview-img, .glossary-card[style*="243, 166, 131"] .index-preview-img { border: 2px solid rgba(243, 166, 131, 0.8) !important; }
-        .crop-card .item-preview-img { border: 2px solid rgba(247, 215, 148, 0.9) !important; }
+        .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(92, 184, 92, 0.8) !important; }
+        .pet-card .item-preview-img, .glossary-card[style*="226, 169, 112"] .index-preview-img { border: 2px solid rgba(226, 169, 112, 0.8) !important; }
+        .crop-card .item-preview-img { border: 2px solid rgba(230, 81, 0, 0.9) !important; }
     </style>
 </head>
 <body>
@@ -587,7 +588,7 @@
             <button class="tab-btn" id="navCalc" onclick="switchTab('calculatorTab', this)">Calculator</button>
             <button class="tab-btn" id="navChecklist" onclick="switchTab('checklistTab', this)">Active Checklist</button>
             <button class="tab-btn" id="navStats" onclick="switchTab('statsTab', this)">Lifetime Stats</button>
-            <button class="tab-btn" onclick="loadActiveEventIndex()">Moon Kingdom Catalog</button>
+            <button class="tab-btn" onclick="loadActiveEventIndex()">Giant Veggie Catalog</button>
         </div>
     </div>
 
@@ -606,7 +607,8 @@
         <!-- SINGLE CONSOLIDATED MATERIAL & ITEM INDEX -->
         <div class="drawer-section-title">📚 Material & Item Index</div>
         <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
-        <div class="drawer-link" onclick="loadActiveEventIndex()">🐰 Moon Kingdom Index</div>
+        <div class="drawer-link" onclick="loadActiveEventIndex()">🥕 Giant Veggie Index</div>
+        <div class="drawer-link" onclick="loadMoonKingdomIndex()">🐰 Moon Kingdom Index</div>
         <div class="drawer-link" onclick="loadMagicAcademyIndex()">🪄 Magic Academy Index</div>
         <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
         <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
@@ -630,12 +632,12 @@
 
     <div id="activeEventContainer">
         <div class="hero-banner-container" id="heroBanner">
-            <div class="event-timer-badge" id="eventTimerBadge">⏳ Maintenance End...</div>
-            <img src="Images/MoonKingdom/Moon Kingdom Key Art.jpg" alt="Moon Kingdom Key Art" class="hero-img">
+            <div class="event-timer-badge" id="eventTimerBadge">⏳ Event Schedule...</div>
+            <img src="Images/GiantVeggie/GiantVeggie.png" alt="Giant Veggie Key Art" class="hero-img">
             <div class="hero-fade-overlay"></div>
             
             <div class="hero-content-wrapper">
-                <h1 class="hero-title">Moon Kingdom</h1>
+                <h1 class="hero-title">Giant Veggie</h1>
                 <!-- HERO HUD PROGRESS OVERLAY CONTAINER -->
                 <div id="heroProgressOverlay" style="width: 100%;"></div>
             </div>
@@ -665,7 +667,7 @@
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
                 <div class="summary-bar-content">
-                    <span class="time-badge" id="totalTimeDisplay">⏱️ 0m | 0 Items</span>
+                    <span class="time-badge" id="totalTimeDisplay">⏱️️ 0m | 0 Items</span>
                     <span class="toggle-btn" id="toggleLabel">Materials ▲</span>
                 </div>
             </div>
@@ -695,14 +697,15 @@
     <script src="js/desert_oasis_data.js"></script>
     <script src="js/magic_academy_data.js"></script>
     <script src="js/moon_kingdom_data.js"></script>
+    <script src="js/giant_veggie_data.js"></script>
 
 <script>
 /* =====================================================================
-   ACTIVE EVENT DATA BINDINGS (Default Moon Kingdom Data Array)
+   ACTIVE EVENT DATA BINDINGS (Default Giant Veggie Data Array)
    ===================================================================== */
-let items = typeof moonKingdomItems !== 'undefined' ? moonKingdomItems : [];
-let pets = typeof moonKingdomPets !== 'undefined' ? moonKingdomPets : [];
-let glossary = typeof moonKingdomGlossary !== 'undefined' ? moonKingdomGlossary : [];
+let items = typeof giantVeggieItems !== 'undefined' ? giantVeggieItems : [];
+let pets = typeof giantVeggiePets !== 'undefined' ? giantVeggiePets : [];
+let glossary = typeof giantVeggieGlossary !== 'undefined' ? giantVeggieGlossary : [];
 
 // Definition of Net-Caught Critters
 const NET_CAUGHT_CRITTERS = [
@@ -723,7 +726,7 @@ function launchConfetti() {
     canvas.height = window.innerHeight;
 
     const pieces = [];
-    const colors = ['#FCE77D', '#9B59B6', '#70A1FF', '#F3A683', '#FFFFFF', '#F7D794'];
+    const colors = ['#F3C044', '#5CB85C', '#E65100', '#E2A970', '#FFFFFF', '#48C9B0'];
 
     for (let i = 0; i < 120; i++) {
         pieces.push({
@@ -769,9 +772,9 @@ function launchConfetti() {
 }
 
 /* =====================================================================
-   EVENT COUNTDOWN TIMER (FULL TIME: DAYS, HOURS, MINS TO SEPT 30 UTC)
+   EVENT COUNTDOWN TIMER (DAYS, HOURS, MINS TO OCT 14 23:59 UTC)
    ===================================================================== */
-const EVENT_END_UTC = new Date(Date.UTC(2026, 8, 30, 23, 59, 59)); 
+const EVENT_END_UTC = new Date(Date.UTC(2026, 9, 14, 23, 59, 59)); 
 
 function updateEventCountdown() {
     const now = new Date();
@@ -789,9 +792,9 @@ function updateEventCountdown() {
     const mins = Math.floor((diff / 1000 / 60) % 60);
 
     if (days > 0) {
-        timerElement.innerText = `⏳ ${days}d ${hours}h${mins}m left`;
+        timerElement.innerText = `⏳ ${days}d ${hours}h ${mins}m left`;
     } else {
-        timerElement.innerText = `⏳ ${hours}h${mins}m left`;
+        timerElement.innerText = `⏳ ${hours}h ${mins}m left`;
     }
 }
 
@@ -807,10 +810,10 @@ let currentCategory = 'furniture';
 
 function loadSavedData() {
     try {
-        const savedQuantities = localStorage.getItem("moon_kingdom_quantities");
+        const savedQuantities = localStorage.getItem("giant_veggie_quantities");
         if (savedQuantities) quantities = JSON.parse(savedQuantities);
         
-        const savedCompleted = localStorage.getItem("moon_kingdom_completed");
+        const savedCompleted = localStorage.getItem("giant_veggie_completed");
         if (savedCompleted) completedCrafts = JSON.parse(savedCompleted);
 
         renderChecklist();
@@ -830,11 +833,11 @@ function loadSavedData() {
 }
 
 function saveQuantities() {
-    try { localStorage.setItem("moon_kingdom_quantities", JSON.stringify(quantities)); } catch (e) {}
+    try { localStorage.setItem("giant_veggie_quantities", JSON.stringify(quantities)); } catch (e) {}
 }
 
 function saveCompleted() {
-    try { localStorage.setItem("moon_kingdom_completed", JSON.stringify(completedCrafts)); } catch (e) {}
+    try { localStorage.setItem("giant_veggie_completed", JSON.stringify(completedCrafts)); } catch (e) {}
 }
 
 /* =====================================================================
@@ -937,8 +940,7 @@ function toggleSheet() {
 function formatTime(minutes) {
     const hrs = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    if (hrs === 0) return `${mins}m`;
-    if (mins === 0) return `${hrs}h`;
+    if (hrs === 0) return `${mins}m`;     if (mins === 0) return `${hrs}h`;
     return `${hrs}h${mins}m`;
 }
 
@@ -966,13 +968,15 @@ function renderGrid() {
     const activeItems = currentCategory === 'furniture' ? items : pets;
 
     if (activeItems.length === 0) {
-        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Maintenance underway! Item details will be added as soon as the Moon Kingdom opens.</div>`;
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Maintenance underway! Item details will be added as soon as the Giant Veggie workshop opens.</div>`;
         return;
     }
 
     activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count}${mat}`).join(", ");
+        
+        // FORMATTING FIX: Explicit space between quantity and material name
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
         
         let cardClass = "item-card";
@@ -1097,7 +1101,7 @@ function renderChecklist() {
 
     let html = ``;
 
-    // 1. Furniture Queue
+    // 1. Workshop Queue
     let activeFurnitureHtml = ``;
     let activeFurnitureCount = 0;
 
@@ -1117,7 +1121,7 @@ function renderChecklist() {
     if (activeFurnitureCount > 0) {
         html += `<div class="checklist-section">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span>🔨 Moon Kingdom Workshop</span>
+                        <span>🔨 Giant Veggie Workshop</span>
                     </div>
                     <div class="checklist-queue-grid">
                         ${activeFurnitureHtml}
@@ -1176,7 +1180,7 @@ function renderChecklist() {
     });
 
     if (totalCompletedCount > 0) {
-        html += `<div class="checklist-section" style="border-color: rgba(252, 231, 125, 0.3);">
+        html += `<div class="checklist-section" style="border-color: rgba(243, 192, 68, 0.3);">
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🎉 Completed Crafts (${totalCompletedCount})</span>
                     </div>
@@ -1413,10 +1417,10 @@ function calculateTotals() {
             
             if (m.category === "Mega Mart") {
                 badge = "Mart";
-                badgeColor = "var(--accent-purple)";
+                badgeColor = "var(--accent-green)";
             } else if (m.category === "Furniture Shop") {
                 badge = "Shop";
-                badgeColor = "var(--accent-purple)";
+                badgeColor = "var(--accent-green)";
             } else if (m.category === "Mining") {
                 badge = "Mine";
                 badgeColor = "#A0A0A0";
@@ -1466,7 +1470,7 @@ function calculateParallelTime(durations, maxSlots) {
    INDEX & ARCHIVE LOADERS
    ===================================================================== */
 function loadActiveEventIndex() {
-    showArchiveView("Moon Kingdom Catalog & Lore");
+    showArchiveView("Giant Veggie Catalog & Lore");
     const grid = document.getElementById('archiveGrid');
     grid.innerHTML = "";
 
@@ -1485,7 +1489,7 @@ function loadActiveEventIndex() {
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
         card.className = "glossary-card";
-        if (item.type === 'crop') card.style.borderColor = "rgba(247, 215, 148, 0.8)";
+        if (item.type === 'crop') card.style.borderColor = "rgba(230, 81, 0, 0.8)";
         card.innerHTML = `
             ${imgHtml}
             <div class="glossary-title" ${item.type === 'crop' ? 'style="color: var(--accent-crop);"' : ''}>${item.name}</div>
@@ -1506,7 +1510,7 @@ function loadActiveEventIndex() {
         const imgHtml = pet.image ? `<div class="card-img-container"><img src="${pet.image}" alt="${pet.name}" class="index-preview-img"></div>` : '';
         const card = document.createElement("div");
         card.className = "glossary-card";
-        card.style.borderColor = "rgba(243, 166, 131, 0.4)";
+        card.style.borderColor = "rgba(226, 169, 112, 0.5)";
         card.innerHTML = `
             ${imgHtml}
             <div class="glossary-title" style="color: var(--accent-pet);">${pet.name}</div>
@@ -1517,7 +1521,6 @@ function loadActiveEventIndex() {
         grid.appendChild(card);
     });
 
-    // RESTORED: EVENT MATERIALS GLOSSARY SECTION
     if (glossary && glossary.length > 0) {
         const materialsHeader = document.createElement("h2");
         materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
@@ -1537,6 +1540,32 @@ function loadActiveEventIndex() {
             grid.appendChild(card);
         });
     }
+}
+
+function loadMoonKingdomIndex() {
+    showArchiveView("Moon Kingdom Catalog & Lore");
+    const grid = document.getElementById('archiveGrid');
+    grid.innerHTML = "";
+
+    if (typeof moonKingdomItems === 'undefined') {
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/moon_kingdom_data.js data not found!</div>';
+        return;
+    }
+
+    moonKingdomItems.forEach(item => {
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
+            <div class="glossary-lore">"${item.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        grid.appendChild(card);
+    });
 }
 
 function loadMagicAcademyIndex() {
