@@ -13,6 +13,7 @@ const coreGlossary = [
     // --- MINING ---
     { name: "Stone", source: "Mine", lore: "You can craft a variety of things with this. It's used to craft items." },
     { name: "Iron Ore", source: "Mine", lore: "It's great for crafting sturdy items!" },
+    { name: "Copper Ore", source: "Mine", lore: "It conducts electricity very well! It's used to craft items." },
     { name: "Silver Ore", source: "Mine", lore: "That's one sparkling ore! It's used to craft items." },
     { name: "Gold Ore", source: "Mine", lore: "It's gold! It's shiny! It's great! It's used to craft items." },
 
