@@ -904,10 +904,11 @@ function switchTab(tabId, btn) {
         if (tabId === 'calculatorTab') document.getElementById('navCalc').classList.add('active');
     }
 
+    // Explicitly toggle hero progress bar based on Checklist tab being active
     const heroOverlay = document.getElementById("heroProgressOverlay");
     if (tabId === 'checklistTab') {
         renderChecklist();
-        renderHeroBannerOverlay();
+        renderHeroBannerOverlay(); 
     } else if (heroOverlay) {
         heroOverlay.innerHTML = '';
     }
@@ -968,9 +969,11 @@ function getCategoryForMaterial(matName) {
     const categories = {
         "Mega Mart": ["Water", "Cheese", "Lettuce", "Onion", "Salt", "Turkey Meat"],
         "Furniture Shop": ["Glass Greenhouse Cube", "Bright Grass Cube"],
-        "Mining": ["Iron Ore", "Silver Ore", "Gold Ore", "Stone"],
+        "Mining": ["Iron Ore", "Silver Ore", "Gold Ore", "Copper Ore", "Stone"],
         "Gathering & Spawns": ["Tree Branch", "Eurasian Tree Sparrow"],
-        "Pet Paradise": ["Normal Egg", "Premium Egg"]
+        "Pet Paradise": ["Normal Egg", "Premium Egg"],
+        "Cooking": ["Broccoli Soup", "Tomato Stew"],
+        "Farming": ["Saguaro Cactus"]
     };
 
     for (const [category, itemsList] of Object.entries(categories)) {
@@ -992,7 +995,7 @@ function renderGrid() {
 
     activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count}${mat}`).join(", ");
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
         
         let cardClass = "item-card";
@@ -1055,34 +1058,42 @@ function renderHeroBannerOverlay() {
     const heroOverlay = document.getElementById("heroProgressOverlay");
     if (!heroOverlay) return;
 
-    let activeFurnitureCount = 0;
-    let completedFurnitureCount = 0;
+    // Prevent re-rendering onto another tab if it's currently hidden
+    const checklistTab = document.getElementById('checklistTab');
+    if (!checklistTab || !checklistTab.classList.contains('active')) {
+        heroOverlay.innerHTML = '';
+        return;
+    }
 
-    items.forEach(item => {
-        activeFurnitureCount += (quantities[item.id] || 0);
-        completedFurnitureCount += (completedCrafts[item.id] || 0);
+    let activeCount = 0;
+    let completedCount = 0;
+
+    const allCraftables = [...items, ...pets];
+    allCraftables.forEach(item => {
+        activeCount += (quantities[item.id] || 0);
+        completedCount += (completedCrafts[item.id] || 0);
     });
 
-    const totalFurniture = activeFurnitureCount + completedFurnitureCount;
-    const furniturePercent = totalFurniture > 0 ? Math.round((completedFurnitureCount / totalFurniture) * 100) : 0;
-    const isGoalComplete = (furniturePercent === 100 && totalFurniture > 0);
+    const totalItems = activeCount + completedCount;
+    const progressPercent = totalItems > 0 ? Math.round((completedCount / totalItems) * 100) : 0;
+    const isGoalComplete = (progressPercent === 100 && totalItems > 0);
 
     if (isGoalComplete && !hasCelebratedCompletion) {
         hasCelebratedCompletion = true;
         launchConfetti();
-    } else if (furniturePercent < 100) {
+    } else if (progressPercent < 100) {
         hasCelebratedCompletion = false;
     }
 
-    if (totalFurniture > 0) {
+    if (totalItems > 0) {
         heroOverlay.innerHTML = `
             <div class="summary-progress-card ${isGoalComplete ? 'goal-completed' : ''}">
                 <div class="progress-card-title">
                     <span><span class="trophy-icon">🏆</span> Progress</span>
-                    <span>${isGoalComplete ? '🎉 100% COMPLETE!' : `${furniturePercent}% (${completedFurnitureCount}/${totalFurniture} Crafted)`}</span>
+                    <span>${isGoalComplete ? '🎉 100% COMPLETE!' : `${progressPercent}% (${completedCount}/${totalItems} Crafted)`}</span>
                 </div>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: ${furniturePercent}%;"></div>
+                    <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
                 </div>
             </div>`;
     } else {
@@ -1285,7 +1296,7 @@ function calculateTotals() {
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
-    const categoryOrder = { "Event Materials": 1, "Gathering & Spawns": 2, "Mining": 3, "Mega Mart": 4, "Furniture Shop": 5, "Pet Paradise": 6 };
+    const categoryOrder = { "Event Materials": 1, "Gathering & Spawns": 2, "Mining": 3, "Mega Mart": 4, "Cooking": 5, "Farming": 6, "Furniture Shop": 7, "Pet Paradise": 8 };
 
     const activeMats = Object.entries(matTotals)
         .filter(([_, count]) => count > 0)
@@ -1301,7 +1312,9 @@ function calculateTotals() {
                 "Furniture Shop": { text: "Shop", color: "var(--accent-green)" },
                 "Mining": { text: "Mine", color: "#A0A0A0" },
                 "Gathering & Spawns": { text: "Gather", color: "var(--accent-blue)" },
-                "Pet Paradise": { text: "Pet", color: "var(--accent-pet)" }
+                "Pet Paradise": { text: "Pet", color: "var(--accent-pet)" },
+                "Cooking": { text: "Cook", color: "#E65100" },
+                "Farming": { text: "Farm", color: "var(--accent-crop)" }
             };
             const badgeStyle = badgeMap[m.category] || { text: "Event", color: "var(--accent-gold)" };
 
