@@ -4,32 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayTogether Workshop Companion</title>
-	
-	<!-- Custom Home Screen Title for iOS -->
-	<meta name="apple-mobile-web-app-title" content="PT Workshop">
-	<meta name="application-name" content="PT Workshop">
-	
-	<!-- iOS Home Screen App Icon -->
-	<link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-	<!-- Desktop Web Favicon -->
-	<link rel="icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
     
-    <!-- GLOBAL FONT -->
+    <meta name="apple-mobile-web-app-title" content="PT Workshop">
+    <meta name="application-name" content="PT Workshop">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* GIANT VEGGIE PALETTE */
-            --bg-color: #18120B;               /* Deep Earthy Soil */
-            --card-bg: #2A2016;                /* Rich Warm Dirt / Root Brown */
-            --accent-gold: #F3C044;            /* Vibrant Veggie Glow Yellow */
-            --accent-green: #5CB85C;           /* Leafy Broccoli Green */
-            --accent-green-glow: #4B934B;      /* Deep Green Glow */
+            --bg-color: #18120B;               
+            --card-bg: #2A2016;                
+            --accent-gold: #F3C044;            
+            --accent-green: #5CB85C;           
+            --accent-green-glow: #4B934B;      
             --text-light: #F4F4F5;
-            --accent-blue: #48C9B0;            /* Bright Water/Sprout Cyan */
-            --accent-pet: #E2A970;             /* Cowboy Leather / Earthy Beige */
-            --accent-crop: #E65100;            /* Giant Carrot Orange */
+            --accent-blue: #48C9B0;            
+            --accent-pet: #E2A970;             
+            --accent-crop: #E65100;            
             --border-radius: 14px;
             --bar-height: 60px;
         }
@@ -38,28 +31,25 @@
             box-sizing: border-box;
         }
 
-        /* PREVENT MOBILE DOUBLE-TAP ZOOM */
         button, .btn, .check-item, input, .tab-btn, .sub-btn, .drawer-link {
             touch-action: manipulation;
         }
 
         body {
-			font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-			background-color: var(--bg-color);
-			color: var(--text-light);
-			margin: 0;
-			padding: 0;
-			padding-bottom: calc(var(--bar-height) + 50px);
-		}
+            font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            padding-bottom: calc(var(--bar-height) + 50px);
+        }
 
-		/* UNIFIED PERMANENT FONT FOR ALL TITLES & HEADINGS */
-		h1, h2, h3, .drawer-title, .coming-soon-title, .archive-title {
-			font-family: 'Comfortaa', cursive, sans-serif;
-			font-weight: 700;
-			letter-spacing: 0.5px;
-		}
+        h1, h2, h3, .drawer-title, .coming-soon-title, .archive-title {
+            font-family: 'Comfortaa', cursive, sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
 
-        /* STICKY HEADER & EDGE-TO-EDGE NAV */
         .nav-header {
             position: sticky;
             top: 0;
@@ -142,7 +132,6 @@
             display: block;
         }
 
-        /* PARALLAX HERO BANNER */
         .hero-banner-container {
             position: relative;
             width: 100%;
@@ -174,42 +163,41 @@
         }
 
         .hero-content-wrapper {
-			position: relative;
-			z-index: 3;
-			padding: 16px 16px 12px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			width: 100%;
-		}
-		
-		.hero-header-row {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-			max-width: 860px;
+            position: relative;
+            z-index: 3;
+            padding: 16px 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .hero-header-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 860px;
             margin-bottom: 8px;
-		}
+        }
 
         .event-timer-badge {
-			position: relative;
-			z-index: 10;
-			background: rgba(24, 18, 11, 0.85);
-			backdrop-filter: blur(6px);
+            position: relative;
+            z-index: 10;
+            background: rgba(24, 18, 11, 0.85);
+            backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-			border: 1px solid var(--accent-green);
-			color: var(--accent-gold);
-			font-size: 0.8rem;
-			font-weight: 700;
-			padding: 6px 16px;
-			border-radius: 20px;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-			white-space: nowrap;
-			text-align: center;
-		}
+            border: 1px solid var(--accent-green);
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            white-space: nowrap;
+            text-align: center;
+        }
 
-        /* PROGRESS SUMMARY CARD */
         .summary-progress-card {
             width: calc(100% - 32px);
             max-width: 860px;
@@ -251,7 +239,6 @@
             transition: width 0.4s ease;
         }
 
-        /* 100% GOAL COMPLETED CELEBRATION EFFECTS */
         .summary-progress-card.goal-completed {
             border-color: #FFF;
             box-shadow: 0 0 20px rgba(243, 192, 68, 0.8), inset 0 0 15px rgba(243, 192, 68, 0.3);
@@ -284,7 +271,6 @@
             100% { transform: translateY(-4px) scale(1.2); }
         }
 
-        /* LIFETIME STATS PAGE STYLING */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -332,7 +318,6 @@
             color: var(--text-light);
         }
 
-        /* SLIDE-OUT DRAWER WITH VERTICAL SCROLLING */
         .drawer-overlay {
             position: fixed;
             top: 0;
@@ -411,6 +396,8 @@
             font-size: 0.9rem;
             margin-bottom: 4px;
             transition: background 0.2s;
+            text-decoration: none;
+            display: block;
         }
 
         .drawer-link:hover {
@@ -418,7 +405,6 @@
             color: var(--accent-gold);
         }
 
-        /* ENGINE STYLING */
         .sub-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .sub-btn { background-color: var(--bg-color); color: #A0988E; border: 2px solid var(--accent-green); padding: 6px 16px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
         .sub-btn.active-furniture { background-color: rgba(92, 184, 92, 0.25); color: var(--accent-gold); border-color: var(--accent-green); }
@@ -461,13 +447,12 @@
         .reset-page-btn { display: block; width: 100%; padding: 12px; background: transparent; color: #d9534f; font-weight: bold; font-size: 0.85rem; text-align: center; border: 1px dashed rgba(217, 83, 79, 0.4); border-radius: var(--border-radius); cursor: pointer; margin-top: 24px; transition: all 0.2s ease; font-family: 'Comfortaa', sans-serif; }
         .reset-page-btn:hover { background: rgba(217, 83, 79, 0.1); border-color: #d9534f; }
 
-        /* CHECKLIST & RESPONSIVE QUEUE GRID */
         .checklist-section { margin-bottom: 24px; background: rgba(30, 22, 14, 0.5); padding: 12px; border-radius: var(--border-radius); border: 1px solid rgba(92, 184, 92, 0.4); }
         .checklist-header { color: var(--accent-gold); padding-bottom: 8px; margin-bottom: 12px; font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
         .checklist-header::after { content: "▼"; font-size: 0.8rem; color: var(--accent-gold); transition: transform 0.2s ease; }
         .checklist-section.collapsed .checklist-header::after { transform: rotate(-90deg); }
         .checklist-section.collapsed .check-item, 
-        .checklist-section.collapsed .checklist-queue-grid { display: none !important; }
+        .checklist-section.collapsed .checklist-queue-grid { display: none; }
 
         .checklist-queue-grid {
             display: grid;
@@ -476,15 +461,10 @@
         }
 
         @media (min-width: 650px) {
-            .checklist-queue-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .checklist-queue-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media (min-width: 900px) {
-            .checklist-queue-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .checklist-queue-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         .check-item { 
@@ -520,13 +500,9 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.4);
         }
 
-        .pet-card-thumb {
-            border-color: var(--accent-pet);
-        }
-
+        .pet-card-thumb { border-color: var(--accent-pet); }
         .empty-state { text-align: center; color: #A0988E; padding: 40px 20px; font-style: italic; background: var(--card-bg); border-radius: var(--border-radius); border: 1px dashed var(--accent-green); }
 
-        /* BOTTOM SHEET */
         .bottom-sheet { 
             position: fixed; 
             bottom: 0; 
@@ -556,19 +532,17 @@
         .tile-title { font-size: 0.75rem; color: #d0c4b4; }
         .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
 
-        /* GALLERY & BORDER STYLES */
-        .card-img-container { padding: 0 !important; margin-bottom: 8px !important; background: transparent !important; }
         .index-preview-img, .item-preview-img { border-radius: 10px; background-color: #ffffff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5); box-sizing: border-box; display: block; margin: 0 auto; }
         .item-preview-img { width: 100%; max-width: 160px; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
         .index-preview-img { width: 100%; max-width: 220px; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
 
         @media (max-width: 600px) {
             .tab-content { padding: 10px 8px; }
-            .furniture-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
-            .index-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-            .glossary-card { padding: 14px !important; }
-            .index-preview-img { max-width: 100% !important; height: 200px !important; object-fit: contain; }
-            .item-preview-img { max-width: 100% !important; height: 110px !important; object-fit: contain; }
+            .furniture-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .index-grid { grid-template-columns: 1fr; gap: 16px; }
+            .glossary-card { padding: 14px; }
+            .index-preview-img { max-width: 100%; height: 200px; object-fit: contain; }
+            .item-preview-img { max-width: 100%; height: 110px; object-fit: contain; }
             .furniture-grid .item-name { font-size: 0.85rem; }
             .furniture-grid .item-time { font-size: 0.75rem; }
             .furniture-grid .item-mats { font-size: 0.7rem; }
@@ -577,16 +551,17 @@
             .qty-input { width: 28px; font-size: 0.9rem; }
             .event-timer-badge { font-size: 0.75rem; padding: 5px 12px; }
             .summary-progress-card { margin: 8px auto 0; width: calc(100% - 20px); padding: 10px; }
+            
+            /* Specific resets for mobile gallery */
+            .card-img-container { padding: 0; margin-bottom: 8px; background: transparent; }
+            .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(92, 184, 92, 0.8); }
+            .pet-card .item-preview-img, .glossary-card[style*="226, 169, 112"] .index-preview-img { border: 2px solid rgba(226, 169, 112, 0.8); }
+            .crop-card .item-preview-img { border: 2px solid rgba(230, 81, 0, 0.9); }
         }
-
-        .item-card .item-preview-img, .glossary-card .index-preview-img { border: 2px solid rgba(92, 184, 92, 0.8) !important; }
-        .pet-card .item-preview-img, .glossary-card[style*="226, 169, 112"] .index-preview-img { border: 2px solid rgba(226, 169, 112, 0.8) !important; }
-        .crop-card .item-preview-img { border: 2px solid rgba(230, 81, 0, 0.9) !important; }
     </style>
 </head>
 <body>
 
-    <!-- CONFETTI CANVAS OVERLAY -->
     <canvas id="confettiCanvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></canvas>
 
     <div class="nav-header">
@@ -600,7 +575,7 @@
         </div>
     </div>
 
-    <!-- SLIDE-OUT HAMBURGER DRAWER -->
+    <!-- Slide-Out Drawer -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
     <div class="drawer" id="drawer">
         <div class="drawer-header">
@@ -608,30 +583,26 @@
             <button class="close-btn" onclick="toggleDrawer()">✕</button>
         </div>
 
-        <!-- MINI-TOOLS -->
         <div class="drawer-section-title">🧮 Mini-Tools</div>
-        <a href="ginseng.html" class="drawer-link" style="text-decoration: none; display: block; color: var(--accent-gold); font-weight: bold;">🌱 Ginseng Pull Odds</a>
+        <a href="ginseng.html" class="drawer-link" style="color: var(--accent-gold); font-weight: bold;">🌱 Ginseng Pull Odds</a>
 
-        <!-- SINGLE CONSOLIDATED MATERIAL & ITEM INDEX -->
         <div class="drawer-section-title">📚 Material & Item Index</div>
         <div class="drawer-link" onclick="loadCoreIndex()" style="font-weight: bold; color: var(--accent-gold);">⭐ PlayTogether Core Index</div>
         <div class="drawer-link" onclick="loadActiveEventIndex()">🥕 Giant Veggie Index</div>
-        <div class="drawer-link" onclick="loadMoonKingdomIndex()">🐰 Moon Kingdom Index</div>
-        <div class="drawer-link" onclick="loadMagicAcademyIndex()">🪄 Magic Academy Index</div>
-        <div class="drawer-link" onclick="loadDesertOasisIndex()">🏺 Desert Oasis Index</div>
-        <div class="drawer-link" onclick="loadGwidamIndex()">🕯️ Gwidam Village Index</div>
+        <div class="drawer-link" onclick="loadGenericArchive('Moon Kingdom Catalog & Lore', 'moonKingdomItems')">🐰 Moon Kingdom Index</div>
+        <div class="drawer-link" onclick="loadGenericArchive('Magic Academy Catalog & Lore', 'magicAcademyItems')">🪄 Magic Academy Index</div>
+        <div class="drawer-link" onclick="loadGenericArchive('Desert Oasis Archive Catalog', 'desertOasisItems')">🏺 Desert Oasis Index</div>
+        <div class="drawer-link" onclick="loadGenericArchive('Gwidam Village Catalog & Lore', 'gwidamItems')">🕯️ Gwidam Village Index</div>
 
-        <!-- EXTERNAL GAME RESOURCES -->
         <div class="drawer-section-title">🔗 Helpful PT Links</div>
-        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🎁 Coupon Redemption ↗</a>
-        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📖 PlayTogether Wiki ↗</a>
-        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📢 Official Patch Notes ↗</a>
+        <a href="https://haegin.kr/playtogether/coupon/english.html" target="_blank" rel="noopener noreferrer" class="drawer-link">🎁 Coupon Redemption ↗</a>
+        <a href="https://playtogether.fandom.com/wiki/Play_Together_Wiki" target="_blank" rel="noopener noreferrer" class="drawer-link">📖 PlayTogether Wiki ↗</a>
+        <a href="https://notice.haegin.kr/play/prod/lang/English" target="_blank" rel="noopener noreferrer" class="drawer-link">📢 Official Patch Notes ↗</a>
 
-        <!-- CREATOR & SOCIAL LINKS -->
         <div class="drawer-section-title">👤 My Stuff :D</div>
-        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">🏡 Visit My PT House ↗</a>
-        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">💻 GitHub Profile ↗</a>
-        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link" style="text-decoration: none; display: block;">📸 Instagram ↗</a>
+        <a href="https://playtogether.id/benni" target="_blank" rel="noopener noreferrer" class="drawer-link">🏡 Visit My PT House ↗</a>
+        <a href="https://github.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link">💻 GitHub Profile ↗</a>
+        <a href="https://www.instagram.com/benni33pt" target="_blank" rel="noopener noreferrer" class="drawer-link">📸 Instagram ↗</a>
         <div class="drawer-link" onclick="copyDiscordHandle()" style="display: flex; justify-content: space-between; align-items: center;">
             <span>💬 Discord: Benni1433</span>
             <span id="discordCopyBadge" style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">Copy</span>
@@ -644,12 +615,10 @@
             <div class="hero-fade-overlay"></div>
     
             <div class="hero-content-wrapper">
-                <!-- CENTERED TIMER BADGE (NO TITLE TEXT) -->
                 <div class="hero-header-row">
                     <div class="event-timer-badge" id="eventTimerBadge">⏳ Calculating...</div>
                 </div>
-                
-                <!-- HERO HUD PROGRESS OVERLAY CONTAINER -->
+                <!-- Dynamic Progress Overlay -->
                 <div id="heroProgressOverlay" style="width: 100%;"></div>
             </div>
         </div>
@@ -673,7 +642,6 @@
             <div class="stats-grid" id="statsGrid"></div>
         </div>
 
-        <!-- UNIVERSAL MATERIAL BOTTOM DRAWER -->
         <div class="bottom-sheet" id="bottomSheet">
             <div class="sheet-header" onclick="toggleSheet()">
                 <div class="drag-handle"></div>
@@ -697,12 +665,13 @@
         </div>
     </div>
 
+    <!-- Dynamic Archive Container -->
     <div id="archiveContainer" class="tab-content" style="padding-top: 24px;">
         <h1 id="archiveTitle" class="archive-title" style="text-align: center; color: var(--accent-gold); margin-bottom: 20px; margin-top: 0;">Event Archive</h1>
         <div class="index-grid" id="archiveGrid"></div>
     </div>
 
-    <!-- DATA SOURCES -->
+    <!-- Data Sources -->
     <script src="js/playtogether_core.js"></script>
     <script src="js/gwidam_data.js"></script>
     <script src="js/desert_oasis_data.js"></script>
@@ -711,23 +680,14 @@
     <script src="js/giant_veggie_data.js"></script>
 
 <script>
-/* =====================================================================
-   ACTIVE EVENT DATA BINDINGS (Default Giant Veggie Data Array)
-   ===================================================================== */
 let items = typeof giantVeggieItems !== 'undefined' ? giantVeggieItems : [];
 let pets = typeof giantVeggiePets !== 'undefined' ? giantVeggiePets : [];
 let glossary = typeof giantVeggieGlossary !== 'undefined' ? giantVeggieGlossary : [];
 
-// Definition of Net-Caught Critters
-const NET_CAUGHT_CRITTERS = [
-    "Straw Scarecrow", "Cursed Scarecrow", "Will-o'-the-Wisp", "Eoduksini"
-];
-
+const NET_CAUGHT_CRITTERS = ["Straw Scarecrow", "Cursed Scarecrow", "Will-o'-the-Wisp", "Eoduksini"];
 let hasCelebratedCompletion = false;
 
-/* =====================================================================
-   PURE JS CONFETTI ENGINE
-   ===================================================================== */
+// Confetti Engine
 function launchConfetti() {
     const canvas = document.getElementById('confettiCanvas');
     if (!canvas) return;
@@ -757,7 +717,6 @@ function launchConfetti() {
 
     function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         pieces.forEach(p => {
             p.y += p.speedY;
             p.x += p.speedX;
@@ -778,16 +737,11 @@ function launchConfetti() {
             cancelAnimationFrame(animationFrame);
         }
     }
-
     update();
 }
 
-/* =====================================================================
-   EVENT COUNTDOWN TIMER (DAYS, HOURS, MINS TO OCT 14 23:59 UTC)
-   ===================================================================== */
-// Note: Month 9 is October in JavaScript UTC constructor (0-indexed: Jan=0, Oct=9)
+// Countdown Timer
 const EVENT_END_UTC = new Date(Date.UTC(2026, 9, 14, 23, 59, 59)); 
-
 function updateEventCountdown() {
     const now = new Date();
     const timerElement = document.getElementById("eventTimerBadge");
@@ -803,19 +757,12 @@ function updateEventCountdown() {
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const mins = Math.floor((diff / 1000 / 60) % 60);
 
-    if (days > 0) {
-        timerElement.innerText = `⏳ ${days}d ${hours}h ${mins}m left`;
-    } else {
-        timerElement.innerText = `⏳ ${hours}h${mins}m left`;
-    }
+    timerElement.innerText = days > 0 ? `⏳ ${days}d ${hours}h ${mins}m left` : `⏳ ${hours}h${mins}m left`;
 }
-
 setInterval(updateEventCountdown, 60000);
 updateEventCountdown();
 
-/* =====================================================================
-   STATE MANAGEMENT & STORAGE
-   ===================================================================== */
+// State Management
 let quantities = {};
 let completedCrafts = {};
 let currentCategory = 'furniture'; 
@@ -829,7 +776,6 @@ function loadSavedData() {
         if (savedCompleted) completedCrafts = JSON.parse(savedCompleted);
 
         renderChecklist();
-
         const hasActiveOrCompleted = Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0);
 
         if (hasActiveOrCompleted) {
@@ -844,17 +790,10 @@ function loadSavedData() {
     }
 }
 
-function saveQuantities() {
-    try { localStorage.setItem("giant_veggie_quantities", JSON.stringify(quantities)); } catch (e) {}
-}
+function saveQuantities() { try { localStorage.setItem("giant_veggie_quantities", JSON.stringify(quantities)); } catch (e) {} }
+function saveCompleted() { try { localStorage.setItem("giant_veggie_completed", JSON.stringify(completedCrafts)); } catch (e) {} }
 
-function saveCompleted() {
-    try { localStorage.setItem("giant_veggie_completed", JSON.stringify(completedCrafts)); } catch (e) {}
-}
-
-/* =====================================================================
-   NAVIGATION & UI CONTROLS
-   ===================================================================== */
+// Navigation & UI
 function toggleDrawer() {
     document.getElementById('drawer').classList.toggle('open');
     document.getElementById('drawerOverlay').classList.toggle('open');
@@ -869,15 +808,12 @@ function copyDiscordHandle() {
             badge.innerText = "Copy";
             badge.style.color = "var(--accent-gold)";
         }, 2000);
-    }).catch(err => {
-        alert("Discord Handle: Benni1433");
-    });
+    }).catch(() => alert("Discord Handle: Benni1433"));
 }
 
 function switchTab(tabId, btn) {
     document.querySelectorAll('#activeEventContainer .tab-content').forEach(tc => tc.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
-    
     document.getElementById(tabId).classList.add('active');
     
     if (btn) {
@@ -889,17 +825,14 @@ function switchTab(tabId, btn) {
     }
 
     const heroOverlay = document.getElementById("heroProgressOverlay");
-    
     if (tabId === 'checklistTab') {
         renderChecklist();
         renderHeroBannerOverlay();
-    } else {
-        if (heroOverlay) heroOverlay.innerHTML = '';
+    } else if (heroOverlay) {
+        heroOverlay.innerHTML = '';
     }
 
-    if (tabId === 'statsTab') {
-        renderLifetimeStats();
-    }
+    if (tabId === 'statsTab') renderLifetimeStats();
 
     const sheet = document.getElementById('bottomSheet');
     if (tabId === 'calculatorTab' || tabId === 'checklistTab') {
@@ -918,12 +851,7 @@ function loadActiveEventView() {
     document.getElementById('tabBtnContainer').style.display = 'flex';
     
     const hasActiveOrCompleted = Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0);
-    if (hasActiveOrCompleted) {
-        switchTab('checklistTab');
-    } else {
-        switchTab('calculatorTab');
-    }
-    
+    switchTab(hasActiveOrCompleted ? 'checklistTab' : 'calculatorTab');
     if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
 }
 
@@ -944,9 +872,8 @@ function switchCategory(category) {
 
 function toggleSheet() {
     const sheet = document.getElementById('bottomSheet');
-    const label = document.getElementById('toggleLabel');
     sheet.classList.toggle('open');
-    label.innerText = sheet.classList.contains('open') ? 'Hide ▼' : 'Materials ▲';
+    document.getElementById('toggleLabel').innerText = sheet.classList.contains('open') ? 'Hide ▼' : 'Materials ▲';
 }
 
 function formatTime(minutes) {
@@ -958,45 +885,39 @@ function formatTime(minutes) {
 }
 
 function getCategoryForMaterial(matName) {
-    const megaMartItems = ["Water", "Cheese", "Lettuce", "Onion", "Salt", "Turkey Meat"];
-    const furnitureShopItems = ["Glass Greenhouse Cube", "Bright Grass Cube"];
-    const miningItems = ["Iron Ore", "Silver Ore", "Gold Ore", "Stone"];
-    const gatheringItems = ["Tree Branch", "Eurasian Tree Sparrow"];
+    const categories = {
+        "Mega Mart": ["Water", "Cheese", "Lettuce", "Onion", "Salt", "Turkey Meat"],
+        "Furniture Shop": ["Glass Greenhouse Cube", "Bright Grass Cube"],
+        "Mining": ["Iron Ore", "Silver Ore", "Gold Ore", "Stone"],
+        "Gathering & Spawns": ["Tree Branch", "Eurasian Tree Sparrow"],
+        "Pet Paradise": ["Normal Egg", "Premium Egg"]
+    };
 
-    if (megaMartItems.includes(matName)) return "Mega Mart";
-    if (furnitureShopItems.includes(matName)) return "Furniture Shop";
-    if (miningItems.includes(matName)) return "Mining";
-    if (gatheringItems.includes(matName)) return "Gathering & Spawns";
-    if (matName === "Normal Egg" || matName === "Premium Egg") return "Pet Paradise";
+    for (const [category, itemsList] of Object.entries(categories)) {
+        if (itemsList.includes(matName)) return category;
+    }
     return "Event Materials";
 }
 
-/* =====================================================================
-   CALCULATOR & CHECKLIST LOGIC
-   ===================================================================== */
+// Logic Rendering
 function renderGrid() {
     const grid = document.getElementById("furnitureGrid");
     grid.innerHTML = "";
-
     const activeItems = currentCategory === 'furniture' ? items : pets;
 
     if (activeItems.length === 0) {
-        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Maintenance underway! Item details will be added as soon as the Giant Veggie workshop opens.</div>`;
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">⏳ Maintenance underway! Item details will be added as soon as the workshop opens.</div>`;
         return;
     }
 
     activeItems.forEach(item => {
         quantities[item.id] = quantities[item.id] || 0;
-        
         const matString = Object.entries(item.mats).map(([mat, count]) => `${count}${mat}`).join(", ");
         const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="item-preview-img"></div>` : '';
         
         let cardClass = "item-card";
-        if (currentCategory === 'pets') {
-            cardClass = "item-card pet-card";
-        } else if (item.type === 'crop') {
-            cardClass = "item-card crop-card";
-        }
+        if (currentCategory === 'pets') cardClass = "item-card pet-card";
+        else if (item.type === 'crop') cardClass = "item-card crop-card";
 
         const card = document.createElement("div");
         card.className = cardClass;
@@ -1023,13 +944,10 @@ function toggleChecklistSection(element) {
 
 function completeCraft(itemId, element) {
     if (quantities[itemId] > 0 && !element.classList.contains('processing')) {
-        element.classList.add('processing'); 
-        element.classList.add('completed'); 
-
+        element.classList.add('processing', 'completed'); 
         setTimeout(() => {
             quantities[itemId]--;
             completedCrafts[itemId] = (completedCrafts[itemId] || 0) + 1;
-
             saveQuantities();
             saveCompleted();
             renderGrid();
@@ -1044,7 +962,6 @@ function undoCraft(itemId) {
     if (completedCrafts[itemId] > 0) {
         completedCrafts[itemId]--;
         quantities[itemId]++;
-
         saveQuantities();
         saveCompleted();
         renderGrid();
@@ -1068,7 +985,6 @@ function renderHeroBannerOverlay() {
 
     const totalFurniture = activeFurnitureCount + completedFurnitureCount;
     const furniturePercent = totalFurniture > 0 ? Math.round((completedFurnitureCount / totalFurniture) * 100) : 0;
-
     const isGoalComplete = (furniturePercent === 100 && totalFurniture > 0);
 
     if (isGoalComplete && !hasCelebratedCompletion) {
@@ -1090,87 +1006,58 @@ function renderHeroBannerOverlay() {
                 </div>
             </div>`;
     } else {
-        heroOverlay.innerHTML = ``;
+        heroOverlay.innerHTML = '';
     }
 }
 
 function renderChecklist() {
     const container = document.getElementById("checklistContainer");
-
-    let hasActiveOrCompletedItems = false;
     const allCraftables = [...items, ...pets];
-
-    allCraftables.forEach(item => {
-        const activeQty = quantities[item.id] || 0;
-        const completedQty = completedCrafts[item.id] || 0;
-        if (activeQty > 0 || completedQty > 0) hasActiveOrCompletedItems = true;
-    });
+    
+    const hasActiveOrCompletedItems = allCraftables.some(item => (quantities[item.id] || 0) > 0 || (completedCrafts[item.id] || 0) > 0);
 
     if (!hasActiveOrCompletedItems) {
         container.innerHTML = `<div class="empty-state">No active project. Adjust quantities on the Calculator tab to see your goals here.</div>`;
         return;
     }
 
-    let html = ``;
+    let html = '';
 
-    // 1. Workshop Queue
-    let activeFurnitureHtml = ``;
-    let activeFurnitureCount = 0;
-
-    items.forEach(item => {
-        const qty = quantities[item.id] || 0;
-        const imgHtml = item.image ? `<img src="${item.image}" alt="${item.name}" class="check-item-thumb">` : '';
-        for (let i = 0; i < qty; i++) {
-            activeFurnitureCount++;
-            activeFurnitureHtml += `
-                <div class="check-item" onclick="completeCraft('${item.id}', this)">
-                    <div class="checkbox"></div>
-                    <div class="check-text">${item.name}</div>${imgHtml}
-                </div>`;
+    // Section Logic Helper
+    const generateSection = (itemList, titleColor, titleText, isPetClass = false) => {
+        let sectionHtml = '';
+        let count = 0;
+        
+        itemList.forEach(item => {
+            const qty = quantities[item.id] || 0;
+            const thumbClass = isPetClass ? "check-item-thumb pet-card-thumb" : "check-item-thumb";
+            const imgHtml = item.image ? `<img src="${item.image}" alt="${item.name}" class="${thumbClass}">` : '';
+            
+            for (let i = 0; i < qty; i++) {
+                count++;
+                sectionHtml += `
+                    <div class="check-item" onclick="completeCraft('${item.id}', this)">
+                        <div class="checkbox"></div>
+                        <div class="check-text">${item.name}</div>${imgHtml}
+                    </div>`;
+            }
+        });
+        
+        if (count > 0) {
+            html += `<div class="checklist-section">
+                        <div class="checklist-header" onclick="toggleChecklistSection(this)">
+                            <span style="color: ${titleColor};">${titleText}</span>
+                        </div>
+                        <div class="checklist-queue-grid">${sectionHtml}</div>
+                    </div>`;
         }
-    });
+    };
 
-    if (activeFurnitureCount > 0) {
-        html += `<div class="checklist-section">
-                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span>🔨 Giant Veggie Workshop</span>
-                    </div>
-                    <div class="checklist-queue-grid">
-                        ${activeFurnitureHtml}
-                    </div>
-                </div>`;
-    }
+    generateSection(items, "var(--accent-gold)", "🔨 Giant Veggie Workshop");
+    generateSection(pets, "var(--accent-pet)", "🐾 Pet Incubator", true);
 
-    // 2. Pet Assembly Queue
-    let activePetsHtml = ``;
-    let activePetsCount = 0;
-
-    pets.forEach(pet => {
-        const qty = quantities[pet.id] || 0;
-        const imgHtml = pet.image ? `<img src="${pet.image}" alt="${pet.name}" class="check-item-thumb pet-card-thumb">` : '';
-        for (let i = 0; i < qty; i++) {
-            activePetsCount++;
-            activePetsHtml += `
-                <div class="check-item" onclick="completeCraft('${pet.id}', this)">
-                    <div class="checkbox"></div>
-                    <div class="check-text">${pet.name}</div>${imgHtml}
-                </div>`;
-        }
-    });
-
-    if (activePetsCount > 0) {
-        html += `<div class="checklist-section">
-                    <div class="checklist-header" onclick="toggleChecklistSection(this)">
-                        <span style="color: var(--accent-pet);">🐾 Pet Incubator</span>
-                    </div>
-                    <div class="checklist-queue-grid">
-                        ${activePetsHtml}
-                    </div>
-                </div>`;
-    }
-
-    // 3. Completed Items History Section
-    let completedHistoryHtml = ``;
+    // Completed Items History Section
+    let completedHistoryHtml = '';
     let totalCompletedCount = 0;
 
     allCraftables.forEach(item => {
@@ -1196,32 +1083,20 @@ function renderChecklist() {
                     <div class="checklist-header" onclick="toggleChecklistSection(this)">
                         <span>🎉 Completed Crafts (${totalCompletedCount})</span>
                     </div>
-                    <div class="checklist-queue-grid">
-                        ${completedHistoryHtml}
-                    </div>
+                    <div class="checklist-queue-grid">${completedHistoryHtml}</div>
                 </div>`;
     }
 
     container.innerHTML = html;
 }
 
-/* =====================================================================
-   LIFETIME STATS COMPUTATION
-   ===================================================================== */
+// Stats and Calculations
 function renderLifetimeStats() {
     const grid = document.getElementById("statsGrid");
-    grid.innerHTML = "";
-
     const allCraftables = [...items, ...pets];
     
-    let totalItems = 0;
-    let totalFurniture = 0;
-    let totalPets = 0;
-    let totalTime = 0;
-
-    const itemCounts = [];
-    const matsConsumed = {};
-    const critters = {};
+    let totalItems = 0, totalFurniture = 0, totalPets = 0, totalTime = 0;
+    const itemCounts = [], matsConsumed = {}, critters = {};
 
     allCraftables.forEach(item => {
         const count = completedCrafts[item.id] || 0;
@@ -1229,24 +1104,16 @@ function renderLifetimeStats() {
             totalItems += count;
             totalTime += (item.timeMinutes || 0) * count;
 
-            const isPet = pets.some(p => p.id === item.id);
-            if (isPet) {
-                totalPets += count;
-            } else {
-                totalFurniture += count;
-            }
+            if (pets.some(p => p.id === item.id)) totalPets += count;
+            else totalFurniture += count;
 
             itemCounts.push({ name: item.name, count });
 
             if (item.mats) {
                 Object.entries(item.mats).forEach(([mat, qty]) => {
                     const totalMatQty = qty * count;
-
-                    if (NET_CAUGHT_CRITTERS.includes(mat)) {
-                        critters[mat] = (critters[mat] || 0) + totalMatQty;
-                    } else {
-                        matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
-                    }
+                    if (NET_CAUGHT_CRITTERS.includes(mat)) critters[mat] = (critters[mat] || 0) + totalMatQty;
+                    else matsConsumed[mat] = (matsConsumed[mat] || 0) + totalMatQty;
                 });
             }
         }
@@ -1256,231 +1123,172 @@ function renderLifetimeStats() {
     const totalResourcesCount = Object.values(matsConsumed).reduce((a, b) => a + b, 0);
 
     itemCounts.sort((a, b) => b.count - a.count);
-
-    const sortedCritters = Object.entries(critters)
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count);
-
-    const sortedMats = Object.entries(matsConsumed)
-        .map(([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count);
+    const sortedCritters = Object.entries(critters).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+    const sortedMats = Object.entries(matsConsumed).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
 
     let craftingHtml = `
         <div class="stats-card">
             <div class="stats-card-title">🔨 Crafting Overview</div>
             <div class="stat-row"><span class="stat-label">Total Items Crafted</span><span class="stat-val">${totalItems}</span></div>
-            <div class="stat-row"><span class="stat-label">Furniture & Crops Crafted</span><span class="stat-val">${totalFurniture}</span></div>
+            <div class="stat-row"><span class="stat-label">Furniture & Crops</span><span class="stat-val">${totalFurniture}</span></div>
             <div class="stat-row"><span class="stat-label">Pets Hatched</span><span class="stat-val">${totalPets}</span></div>
-            <div class="stat-row"><span class="stat-label">Cumulative Crafting Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
-            <div class="stat-row"><span class="stat-label">Total Critters Caught</span><span class="stat-val">${totalCrittersCount.toLocaleString()}</span></div>
-            <div class="stat-row"><span class="stat-label">Total Resources Consumed</span><span class="stat-val">${totalResourcesCount.toLocaleString()}</span></div>
+            <div class="stat-row"><span class="stat-label">Total Crafting Time</span><span class="stat-val">${formatTime(totalTime)}</span></div>
+            <div class="stat-row"><span class="stat-label">Critters Caught</span><span class="stat-val">${totalCrittersCount.toLocaleString()}</span></div>
+            <div class="stat-row"><span class="stat-label">Resources Consumed</span><span class="stat-val">${totalResourcesCount.toLocaleString()}</span></div>
         </div>`;
 
-    let itemizedHtml = `
-        <div class="stats-card">
-            <div class="stats-card-title">🎨 Crafts Breakdown</div>`;
-    
-    if (itemCounts.length === 0) {
-        itemizedHtml += `<div class="stat-row"><span class="stat-label">No items crafted yet.</span></div>`;
-    } else {
-        itemCounts.forEach(item => {
-            itemizedHtml += `<div class="stat-row"><span class="stat-label">${item.name}</span><span class="stat-val">${item.count}</span></div>`;
-        });
-    }
-    itemizedHtml += `</div>`;
+    const generateStatList = (title, icon, arr, emptyMsg) => {
+        let html = `<div class="stats-card"><div class="stats-card-title">${icon} ${title}</div>`;
+        if (arr.length === 0) {
+            html += `<div class="stat-row"><span class="stat-label">${emptyMsg}</span></div>`;
+        } else {
+            arr.forEach(item => {
+                if (item.count > 0) html += `<div class="stat-row"><span class="stat-label">${item.name}</span><span class="stat-val">${item.count.toLocaleString()}</span></div>`;
+            });
+        }
+        return html + `</div>`;
+    };
 
-    let crittersHtml = `
-        <div class="stats-card">
-            <div class="stats-card-title">🦋 Critters Caught</div>`;
-    
-    if (sortedCritters.length === 0) {
-        crittersHtml += `<div class="stat-row"><span class="stat-label">No critters caught yet.</span></div>`;
-    } else {
-        sortedCritters.forEach(critter => {
-            if (critter.count > 0) {
-                crittersHtml += `<div class="stat-row"><span class="stat-label">${critter.name}</span><span class="stat-val">${critter.count.toLocaleString()}</span></div>`;
-            }
-        });
-    }
-    crittersHtml += `</div>`;
-
-    let matsHtml = `
-        <div class="stats-card">
-            <div class="stats-card-title">📦 Resources Consumed</div>`;
-    
-    if (sortedMats.length === 0) {
-        matsHtml += `<div class="stat-row"><span class="stat-label">No materials consumed yet.</span></div>`;
-    } else {
-        sortedMats.forEach(mat => {
-            if (mat.count > 0) {
-                matsHtml += `<div class="stat-row"><span class="stat-label">${mat.name}</span><span class="stat-val">${mat.count.toLocaleString()}</span></div>`;
-            }
-        });
-    }
-    matsHtml += `</div>`;
-
-    grid.innerHTML = craftingHtml + itemizedHtml + crittersHtml + matsHtml;
+    grid.innerHTML = craftingHtml 
+        + generateStatList("Crafts Breakdown", "🎨", itemCounts, "No items crafted yet.")
+        + generateStatList("Critters Caught", "🦋", sortedCritters, "No critters caught yet.")
+        + generateStatList("Resources Consumed", "📦", sortedMats, "No materials consumed yet.");
 }
 
 function updateQty(id, change) {
     quantities[id] = Math.max(0, (quantities[id] || 0) + change);
-    saveQuantities();
-    renderGrid();
-    
-    if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
-        renderChecklist(); 
-    } else {
-        document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Adjust quantities on the Calculator tab to see your goals here.</div>`;
-    }
-    
-    calculateTotals();
+    triggerUpdates();
 }
 
 function handleManualInput(id, value) {
     quantities[id] = Math.max(0, parseInt(value) || 0);
+    triggerUpdates();
+}
+
+function resetQuantities() {
+    if (!confirm("Are you sure you want to reset all item quantities and completed progress?")) return;
+    Object.keys(quantities).forEach(id => quantities[id] = 0);
+    Object.keys(completedCrafts).forEach(id => completedCrafts[id] = 0);
+    hasCelebratedCompletion = false;
+    triggerUpdates();
+}
+
+function triggerUpdates() {
     saveQuantities();
+    saveCompleted();
     renderGrid();
-    
     if (Object.values(quantities).some(q => q > 0) || Object.values(completedCrafts).some(q => q > 0)) {
         renderChecklist(); 
     } else {
         document.getElementById("checklistContainer").innerHTML = `<div class="empty-state">No active project. Adjust quantities on the Calculator tab to see your goals here.</div>`;
     }
-    
-    calculateTotals();
-}
-
-function resetQuantities() {
-    if (!confirm("Are you sure you want to reset all item quantities and completed progress?")) return;
-
-    Object.keys(quantities).forEach(id => quantities[id] = 0);
-    Object.keys(completedCrafts).forEach(id => completedCrafts[id] = 0);
-    hasCelebratedCompletion = false;
-    
-    saveQuantities();
-    saveCompleted();
-    
-    renderGrid();
-    renderChecklist();
     renderHeroBannerOverlay();
     calculateTotals();
 }
 
-/* =====================================================================
-   MATERIAL DRAWER COMPUTATION
-   ===================================================================== */
 function calculateTotals() {
     const matTotals = {};
     const taskDurations = [];
     let activeItemCount = 0;
 
-    const allCraftables = [...items, ...pets];
-
-    allCraftables.forEach(item => {
+    [...items, ...pets].forEach(item => {
         const activeQty = quantities[item.id] || 0;
         if (activeQty > 0) {
             activeItemCount += activeQty;
-            
             Object.entries(item.mats).forEach(([mat, count]) => {
                 matTotals[mat] = (matTotals[mat] || 0) + (count * activeQty);
             });
-
-            for (let i = 0; i < activeQty; i++) {
-                taskDurations.push(item.timeMinutes);
-            }
+            for (let i = 0; i < activeQty; i++) taskDurations.push(item.timeMinutes);
         }
     });
 
     const matsGridEl = document.getElementById("materialsGrid");
     matsGridEl.innerHTML = "";
 
-    const categoryOrder = {
-        "Event Materials": 1,
-        "Gathering & Spawns": 2,
-        "Mining": 3,
-        "Mega Mart": 4,
-        "Furniture Shop": 5,
-        "Pet Paradise": 6
-    };
+    const categoryOrder = { "Event Materials": 1, "Gathering & Spawns": 2, "Mining": 3, "Mega Mart": 4, "Furniture Shop": 5, "Pet Paradise": 6 };
 
     const activeMats = Object.entries(matTotals)
         .filter(([_, count]) => count > 0)
-        .map(([name, count]) => ({
-            name,
-            count,
-            category: getCategoryForMaterial(name)
-        }))
-        .sort((a, b) => {
-            const catA = categoryOrder[a.category] || 99;
-            const catB = categoryOrder[b.category] || 99;
-            if (catA !== catB) return catA - catB;
-            return b.count - a.count;
-        });
+        .map(([name, count]) => ({ name, count, category: getCategoryForMaterial(name) }))
+        .sort((a, b) => (categoryOrder[a.category] || 99) - (categoryOrder[b.category] || 99) || b.count - a.count);
 
     if (activeMats.length === 0) {
-        matsGridEl.innerHTML = `
-            <div class="mat-tile" style="grid-column: 1 / -1; justify-content: center;">
-                <span class="tile-title">No Active Materials Selected</span>
-            </div>`;
+        matsGridEl.innerHTML = `<div class="mat-tile" style="grid-column: 1 / -1; justify-content: center;"><span class="tile-title">No Active Materials Selected</span></div>`;
     } else {
         activeMats.forEach(m => {
-            let badge = "Event";
-            let badgeColor = "var(--accent-gold)";
-            
-            if (m.category === "Mega Mart") {
-                badge = "Mart";
-                badgeColor = "var(--accent-green)";
-            } else if (m.category === "Furniture Shop") {
-                badge = "Shop";
-                badgeColor = "var(--accent-green)";
-            } else if (m.category === "Mining") {
-                badge = "Mine";
-                badgeColor = "#A0A0A0";
-            } else if (m.category.includes("Gathering")) {
-                badge = "Gather";
-                badgeColor = "var(--accent-blue)";
-            } else if (m.category === "Pet Paradise") {
-                badge = "Pet";
-                badgeColor = "var(--accent-pet)";
-            }
+            const badgeMap = {
+                "Mega Mart": { text: "Mart", color: "var(--accent-green)" },
+                "Furniture Shop": { text: "Shop", color: "var(--accent-green)" },
+                "Mining": { text: "Mine", color: "#A0A0A0" },
+                "Gathering & Spawns": { text: "Gather", color: "var(--accent-blue)" },
+                "Pet Paradise": { text: "Pet", color: "var(--accent-pet)" }
+            };
+            const badgeStyle = badgeMap[m.category] || { text: "Event", color: "var(--accent-gold)" };
 
             const tile = document.createElement("div");
             tile.className = "mat-tile";
             tile.innerHTML = `
                 <div style="display: flex; flex-direction: column; gap: 2px;">
                     <span class="tile-title">${m.name}</span>
-                    <span style="font-size: 0.65rem; color: ${badgeColor}; font-weight: bold; text-transform: uppercase;">[${badge}]</span>
+                    <span style="font-size: 0.65rem; color: ${badgeStyle.color}; font-weight: bold; text-transform: uppercase;">[${badgeStyle.text}]</span>
                 </div>
                 <span class="tile-count">${m.count.toLocaleString()}</span>`;
             matsGridEl.appendChild(tile);
         });
     }
 
-    const totalParallelTime = calculateParallelTime(taskDurations, 4);
-    document.getElementById("totalTimeDisplay").innerText = `⏱️️ ${formatTime(totalParallelTime)} | ${activeItemCount} Active Items`;
+    document.getElementById("totalTimeDisplay").innerText = `⏱ ${formatTime(calculateParallelTime(taskDurations, 4))} | ${activeItemCount} Active Items`;
 }
 
 function calculateParallelTime(durations, maxSlots) {
     if (durations.length === 0) return 0;
     durations.sort((a, b) => b - a);
     const slots = new Array(maxSlots).fill(0);
-
     durations.forEach(duration => {
         let earliestSlot = 0;
-        for (let i = 1; i < maxSlots; i++) {
-            if (slots[i] < slots[earliestSlot]) {
-                earliestSlot = i;
-            }
-        }
+        for (let i = 1; i < maxSlots; i++) if (slots[i] < slots[earliestSlot]) earliestSlot = i;
         slots[earliestSlot] += duration;
     });
-
     return Math.max(...slots);
 }
 
-/* =====================================================================
-   INDEX & ARCHIVE LOADERS
-   ===================================================================== */
+// Streamlined Index Loaders
+function showArchiveView(title) {
+    document.getElementById('activeEventContainer').style.display = 'none';
+    document.getElementById('archiveContainer').style.display = 'block';
+    document.getElementById('archiveTitle').innerText = title;
+    document.getElementById('homeBtn').style.display = 'block';
+    document.getElementById('tabBtnContainer').style.display = 'none';
+    if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
+}
+
+function loadGenericArchive(title, dataVarName) {
+    showArchiveView(title);
+    const grid = document.getElementById('archiveGrid');
+    grid.innerHTML = "";
+    
+    const archiveData = window[dataVarName];
+    if (!archiveData) {
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: Data not found!</div>';
+        return;
+    }
+
+    archiveData.forEach(item => {
+        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
+        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
+        const card = document.createElement("div");
+        card.className = "glossary-card";
+        card.innerHTML = `
+            ${imgHtml}
+            <div class="glossary-title">${item.name}</div>
+            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
+            <div class="glossary-lore">"${item.lore}"</div>
+            <div class="glossary-source">📦 Materials: ${matString}</div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
 function loadActiveEventIndex() {
     showArchiveView("Giant Veggie Catalog & Lore");
     const grid = document.getElementById('archiveGrid');
@@ -1491,145 +1299,35 @@ function loadActiveEventIndex() {
         return;
     }
 
-    const furnitureHeader = document.createElement("h2");
-    furnitureHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); padding-bottom: 6px; margin: 12px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    furnitureHeader.innerText = "🔨 Furniture & Crop";
-    grid.appendChild(furnitureHeader);
+    const appendSection = (titleText, titleColor, dataArray, isCropFilter = null) => {
+        if (!dataArray || dataArray.length === 0) return;
+        const header = document.createElement("h2");
+        header.style.cssText = `grid-column: 1 / -1; color: ${titleColor}; border-bottom: 2px solid ${titleColor}; padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;`;
+        header.innerText = titleText;
+        grid.appendChild(header);
 
-    items.forEach(item => {
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        if (item.type === 'crop') card.style.borderColor = "rgba(230, 81, 0, 0.8)";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title" ${item.type === 'crop' ? 'style="color: var(--accent-crop);"' : ''}>${item.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
-            <div class="glossary-lore">"${item.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
-
-    const petsHeader = document.createElement("h2");
-    petsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-pet); border-bottom: 2px solid var(--accent-pet); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-    petsHeader.innerText = "🐾 Pets";
-    grid.appendChild(petsHeader);
-
-    pets.forEach(pet => {
-        const matString = Object.entries(pet.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = pet.image ? `<div class="card-img-container"><img src="${pet.image}" alt="${pet.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.style.borderColor = "rgba(226, 169, 112, 0.5)";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title" style="color: var(--accent-pet);">${pet.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(pet.timeMinutes)}</div>
-            <div class="glossary-lore">"${pet.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
-
-    if (glossary && glossary.length > 0) {
-        const materialsHeader = document.createElement("h2");
-        materialsHeader.style.cssText = "grid-column: 1 / -1; color: var(--accent-blue); border-bottom: 2px solid var(--accent-blue); padding-bottom: 6px; margin: 24px 0 4px; font-size: 1.1rem; text-transform: uppercase;";
-        materialsHeader.innerText = "📌 Event Materials";
-        grid.appendChild(materialsHeader);
-
-        glossary.forEach(mat => {
-            const imgHtml = mat.image ? `<div class="card-img-container"><img src="${mat.image}" alt="${mat.name}" class="index-preview-img"></div>` : '';
+        dataArray.forEach(item => {
+            const matString = item.mats ? Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ") : "";
+            const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
             const card = document.createElement("div");
             card.className = "glossary-card";
+            if (item.type === 'crop') card.style.borderColor = "rgba(230, 81, 0, 0.8)";
+            
             card.innerHTML = `
                 ${imgHtml}
-                <div class="glossary-title">${mat.name}</div>
-                <div class="glossary-lore">"${mat.lore}"</div>
-                <div class="glossary-source">📍 Location: ${mat.source}</div>
+                <div class="glossary-title" ${item.type === 'crop' ? 'style="color: var(--accent-crop);"' : ''}>${item.name}</div>
+                ${item.timeMinutes ? `<div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>` : ''}
+                <div class="glossary-lore">"${item.lore}"</div>
+                ${matString ? `<div class="glossary-source">📦 Materials: ${matString}</div>` : ''}
+                ${item.source ? `<div class="glossary-source">📍 Location: ${item.source}</div>` : ''}
             `;
             grid.appendChild(card);
         });
-    }
-}
+    };
 
-function loadMoonKingdomIndex() {
-    showArchiveView("Moon Kingdom Catalog & Lore");
-    const grid = document.getElementById('archiveGrid');
-    grid.innerHTML = "";
-
-    if (typeof moonKingdomItems === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/moon_kingdom_data.js data not found!</div>';
-        return;
-    }
-
-    moonKingdomItems.forEach(item => {
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title">${item.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
-            <div class="glossary-lore">"${item.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-function loadMagicAcademyIndex() {
-    showArchiveView("Magic Academy Catalog & Lore");
-    const grid = document.getElementById('archiveGrid');
-    grid.innerHTML = "";
-
-    if (typeof magicAcademyItems === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/magic_academy_data.js data not found!</div>';
-        return;
-    }
-
-    magicAcademyItems.forEach(item => {
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title">${item.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
-            <div class="glossary-lore">"${item.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-function loadDesertOasisIndex() {
-    showArchiveView("Desert Oasis Archive Catalog");
-    const grid = document.getElementById('archiveGrid');
-    grid.innerHTML = "";
-
-    if (typeof desertOasisItems === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/desert_oasis_data.js data not found!</div>';
-        return;
-    }
-
-    desertOasisItems.forEach(item => {
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title">${item.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
-            <div class="glossary-lore">"${item.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
+    appendSection("🔨 Furniture & Crop", "var(--accent-gold)", items);
+    appendSection("🐾 Pets", "var(--accent-pet)", pets);
+    appendSection("📌 Event Materials", "var(--accent-blue)", glossary);
 }
 
 function loadCoreIndex() {
@@ -1638,7 +1336,7 @@ function loadCoreIndex() {
     grid.innerHTML = "";
 
     if (typeof coreGlossary === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/playtogether_core.js data not found!</div>';
+        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: data not found!</div>';
         return;
     }
 
@@ -1652,41 +1350,6 @@ function loadCoreIndex() {
         `;
         grid.appendChild(card);
     });
-}
-
-function loadGwidamIndex() {
-    showArchiveView("Gwidam Village Catalog & Lore");
-    const grid = document.getElementById('archiveGrid');
-    grid.innerHTML = "";
-
-    if (typeof gwidamItems === 'undefined') {
-        grid.innerHTML = '<div style="color: #d9534f; text-align: center; grid-column: 1 / -1;">Error: js/gwidam_data.js data not found!</div>';
-        return;
-    }
-
-    gwidamItems.forEach(item => {
-        const matString = Object.entries(item.mats).map(([mat, count]) => `${count} ${mat}`).join(", ");
-        const imgHtml = item.image ? `<div class="card-img-container"><img src="${item.image}" alt="${item.name}" class="index-preview-img"></div>` : '';
-        const card = document.createElement("div");
-        card.className = "glossary-card";
-        card.innerHTML = `
-            ${imgHtml}
-            <div class="glossary-title">${item.name}</div>
-            <div class="glossary-sub">⏱️ Craft Time: ${formatTime(item.timeMinutes)}</div>
-            <div class="glossary-lore">"${item.lore}"</div>
-            <div class="glossary-source">📦 Materials: ${matString}</div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-function showArchiveView(title) {
-    document.getElementById('activeEventContainer').style.display = 'none';
-    document.getElementById('archiveContainer').style.display = 'block';
-    document.getElementById('archiveTitle').innerText = title;
-    document.getElementById('homeBtn').style.display = 'block';
-    document.getElementById('tabBtnContainer').style.display = 'none';
-    if (document.getElementById('drawer').classList.contains('open')) toggleDrawer();
 }
 
 // Initialization
