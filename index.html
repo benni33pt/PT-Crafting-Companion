@@ -31,6 +31,22 @@
             box-sizing: border-box;
         }
 
+        /* Custom Dark Scrollbars for Webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #443525; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-gold);
+        }
+
         button, .btn, .check-item, input, .tab-btn, .sub-btn, .drawer-link {
             touch-action: manipulation;
         }
@@ -324,7 +340,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             z-index: 200;
             display: none;
         }
@@ -410,11 +428,23 @@
         .sub-btn.active-furniture { background-color: rgba(92, 184, 92, 0.25); color: var(--accent-gold); border-color: var(--accent-green); }
         .sub-btn.active-pets { background-color: rgba(226, 169, 112, 0.2); color: var(--accent-pet); border-color: var(--accent-pet); }
 
+        /* Tactile Card Hover States */
         .furniture-grid, .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-        .item-card, .glossary-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 14px; border: 1px solid #443525; transition: border-color 0.2s ease; }
+        .item-card, .glossary-card { background-color: var(--card-bg); border-radius: var(--border-radius); padding: 14px; border: 1px solid #443525; transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
         .item-card { display: flex; flex-direction: column; justify-content: space-between; }
         .item-card.pet-card { border: 1px solid rgba(226, 169, 112, 0.5); }
         .item-card.crop-card { border: 1px solid rgba(230, 81, 0, 0.7); }
+
+        @media (hover: hover) {
+            .item-card:hover, .glossary-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+            }
+            .mat-tile:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            }
+        }
 
         .card-img-container { text-align: center; margin-bottom: 12px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 8px; }
         .item-preview-img { max-width: 100%; height: 100px; object-fit: contain; }
@@ -430,9 +460,44 @@
         .glossary-source { background: rgba(243, 192, 68, 0.15); color: var(--text-light); padding: 4px 8px; border-radius: 4px; display: inline-block; }
         .glossary-lore { font-size: 0.8rem; color: #CCCCCC; font-style: italic; margin-bottom: 10px; line-height: 1.35; }
 
-        .controls { display: flex; align-items: center; justify-content: space-between; background: var(--bg-color); border-radius: 8px; padding: 4px; }
-        .btn { background: var(--accent-green); color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-        .qty-input { width: 40px; text-align: center; background: transparent; border: none; color: white; font-weight: bold; font-size: 1rem; font-family: 'Comfortaa', sans-serif; }
+        /* Consolidated Quantity Pill Controls */
+        .controls { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            background: rgba(0, 0, 0, 0.3); 
+            border: 1px solid #443525;
+            border-radius: 8px; 
+            padding: 2px; 
+            overflow: hidden;
+        }
+        .btn { 
+            background: transparent; 
+            color: var(--accent-green); 
+            border: none; 
+            width: 36px; 
+            height: 32px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1.2rem; 
+            transition: background 0.2s;
+        }
+        .btn:active { background: rgba(92, 184, 92, 0.2); }
+        .qty-input { 
+            width: 40px; 
+            text-align: center; 
+            background: transparent; 
+            border: none; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 1rem; 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .qty-input:focus {
+            border-bottom: 2px solid var(--accent-gold);
+            outline: none;
+        }
         
         .qty-input::-webkit-outer-spin-button,
         .qty-input::-webkit-inner-spin-button {
@@ -467,6 +532,7 @@
             .checklist-queue-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
+        /* Animated Strikethrough Checklist Items */
         .check-item { 
             display: flex; 
             align-items: center; 
@@ -481,12 +547,26 @@
         }
         .check-item:hover { background: #35291C; }
         .check-item.completed { background: rgba(30, 22, 14, 0.7); border-color: rgba(243, 192, 68, 0.2); }
-        .check-item.completed .check-text { text-decoration: line-through; color: #8A7E72; }
+        .check-item.completed .check-text { color: #8A7E72; }
 
         .checkbox { width: 24px; height: 24px; min-width: 24px; border: 2px solid var(--accent-green); border-radius: 6px; margin-right: 12px; display: flex; align-items: center; justify-content: center; background: var(--bg-color); transition: all 0.2s ease; }
         .check-item.completed .checkbox { background: var(--accent-green); border-color: var(--accent-green); }
         .check-item.completed .checkbox::after { content: "✓"; color: #FFFFFF; font-weight: bold; font-size: 1rem; }
-        .check-text { font-size: 0.9rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; line-height: 1.2; }
+        
+        .check-text { position: relative; font-size: 0.9rem; flex-grow: 1; font-weight: 500; color: var(--text-light); transition: color 0.2s ease; line-height: 1.2; display: inline-block; }
+        .check-text::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            height: 2px;
+            width: 0;
+            background: currentColor;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .check-item.completed .check-text::after {
+            width: 100%;
+        }
 
         .check-item-thumb {
             width: 32px;
@@ -528,7 +608,7 @@
         .sheet-action-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #33271B; padding-bottom: 8px; margin-bottom: 12px; }
         .sheet-title { font-size: 0.85rem; font-weight: bold; color: var(--text-light); }
         .materials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .mat-tile { background-color: var(--card-bg); border: 1px solid #443525; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
+        .mat-tile { background-color: var(--card-bg); border: 1px solid #443525; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
         .tile-title { font-size: 0.75rem; color: #d0c4b4; }
         .tile-count { font-size: 0.9rem; font-weight: bold; color: var(--accent-gold); }
 
@@ -546,7 +626,7 @@
             .furniture-grid .item-name { font-size: 0.85rem; }
             .furniture-grid .item-time { font-size: 0.75rem; }
             .furniture-grid .item-mats { font-size: 0.7rem; }
-            .controls { padding: 2px; }
+            
             .btn { width: 28px; height: 28px; font-size: 1rem; }
             .qty-input { width: 28px; font-size: 0.9rem; }
             .event-timer-badge { font-size: 0.75rem; padding: 5px 12px; }
